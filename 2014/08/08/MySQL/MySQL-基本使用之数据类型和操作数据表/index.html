@@ -1,0 +1,803 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="DB," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="数据类型数据类型是指的列、存储过程参数、表达式和局部变量的数据特征，它决定了数据的存储格式，代表了不同的信息类型。 整型： TININT， 1 个字节 SMALLINT，2 个字节 MEDIUMINT， 3 个字节 INT， 4 个字节 BIGINT， 8 个字节  数据类型的选取，选取最合适的数据类型，才更加有利于我们优化数据库。 浮点型 FLOAT[(M,D)] DOUBLE[(M,D)]">
+<meta name="keywords" content="DB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 基本使用之数据类型和操作数据表">
+<meta property="og:url" content="http://yoursite.com/2014/08/08/MySQL/MySQL-基本使用之数据类型和操作数据表/index.html">
+<meta property="og:site_name" content="枫叶 🍁 影">
+<meta property="og:description" content="数据类型数据类型是指的列、存储过程参数、表达式和局部变量的数据特征，它决定了数据的存储格式，代表了不同的信息类型。 整型： TININT， 1 个字节 SMALLINT，2 个字节 MEDIUMINT， 3 个字节 INT， 4 个字节 BIGINT， 8 个字节  数据类型的选取，选取最合适的数据类型，才更加有利于我们优化数据库。 浮点型 FLOAT[(M,D)] DOUBLE[(M,D)]">
+<meta property="og:updated_time" content="2017-05-12T04:12:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 基本使用之数据类型和操作数据表">
+<meta name="twitter:description" content="数据类型数据类型是指的列、存储过程参数、表达式和局部变量的数据特征，它决定了数据的存储格式，代表了不同的信息类型。 整型： TININT， 1 个字节 SMALLINT，2 个字节 MEDIUMINT， 3 个字节 INT， 4 个字节 BIGINT， 8 个字节  数据类型的选取，选取最合适的数据类型，才更加有利于我们优化数据库。 浮点型 FLOAT[(M,D)] DOUBLE[(M,D)]">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/08/08/MySQL/MySQL-基本使用之数据类型和操作数据表/"/>
+
+
+
+
+
+  <title>MySQL 基本使用之数据类型和操作数据表 | 枫叶 🍁 影</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">枫叶 🍁 影</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2014/08/08/MySQL/MySQL-基本使用之数据类型和操作数据表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL 基本使用之数据类型和操作数据表</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-08-08T00:00:00+08:00">
+                2014-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>数据类型是指的列、存储过程参数、表达式和局部变量的数据特征，它决定了数据的存储格式，代表了不同的信息类型。</p>
+<h3 id="整型："><a href="#整型：" class="headerlink" title="整型："></a>整型：</h3><ol>
+<li>TININT， 1 个字节</li>
+<li>SMALLINT，2 个字节</li>
+<li>MEDIUMINT， 3 个字节</li>
+<li>INT， 4 个字节</li>
+<li>BIGINT， 8 个字节</li>
+</ol>
+<p>数据类型的选取，选取最合适的数据类型，才更加有利于我们优化数据库。</p>
+<h3 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h3><ol>
+<li>FLOAT[(M,D)]</li>
+<li>DOUBLE[(M,D)]</li>
+</ol>
+<h3 id="日期时间类型"><a href="#日期时间类型" class="headerlink" title="日期时间类型"></a>日期时间类型</h3><ol>
+<li>YEAR</li>
+<li>TIME</li>
+<li>DATE </li>
+<li>DATETIME</li>
+<li>TIMETAMP</li>
+</ol>
+<h3 id="字符型"><a href="#字符型" class="headerlink" title="字符型"></a>字符型</h3><ol>
+<li>CHAR(M), M 个字节，定长类型， 0 \&lt;= M \&lt;= 255</li>
+<li>VARCHAR(M)</li>
+<li>TINYTEXT</li>
+<li>TEXT </li>
+<li>MEDIUMINT，</li>
+<li>LONGTEXT</li>
+<li>ENUM(‘value1’,’value2’,…)</li>
+<li>SET(‘value1’,’value2’,…)</li>
+</ol>
+<h2 id="操作表"><a href="#操作表" class="headerlink" title="操作表"></a>操作表</h2><h3 id="打开数据库-amp-查看当前打开的数据库"><a href="#打开数据库-amp-查看当前打开的数据库" class="headerlink" title="打开数据库 &amp; 查看当前打开的数据库"></a>打开数据库 &amp; 查看当前打开的数据库</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mysql&gt; USE t2;</div><div class="line">Database changed</div><div class="line">mysql&gt; SELECT DATABASE();</div><div class="line">+------------+</div><div class="line">| DATABASE() |</div><div class="line">+------------+</div><div class="line">| t2         |</div><div class="line">+------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h3 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h3><blockquote>
+<p>  CREATE TABLE [IF NOT EXISTS] table_name (<br>    column_name data_type,<br>    ….<br>)</p>
+</blockquote>
+<p>创建表名：tab1，有三个属性username，age，salary</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; CREATE TABLE tb1 ( </div><div class="line">        username VARCHAR(20), </div><div class="line">        age TINYINT UNSIGNED, </div><div class="line">        salary FLOAT(8,2) UNSIGNED </div><div class="line">        );</div><div class="line"></div><div class="line">Query OK, 0 rows affected (0.03 sec)</div></pre></td></tr></table></figure>
+<h3 id="查看数据表"><a href="#查看数据表" class="headerlink" title="查看数据表"></a>查看数据表</h3><blockquote>
+<p>SHOW TABLES [FROM db_name]<br>  [LIKE ‘patter’ |  WHERE expr]</p>
+</blockquote>
+<p>实例：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SHOW TABLES;</div><div class="line">+--------------+</div><div class="line">| Tables_in_t2 |</div><div class="line">+--------------+</div><div class="line">| tb1          |</div><div class="line">+--------------+</div><div class="line">1 row in set (0.01 sec)</div></pre></td></tr></table></figure>
+<h3 id="查看数据表结构-SHOW"><a href="#查看数据表结构-SHOW" class="headerlink" title="查看数据表结构 SHOW"></a>查看数据表结构 <em>SHOW</em></h3><blockquote>
+<p>SHOW COLUMNS FROM tbl_name;</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SHOW COLUMNS FROM tb1;</div><div class="line">+----------+---------------------+------+-----+---------+-------+</div><div class="line">| Field    | Type                | Null | Key | Default | Extra |</div><div class="line">+----------+---------------------+------+-----+---------+-------+</div><div class="line">| username | varchar(20)         | YES  |     | NULL    |       |</div><div class="line">| age      | tinyint(3) unsigned | YES  |     | NULL    |       |</div><div class="line">| salary   | float(8,2) unsigned | YES  |     | NULL    |       |</div><div class="line">+----------+---------------------+------+-----+---------+-------+</div><div class="line">3 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h3 id="插入记录-INSERT"><a href="#插入记录-INSERT" class="headerlink" title="插入记录 INSERT"></a>插入记录 INSERT</h3><blockquote>
+<p>INSERT [INTO] tab_name [(col_name,…)] VALUES(val,…)</p>
+</blockquote>
+<p>通过上面的格式可以看出，执行插入操作的时候列的名字可以忽略，但是这个时候必须插入所有列的值,否则插入操作会报错。<br>实例1，省略列字段名字</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysql&gt; INSERT tb1 VALUES('Jack',23,8888.12);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; INSERT tb1 VALUES('Jack',23);</div><div class="line">ERROR 1136 (21S01): Column count does n0t match value count at row 1</div></pre></td></tr></table></figure>
+<p>实例2，部分赋值</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql&gt; INSERT tb1 (username,age) VALUES('Rose',24);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line">mysql&gt; INSERT tb1 (username, salary) VALUES ('Jhon',9898.00);</div><div class="line">Query OK, 1 row affected (0.01 sec)</div></pre></td></tr></table></figure>
+<h3 id="记录查找"><a href="#记录查找" class="headerlink" title="记录查找 *"></a>记录查找 *</h3><p> SELECT *</p>
+<blockquote>
+<p>SELECT expr,… FROM tbl_name</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SELECT * FROM tb1;</div><div class="line">+----------+------+---------+</div><div class="line">| username | age  | salary  |</div><div class="line">+----------+------+---------+</div><div class="line">| Jack     |   23 | 8888.12 |</div><div class="line">| Rose     |   24 |    NULL |</div><div class="line">| Jhon     | NULL | 9898.00 |</div><div class="line">+----------+------+---------+</div><div class="line">3 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h3 id="空值与非空值"><a href="#空值与非空值" class="headerlink" title="空值与非空值"></a>空值与非空值</h3><ul>
+<li>NULL， 字段值可以为空；</li>
+<li>NOT NULL， 字段值不可以为空；</li>
+</ul>
+<p>创建一个表 tb2，设置两个字段 username，禁止为空，age，可以为空</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">mysql\&gt; CREATE TABLE tb2(</div><div class="line">	-&gt; username VARCHAR(20) NOT NULL,</div><div class="line">	-&gt; age TINYINT UNSIGNED NULL</div><div class="line">	-&gt; );</div><div class="line">Query OK, 0 rows affected (0.03 sec)</div><div class="line"></div><div class="line">mysql\&gt; SHOW COLUMNS FROM tb2;</div><div class="line">+----------+---------------------+------+-----+---------+-------+</div><div class="line">| Field    | Type                | Null | Key | Default | Extra |</div><div class="line">+----------+---------------------+------+-----+---------+-------+</div><div class="line">| username | varchar(20)         | NO   |     | NULL    |       |</div><div class="line">| age      | tinyint(3) unsigned | YES  |     | NULL    |       |</div><div class="line">+----------+---------------------+------+-----+---------+-------+</div><div class="line">2 rows in set (0.00 sec)</div><div class="line"></div><div class="line">mysql\&gt; INSERT tb2 VALUES('Lucy',NULL);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql\&gt; INSERT tb2 VALUES(NULL,23);</div><div class="line">ERROR 1048 (23000): Column 'username' cannot be null</div><div class="line"></div><div class="line">mysql\&gt; SELECT \* FROM tb2;</div><div class="line">+----------+------+</div><div class="line">| username | age  |</div><div class="line">+----------+------+</div><div class="line">| Lucy     | NULL |</div><div class="line">+----------+------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h3 id="AUTO-INCREMENT-自动编号"><a href="#AUTO-INCREMENT-自动编号" class="headerlink" title="AUTO_INCREMENT 自动编号"></a>AUTO_INCREMENT 自动编号</h3><ul>
+<li>自动编号，且必须与主键组合使用；</li>
+<li>默认情况下，起始值为1，每次的增量为1；</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysql\&gt; CREATE TABLE tb3(</div><div class="line">	-&gt; id SMALLINT UNSIGNED AUTO_INCREMENT,</div><div class="line">	-&gt; username VARCHAR(30) NOT NULL</div><div class="line">	-&gt; );</div><div class="line">ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key</div></pre></td></tr></table></figure>
+<h3 id="PRIMARY-KEY"><a href="#PRIMARY-KEY" class="headerlink" title="PRIMARY KEY"></a>PRIMARY KEY</h3><ul>
+<li>主键约束</li>
+<li>每张数据表只能存在一个主键</li>
+<li>主键保证记录的唯一性</li>
+<li>主键自动为 NOT NULL</li>
+</ul>
+<p>创建一个数据表 tb3, 设置  id 为主键，并且插入三条数据，查看 id 自动增长。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">CREATE TABLE tb3( </div><div class="line">	id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, </div><div class="line">	username VARCHAR(30) NOT NULL );</div><div class="line"></div><div class="line">Query OK, 0 rows affected (0.02 sec)</div><div class="line"></div><div class="line">mysql&gt; SHOW COLUMNS FROM tb3;</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">| Field    | Type                 | Null | Key | Default | Extra          |</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">| id       | smallint(5) unsigned | NO   | PRI | NULL    | auto_increment |</div><div class="line">| username | varchar(30)          | NO   |     | NULL    |                |</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">2 rows in set (0.00 sec)</div><div class="line"></div><div class="line"></div><div class="line">mysql&gt; INSERT tb3(username) VALUES('JACK');</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; INSERT tb3(username) VALUES('ROSE');</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; INSERT tb3(username) VALUES('TOM');</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM tb3;</div><div class="line">+----+----------+</div><div class="line">| id | username |</div><div class="line">+----+----------+</div><div class="line">|  1 | JACK     |</div><div class="line">|  2 | ROSE     |</div><div class="line">|  3 | TOM      |</div><div class="line">+----+----------+</div><div class="line">3 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意 AUTO_INCREMENT 一定需要和PRIMAR  KEY 一起使用，但是 PRIMARY KEY 可以单独使用。并且主键不能重复。</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">mysql&gt; CREATE TABLE tb4( </div><div class="line">	id SMALLINT UNSIGNED PRIMARY KEY, </div><div class="line">	username VARCHAR(30) NOT NULL </div><div class="line">	);</div><div class="line"></div><div class="line">Query OK, 0 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SHOW COLUMNS FROM tb4;</div><div class="line">+----------+----------------------+------+-----+---------+-------+</div><div class="line">| Field    | Type                 | Null | Key | Default | Extra |</div><div class="line">+----------+----------------------+------+-----+---------+-------+</div><div class="line">| id       | smallint(5) unsigned | NO   | PRI | NULL    |       |</div><div class="line">| username | varchar(30)          | NO   |     | NULL    |       |</div><div class="line">+----------+----------------------+------+-----+---------+-------+</div><div class="line">2 rows in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; INSERT tb4 VALUES(1,'TOM');</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; INSERT tb4 VALUES(3,'TOM1');</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM tb4;</div><div class="line">+----+----------+</div><div class="line">| id | username |</div><div class="line">+----+----------+</div><div class="line">|  1 | TOM      |</div><div class="line">|  3 | TOM1     |</div><div class="line">+----+----------+</div><div class="line">2 rows in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; INSERT tb4 VALUES(3,'TO');</div><div class="line">ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'</div></pre></td></tr></table></figure>
+<h3 id="UNIQUE-KEY"><a href="#UNIQUE-KEY" class="headerlink" title="UNIQUE KEY"></a>UNIQUE KEY</h3><ul>
+<li>唯一约束</li>
+<li>唯一约束可以保证记录的唯一性</li>
+<li>唯一约束的字段可以为空值（NULL）</li>
+<li>每张数据表可以存在多个唯一约束</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">mysql&gt; CREATE TABLE tb5 (</div><div class="line">    -&gt; id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,</div><div class="line">    -&gt; username VARCHAR(20) NOT NULL UNIQUE KEY,</div><div class="line">    -&gt; age TINYINT UNSIGNED</div><div class="line">    -&gt; );</div><div class="line">Query OK, 0 rows affected (0.02 sec)</div><div class="line"></div><div class="line">mysql&gt; SHOW COLUMNS FROM tb5;</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">| Field    | Type                 | Null | Key | Default | Extra          |</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">| id       | smallint(5) unsigned | NO   | PRI | NULL    | auto_increment |</div><div class="line">| username | varchar(20)          | NO   | UNI | NULL    |                |</div><div class="line">| age      | tinyint(3) unsigned  | YES  |     | NULL    |                |</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">3 rows in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; INSERT tb5(username,age) VALUES ('TOM', 66);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; INSERT tb5(username,age) VALUES ('TOM', 66);</div><div class="line">ERROR 1062 (23000): Duplicate entry 'TOM' for key 'username'</div></pre></td></tr></table></figure>
+<h3 id="默认约束"><a href="#默认约束" class="headerlink" title="默认约束"></a>默认约束</h3><ul>
+<li>默认值</li>
+<li>当插入就时，如果没有明确为字段赋值，则自动赋予默认值。</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">mysql&gt; CREATE TABLE tb6(</div><div class="line">    -&gt; id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,</div><div class="line">    -&gt; username VARCHAR(10) NOT NULL UNIQUE KEY,</div><div class="line">    -&gt; sex ENUM('1','2','3') DEFAULT '3'</div><div class="line">    -&gt; );</div><div class="line">Query OK, 0 rows affected (0.02 sec)</div><div class="line"></div><div class="line">mysql&gt; SHOW COLUMNS FROM tb6;</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">| Field    | Type                 | Null | Key | Default | Extra          |</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">| id       | smallint(5) unsigned | NO   | PRI | NULL    | auto_increment |</div><div class="line">| username | varchar(10)          | NO   | UNI | NULL    |                |</div><div class="line">| sex      | enum('1','2','3')    | YES  |     | 3       |                |</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">3 rows in set (0.00 sec)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">mysql&gt; INSERT tb6(username,sex) VALUES('JACK','2');</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; INSERT tb6(username) VALUES('ROSE');</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM tb6;</div><div class="line">+----+----------+------+</div><div class="line">| id | username | sex  |</div><div class="line">+----+----------+------+</div><div class="line">|  1 | JACK     | 2    |</div><div class="line">|  3 | ROSE     | 3    |</div><div class="line">+----+----------+------+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h2 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h2><ol>
+<li>数据类型：字符型、整型、浮点型、日期时间型</li>
+<li>数据表操作：插入记录和查找记录</li>
+<li>记录操作：创建数据表和约束的使用；</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DB/" rel="tag"># DB</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/08/07/MySQL/MySQL-基本使用/" rel="next" title="MySQL 基本使用">
+                <i class="fa fa-chevron-left"></i> MySQL 基本使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/08/09/MySQL/MySQL-操作数据表中的记录/" rel="prev" title="MySQL 约束以及修改约束">
+                MySQL 约束以及修改约束 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘桂良" />
+          <p class="site-author-name" itemprop="name">刘桂良</p>
+           
+              <p class="site-description motion-element" itemprop="description">不变应万变，世界瞬息万变</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">1.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整型："><span class="nav-number">1.1.</span> <span class="nav-text">整型：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点型"><span class="nav-number">1.2.</span> <span class="nav-text">浮点型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日期时间类型"><span class="nav-number">1.3.</span> <span class="nav-text">日期时间类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符型"><span class="nav-number">1.4.</span> <span class="nav-text">字符型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作表"><span class="nav-number">2.</span> <span class="nav-text">操作表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开数据库-amp-查看当前打开的数据库"><span class="nav-number">2.1.</span> <span class="nav-text">打开数据库 & 查看当前打开的数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建数据表"><span class="nav-number">2.2.</span> <span class="nav-text">创建数据表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看数据表"><span class="nav-number">2.3.</span> <span class="nav-text">查看数据表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看数据表结构-SHOW"><span class="nav-number">2.4.</span> <span class="nav-text">查看数据表结构 SHOW</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入记录-INSERT"><span class="nav-number">2.5.</span> <span class="nav-text">插入记录 INSERT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#记录查找"><span class="nav-number">2.6.</span> <span class="nav-text">记录查找 *</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空值与非空值"><span class="nav-number">2.7.</span> <span class="nav-text">空值与非空值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AUTO-INCREMENT-自动编号"><span class="nav-number">2.8.</span> <span class="nav-text">AUTO_INCREMENT 自动编号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PRIMARY-KEY"><span class="nav-number">2.9.</span> <span class="nav-text">PRIMARY KEY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIQUE-KEY"><span class="nav-number">2.10.</span> <span class="nav-text">UNIQUE KEY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#默认约束"><span class="nav-number">2.11.</span> <span class="nav-text">默认约束</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结："><span class="nav-number">3.</span> <span class="nav-text">小结：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘桂良</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
