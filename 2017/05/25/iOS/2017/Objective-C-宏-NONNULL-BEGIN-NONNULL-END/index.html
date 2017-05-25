@@ -90,16 +90,16 @@
 
 
 
-<meta name="description" content="最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查看两个宏的定义： 123#define NS_ASSUME_NONNULL_BEGIN _Pragma(&quot;clang assume_nonnu">
+<meta name="description" content="这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。  ##初识 最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Objective-C 宏 NONNULL_BEGIN &amp; NONNULL_END">
 <meta property="og:url" content="http://yoursite.com/2017/05/25/iOS/2017/Objective-C-宏-NONNULL-BEGIN-NONNULL-END/index.html">
 <meta property="og:site_name" content="枫叶 🍁 影">
-<meta property="og:description" content="最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查看两个宏的定义： 123#define NS_ASSUME_NONNULL_BEGIN _Pragma(&quot;clang assume_nonnu">
-<meta property="og:updated_time" content="2017-05-25T06:48:15.000Z">
+<meta property="og:description" content="这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。  ##初识 最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查">
+<meta property="og:updated_time" content="2017-05-25T06:59:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Objective-C 宏 NONNULL_BEGIN &amp; NONNULL_END">
-<meta name="twitter:description" content="最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查看两个宏的定义： 123#define NS_ASSUME_NONNULL_BEGIN _Pragma(&quot;clang assume_nonnu">
+<meta name="twitter:description" content="这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。  ##初识 最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查">
 
 
 
@@ -316,27 +316,33 @@
       
 
       
-        <p>最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义</p>
+        <blockquote>
+<p>这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。</p>
+</blockquote>
+<p>##初识</p>
+<p>最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></div></pre></td></tr></table></figure>
 <p>进入文件<em>NSObjCRuntime.h</em>这个文件查看两个宏的定义：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#define NS_ASSUME_NONNULL_BEGIN _Pragma(<span class="meta-string">"clang assume_nonnull begin"</span>)</span></div><div class="line"><span class="meta">#define NS_ASSUME_NONNULL_END   _Pragma(<span class="meta-string">"clang assume_nonnull end"</span>)</span></div></pre></td></tr></table></figure>
 <p>反正也看不出是个什么鬼。如果看过 Swift 中的 ？和 ！，应该对这个理解的清楚一些。</p>
-<p>其实，之前我们在使用OC开发的时候，有些时候对于对象为空的避免并没有体现在编写代码的层面上，也就是在写一些代码的时候可能没有通过语法来标记这个对象是否可以为空，但是Swift中的语法却做到了这一点。OC也是一门仍然在完善的语言，Nullability就是他的这个性特性。</p>
+<h2 id="写一个Person类"><a href="#写一个Person类" class="headerlink" title="写一个Person类"></a>写一个Person类</h2><p>其实，之前我们在使用OC开发的时候，有些时候对于对象为空的避免并没有体现在编写代码的层面上，也就是在写一些代码的时候可能没有通过语法来标记这个对象是否可以为空，但是Swift中的语法却做到了这一点。OC也是一门仍然在完善的语言，Nullability就是他的这个性特性。</p>
 <p>比如我们创建一个Person类，属性有name,我们一般这样写：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> <span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="comment">//Person.h</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> *name;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//Person.m</span></div><div class="line"><span class="meta">#import <span class="meta-string">"Person.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <p>使用的时候这样写：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Person *ap = [Person new];</div><div class="line">ap.name = <span class="string">@"Tom"</span>;</div><div class="line"></div><div class="line">Person *tp = [Person new];</div><div class="line">ap.name = <span class="literal">nil</span>;</div></pre></td></tr></table></figure>
-<p>但是有些时候我们想让这个人对象的名字不能设置为nil，那么Person类就应该这样实现：</p>
+<h2 id="nullable-amp-nonnull"><a href="#nullable-amp-nonnull" class="headerlink" title="nullable &amp; nonnull"></a>nullable &amp; nonnull</h2><p>但是有些时候我们想让这个人对象的名字不能设置为nil，那么Person类就应该这样实现：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> <span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="comment">//Person.h</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>, <span class="keyword">nullable</span>)<span class="built_in">NSString</span> *name;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//Person.m</span></div><div class="line"><span class="meta">#import <span class="meta-string">"Person.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <p>这样，如果在使用这个类的时候，为对象设置name为nil，编译器就会报警告，对于方法也是一样的：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- (<span class="keyword">void</span>)runWithDistance:(<span class="built_in">NSString</span> *_Nonnull)mile;<span class="comment">//mile不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)runWithTime:(<span class="keyword">nonnull</span> <span class="built_in">NSString</span> *)time;<span class="comment">// time 不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatWithFood:(<span class="built_in">NSString</span> * _Nullable)food;<span class="comment">//food可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatAtPlace:(<span class="keyword">nullable</span> <span class="built_in">NSString</span> *)place;<span class="comment">// place 可以为nil</span></div></pre></td></tr></table></figure>
 <p>注意：_Nonnull 和 nonnull  效果是一样的，只是形式不一样。</p>
 <p>nonul , _Nonnull 表示属性或者参数不可以为空；<br>nullable, _Nullable 表示属性或者参数可以为空</p>
-<p>我们根据上面的理解继续完善一下 人 类：</p>
+<p>我们根据上面的理解继续完善一下 Person 类：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>, <span class="keyword">nonnull</span>)<span class="built_in">NSString</span> *name;<span class="comment">// name 不可以为空</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> * _Nonnull mile;<span class="comment">// mile 不可以为空</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> * _Nullable food;<span class="comment">// food 可以为空</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>,<span class="keyword">nullable</span>) <span class="built_in">NSString</span> *time; <span class="comment">//time 可以为空</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)runWithDistance:(<span class="built_in">NSString</span> *_Nonnull)mile;<span class="comment">//mile不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)runWithTime:(<span class="keyword">nonnull</span> <span class="built_in">NSString</span> *)time;<span class="comment">// time 不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatWithFood:(<span class="built_in">NSString</span> * _Nullable)food;<span class="comment">//food可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatAtPlace:(<span class="keyword">nullable</span> <span class="built_in">NSString</span> *)place;<span class="comment">// place 可以为nil</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">//Person.m</span></div><div class="line"><span class="meta">#import <span class="meta-string">"Person.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>到这里就应该出现 <em>NS_ASSUME_NONNULL_BEGIN</em> 宏了，有没有发现上面的代码有些啰嗦，苹果为了让我们少些介个 nonnull，所以就定义了这个宏，我们用这个宏进行改写：</p>
+<h2 id="NS-ASSUME-NONNULL-BEGIN-amp-NS-ASSUME-NONNULL-END-怎么用"><a href="#NS-ASSUME-NONNULL-BEGIN-amp-NS-ASSUME-NONNULL-END-怎么用" class="headerlink" title="NS_ASSUME_NONNULL_BEGIN &amp; NS_ASSUME_NONNULL_END 怎么用"></a>NS_ASSUME_NONNULL_BEGIN &amp; NS_ASSUME_NONNULL_END 怎么用</h2><p>到这里就应该出现 <em>NS_ASSUME_NONNULL_BEGIN</em> 宏了，有没有发现上面的代码有些啰嗦，苹果为了让我们少些几个 nonnull，所以就定义了这个宏，我们用这个宏进行改写：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> *name;<span class="comment">// name 不可以为空</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> * mile;<span class="comment">// mile 不可以为空</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> * _Nullable food;<span class="comment">// food 可以为空</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>,<span class="keyword">nullable</span>) <span class="built_in">NSString</span> *time; <span class="comment">//time 可以为空</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)runWithDistance:(<span class="built_in">NSString</span> *)mile;<span class="comment">//mile不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)runWithTime:(<span class="built_in">NSString</span> *)time;<span class="comment">// time 不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatWithFood:(<span class="built_in">NSString</span> * _Nullable)food;<span class="comment">//food可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatAtPlace:(<span class="keyword">nullable</span> <span class="built_in">NSString</span> *)place;<span class="comment">// place 可以为nil</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></div></pre></td></tr></table></figure>
 <p>下面和上面的效果是一样的，也就是说在NS_ASSUME_NONNULL_BEGIN、NS_ASSUME_NONNULL_END两个宏之间 nonnull 就没有必要写了，默认就是nonnull，如果不是nonnull那么就需要显示写成nullable的。</p>
+<p>好了，理解清楚了，如果不知道这么个东西，真的看起文档来比较麻烦。之前在看Swift的时候老是觉得OC为什么不能直接对空值进行检测呢？每次有些空值还要自己判断，现在好啦。</p>
+<p>OVER，记录完毕。</p>
 
       
     </div>
@@ -428,8 +434,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -491,6 +506,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写一个Person类"><span class="nav-number">1.</span> <span class="nav-text">写一个Person类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nullable-amp-nonnull"><span class="nav-number">2.</span> <span class="nav-text">nullable & nonnull</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NS-ASSUME-NONNULL-BEGIN-amp-NS-ASSUME-NONNULL-END-怎么用"><span class="nav-number">3.</span> <span class="nav-text">NS_ASSUME_NONNULL_BEGIN & NS_ASSUME_NONNULL_END 怎么用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
