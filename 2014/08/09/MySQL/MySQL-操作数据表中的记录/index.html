@@ -97,7 +97,7 @@
 <meta property="og:url" content="http://yoursite.com/2014/08/09/MySQL/MySQL-操作数据表中的记录/index.html">
 <meta property="og:site_name" content="枫叶 🍁 影">
 <meta property="og:description" content="约束，是否可以为空的维度 约束保证数据的完整性和一致性； 约束分为表级约束和列级约束； 约束类型分为： NOT NULL(非空约束) PRIMARY KEY(主键约束) UNIQUE KEY(唯一约束) DEFAULT(默认约束) FOREIGN KEY(外键约束)    FOREIGN KEY外键约束保持数据一致性，完整性；实现一对一或者一对多关系。 外键约束的要求：   父表和子表必须使用相">
-<meta property="og:updated_time" content="2017-05-12T21:17:41.000Z">
+<meta property="og:updated_time" content="2017-05-17T08:05:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 约束以及修改约束">
 <meta name="twitter:description" content="约束，是否可以为空的维度 约束保证数据的完整性和一致性； 约束分为表级约束和列级约束； 约束类型分为： NOT NULL(非空约束) PRIMARY KEY(主键约束) UNIQUE KEY(唯一约束) DEFAULT(默认约束) FOREIGN KEY(外键约束)    FOREIGN KEY外键约束保持数据一致性，完整性；实现一对一或者一对多关系。 外键约束的要求：   父表和子表必须使用相">
@@ -416,6 +416,9 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt; ALTER TABLE users1 DROP coln, DROP conn;</div><div class="line">Query OK, 0 rows affected (0.05 sec)</div><div class="line">Records: 0  Duplicates: 0  Warnings: 0</div><div class="line"></div><div class="line">mysql&gt; SHOW COLUMNS FROM users1;</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">| Field    | Type                 | Null | Key | Default | Extra          |</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">| truename | varchar(20)          | NO   |     | NULL    |                |</div><div class="line">| id       | smallint(5) unsigned | NO   | PRI | NULL    | auto_increment |</div><div class="line">| username | varchar(20)          | NO   |     | NULL    |                |</div><div class="line">| password | varchar(32)          | NO   |     | NULL    |                |</div><div class="line">| pid      | smallint(5) unsigned | YES  | MUL | NULL    |                |</div><div class="line">| age      | tinyint(3) unsigned  | NO   |     | 10      |                |</div><div class="line">+----------+----------------------+------+-----+---------+----------------+</div><div class="line">6 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
 <p>删除一列的同时增加一列：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mysql&gt; ALTER TABLE users1 DROP truename, ADD chinaname VARCHAR(20);</div><div class="line">Query OK, 0 rows affected (0.05 sec)</div><div class="line">Records: 0  Duplicates: 0  Warnings: 0</div><div class="line"></div><div class="line">mysql&gt; SHOW COLUMNS FROM users1;</div><div class="line">+-----------+----------------------+------+-----+---------+----------------+</div><div class="line">| Field     | Type                 | Null | Key | Default | Extra          |</div><div class="line">+-----------+----------------------+------+-----+---------+----------------+</div><div class="line">| id        | smallint(5) unsigned | NO   | PRI | NULL    | auto_increment |</div><div class="line">| username  | varchar(20)          | NO   |     | NULL    |                |</div><div class="line">| password  | varchar(32)          | NO   |     | NULL    |                |</div><div class="line">| pid       | smallint(5) unsigned | YES  | MUL | NULL    |                |</div><div class="line">| age       | tinyint(3) unsigned  | NO   |     | 10      |                |</div><div class="line">| chinaname | varchar(20)          | YES  |     | NULL    |                |</div><div class="line">+-----------+----------------------+------+-----+---------+----------------+</div><div class="line">6 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h2 id="约束操作"><a href="#约束操作" class="headerlink" title="约束操作"></a>约束操作</h2><h3 id="添加主键约束"><a href="#添加主键约束" class="headerlink" title="添加主键约束"></a>添加主键约束</h3><blockquote>
+<p>ALTER TABLE tbl_name ADD [CONSTRAINT [symbol]] PRIMARY KEY [index_type] （index_col_name, …）</p>
+</blockquote>
 
       
     </div>
@@ -542,7 +545,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -553,7 +556,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -564,7 +567,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -599,7 +602,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#约束，是否可以为空的维度"><span class="nav-number">1.</span> <span class="nav-text">约束，是否可以为空的维度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FOREIGN-KEY外键约束"><span class="nav-number">1.1.</span> <span class="nav-text">FOREIGN KEY外键约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑数据表的默认存储引擎"><span class="nav-number">1.2.</span> <span class="nav-text">编辑数据表的默认存储引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看表中是否存在索引"><span class="nav-number">1.3.</span> <span class="nav-text">查看表中是否存在索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外键约束的参照操作"><span class="nav-number">1.4.</span> <span class="nav-text">外键约束的参照操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作数目的维度-——-表级约束和列级约束"><span class="nav-number">2.</span> <span class="nav-text">操作数目的维度 —— 表级约束和列级约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对数据表的操作"><span class="nav-number">3.</span> <span class="nav-text">对数据表的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加单列"><span class="nav-number">3.1.</span> <span class="nav-text">添加单列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加多列"><span class="nav-number">3.2.</span> <span class="nav-text">添加多列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除列"><span class="nav-number">3.3.</span> <span class="nav-text">删除列</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#约束，是否可以为空的维度"><span class="nav-number">1.</span> <span class="nav-text">约束，是否可以为空的维度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FOREIGN-KEY外键约束"><span class="nav-number">1.1.</span> <span class="nav-text">FOREIGN KEY外键约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑数据表的默认存储引擎"><span class="nav-number">1.2.</span> <span class="nav-text">编辑数据表的默认存储引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看表中是否存在索引"><span class="nav-number">1.3.</span> <span class="nav-text">查看表中是否存在索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外键约束的参照操作"><span class="nav-number">1.4.</span> <span class="nav-text">外键约束的参照操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作数目的维度-——-表级约束和列级约束"><span class="nav-number">2.</span> <span class="nav-text">操作数目的维度 —— 表级约束和列级约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对数据表的操作"><span class="nav-number">3.</span> <span class="nav-text">对数据表的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加单列"><span class="nav-number">3.1.</span> <span class="nav-text">添加单列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加多列"><span class="nav-number">3.2.</span> <span class="nav-text">添加多列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除列"><span class="nav-number">3.3.</span> <span class="nav-text">删除列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约束操作"><span class="nav-number">4.</span> <span class="nav-text">约束操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加主键约束"><span class="nav-number">4.1.</span> <span class="nav-text">添加主键约束</span></a></li></ol></li></ol></div>
             
 
           </div>
