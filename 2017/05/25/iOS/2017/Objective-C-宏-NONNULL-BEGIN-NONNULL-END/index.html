@@ -90,16 +90,16 @@
 
 
 
-<meta name="description" content="这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。  ##初识 最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查">
+<meta name="description" content="这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。  初识最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查看两个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Objective-C 宏 NONNULL_BEGIN &amp; NONNULL_END">
 <meta property="og:url" content="http://yoursite.com/2017/05/25/iOS/2017/Objective-C-宏-NONNULL-BEGIN-NONNULL-END/index.html">
 <meta property="og:site_name" content="枫叶 🍁 影">
-<meta property="og:description" content="这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。  ##初识 最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查">
-<meta property="og:updated_time" content="2017-05-25T06:59:04.000Z">
+<meta property="og:description" content="这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。  初识最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查看两个">
+<meta property="og:updated_time" content="2017-05-25T07:01:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Objective-C 宏 NONNULL_BEGIN &amp; NONNULL_END">
-<meta name="twitter:description" content="这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。  ##初识 最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查">
+<meta name="twitter:description" content="这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。  初识最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义 12345NS_ASSUME_NONNULL_BEGINNS_ASSUME_NONNULL_END 进入文件NSObjCRuntime.h这个文件查看两个">
 
 
 
@@ -319,8 +319,7 @@
         <blockquote>
 <p>这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。</p>
 </blockquote>
-<p>##初识</p>
-<p>最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义</p>
+<h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p>最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></div></pre></td></tr></table></figure>
 <p>进入文件<em>NSObjCRuntime.h</em>这个文件查看两个宏的定义：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#define NS_ASSUME_NONNULL_BEGIN _Pragma(<span class="meta-string">"clang assume_nonnull begin"</span>)</span></div><div class="line"><span class="meta">#define NS_ASSUME_NONNULL_END   _Pragma(<span class="meta-string">"clang assume_nonnull end"</span>)</span></div></pre></td></tr></table></figure>
@@ -516,7 +515,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写一个Person类"><span class="nav-number">1.</span> <span class="nav-text">写一个Person类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nullable-amp-nonnull"><span class="nav-number">2.</span> <span class="nav-text">nullable & nonnull</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NS-ASSUME-NONNULL-BEGIN-amp-NS-ASSUME-NONNULL-END-怎么用"><span class="nav-number">3.</span> <span class="nav-text">NS_ASSUME_NONNULL_BEGIN & NS_ASSUME_NONNULL_END 怎么用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初识"><span class="nav-number">1.</span> <span class="nav-text">初识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写一个Person类"><span class="nav-number">2.</span> <span class="nav-text">写一个Person类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nullable-amp-nonnull"><span class="nav-number">3.</span> <span class="nav-text">nullable & nonnull</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NS-ASSUME-NONNULL-BEGIN-amp-NS-ASSUME-NONNULL-END-怎么用"><span class="nav-number">4.</span> <span class="nav-text">NS_ASSUME_NONNULL_BEGIN & NS_ASSUME_NONNULL_END 怎么用</span></a></li></ol></div>
             
 
           </div>

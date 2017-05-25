@@ -324,8 +324,7 @@
             <blockquote>
 <p>这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。</p>
 </blockquote>
-<p>##初识</p>
-<p>最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义</p>
+<h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p>最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></div></pre></td></tr></table></figure>
 <p>进入文件<em>NSObjCRuntime.h</em>这个文件查看两个宏的定义：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#define NS_ASSUME_NONNULL_BEGIN _Pragma(<span class="meta-string">"clang assume_nonnull begin"</span>)</span></div><div class="line"><span class="meta">#define NS_ASSUME_NONNULL_END   _Pragma(<span class="meta-string">"clang assume_nonnull end"</span>)</span></div></pre></td></tr></table></figure>
