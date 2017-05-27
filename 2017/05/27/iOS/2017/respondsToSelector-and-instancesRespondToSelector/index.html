@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="DB," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -90,17 +90,16 @@
 
 
 
-<meta name="description" content="第一部分： 关系数据库（2~6章），第二章介绍了数据的关系模型，包括几本概念，诸如关系数据库的结构、数据库模式、码、模式图、关系查询语言和关系操作等。 第 2 章 关系模型介绍">
-<meta name="keywords" content="DB">
+<meta name="description" content="前情提要最近在写代码的时候无意间写错了，将respondsToSelector写成了instancesRespondToSelector，结果…就没有了结果。 开始respondsToSelectorrespondsToSelector 是协议  中的一个@required的方法 12345678910111213141516171819202122232425262728293031323334">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Database System Concepts(一)">
-<meta property="og:url" content="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-一/index.html">
+<meta property="og:title" content="respondsToSelector and instancesRespondToSelector">
+<meta property="og:url" content="http://yoursite.com/2017/05/27/iOS/2017/respondsToSelector-and-instancesRespondToSelector/index.html">
 <meta property="og:site_name" content="枫叶 🍁 影">
-<meta property="og:description" content="第一部分： 关系数据库（2~6章），第二章介绍了数据的关系模型，包括几本概念，诸如关系数据库的结构、数据库模式、码、模式图、关系查询语言和关系操作等。 第 2 章 关系模型介绍">
-<meta property="og:updated_time" content="2017-05-13T05:03:11.000Z">
+<meta property="og:description" content="前情提要最近在写代码的时候无意间写错了，将respondsToSelector写成了instancesRespondToSelector，结果…就没有了结果。 开始respondsToSelectorrespondsToSelector 是协议  中的一个@required的方法 12345678910111213141516171819202122232425262728293031323334">
+<meta property="og:updated_time" content="2017-05-27T04:30:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Database System Concepts(一)">
-<meta name="twitter:description" content="第一部分： 关系数据库（2~6章），第二章介绍了数据的关系模型，包括几本概念，诸如关系数据库的结构、数据库模式、码、模式图、关系查询语言和关系操作等。 第 2 章 关系模型介绍">
+<meta name="twitter:title" content="respondsToSelector and instancesRespondToSelector">
+<meta name="twitter:description" content="前情提要最近在写代码的时候无意间写错了，将respondsToSelector写成了instancesRespondToSelector，结果…就没有了结果。 开始respondsToSelectorrespondsToSelector 是协议  中的一个@required的方法 12345678910111213141516171819202122232425262728293031323334">
 
 
 
@@ -128,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-一/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/27/iOS/2017/respondsToSelector-and-instancesRespondToSelector/"/>
 
 
 
 
 
-  <title>Database System Concepts(一) | 枫叶 🍁 影</title>
+  <title>respondsToSelector and instancesRespondToSelector | 枫叶 🍁 影</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +252,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-一/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/27/iOS/2017/respondsToSelector-and-instancesRespondToSelector/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘桂良">
@@ -270,7 +269,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Database System Concepts(一)</h1>
+          <h1 class="post-title" itemprop="name headline">respondsToSelector and instancesRespondToSelector</h1>
         
 
         <div class="post-meta">
@@ -282,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T00:00:00+08:00">
-                2017-05-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T12:19:21+08:00">
+                2017-05-27
               </time>
             
 
@@ -292,28 +291,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Database/" itemprop="url" rel="index">
-                    <span itemprop="name">Database</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -339,8 +316,11 @@
       
 
       
-        <p>第一部分： 关系数据库（2~6章），第二章介绍了数据的关系模型，包括几本概念，诸如关系数据库的结构、数据库模式、码、模式图、关系查询语言和关系操作等。</p>
-<h2 id="第-2-章-关系模型介绍"><a href="#第-2-章-关系模型介绍" class="headerlink" title="第 2 章 关系模型介绍"></a>第 2 章 关系模型介绍</h2>
+        <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>最近在写代码的时候无意间写错了，将<em>respondsToSelector</em>写成了<em>instancesRespondToSelector</em>，结果…就没有了结果。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="respondsToSelector"><a href="#respondsToSelector" class="headerlink" title="respondsToSelector"></a>respondsToSelector</h3><p><em>respondsToSelector</em> 是协议 <nsobject> 中的一个@required的方法</nsobject></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">NSObject</span></span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isEqual:(<span class="keyword">id</span>)object;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSUInteger</span> hash;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) Class superclass;</div><div class="line">- (Class)<span class="keyword">class</span> OBJC_SWIFT_UNAVAILABLE(<span class="string">"use 'type(of: anObject)' instead"</span>);</div><div class="line">- (<span class="keyword">instancetype</span>)<span class="keyword">self</span>;</div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)performSelector:(SEL)aSelector;</div><div class="line">- (<span class="keyword">id</span>)performSelector:(SEL)aSelector withObject:(<span class="keyword">id</span>)object;</div><div class="line">- (<span class="keyword">id</span>)performSelector:(SEL)aSelector withObject:(<span class="keyword">id</span>)object1 withObject:(<span class="keyword">id</span>)object2;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isProxy;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isKindOfClass:(Class)aClass;</div><div class="line">- (<span class="built_in">BOOL</span>)isMemberOfClass:(Class)aClass;</div><div class="line">- (<span class="built_in">BOOL</span>)conformsToProtocol:(Protocol *)aProtocol;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)respondsToSelector:(SEL)aSelector;</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)<span class="keyword">retain</span> OBJC_ARC_UNAVAILABLE;</div><div class="line">- (<span class="keyword">oneway</span> <span class="keyword">void</span>)release OBJC_ARC_UNAVAILABLE;</div><div class="line">- (<span class="keyword">instancetype</span>)autorelease OBJC_ARC_UNAVAILABLE;</div><div class="line">- (<span class="built_in">NSUInteger</span>)retainCount OBJC_ARC_UNAVAILABLE;</div><div class="line"></div><div class="line">- (<span class="keyword">struct</span> _NSZone *)zone OBJC_ARC_UNAVAILABLE;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *description;</div><div class="line"><span class="keyword">@optional</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *debugDescription;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><em>respondsToSelector</em> 返回一个Boolean值，表示调用该方法的对象是否实现了或者继承了 <em>aSelector</em> 这个方法。</p>
+
       
     </div>
 
@@ -367,12 +347,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/DB/" rel="tag"># DB</a>
-          
-        </div>
-      
 
       
         
@@ -382,8 +356,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/08/MySQL/MySQL-开发技巧（一）/" rel="next" title="MySQL 开发技巧（一）">
-                <i class="fa fa-chevron-left"></i> MySQL 开发技巧（一）
+              <a href="/2017/05/25/iOS/2017/UnitTest/XCTest-一-API认识/" rel="next" title="XCTest(一) API认识">
+                <i class="fa fa-chevron-left"></i> XCTest(一) API认识
               </a>
             
           </div>
@@ -392,8 +366,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/13/Database System Concepts/Database-System-Concepts-二/" rel="prev" title="Database System Concepts(二)">
-                Database System Concepts(二) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/27/iOS/2017/Xcode-warning-Handle/" rel="prev" title="Xcode warning Handle">
+                Xcode warning Handle <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -523,7 +497,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第-2-章-关系模型介绍"><span class="nav-number">1.</span> <span class="nav-text">第 2 章 关系模型介绍</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前情提要"><span class="nav-number">1.</span> <span class="nav-text">前情提要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#respondsToSelector"><span class="nav-number">2.1.</span> <span class="nav-text">respondsToSelector</span></a></li></ol></li></ol></div>
             
 
           </div>
