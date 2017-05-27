@@ -253,6 +253,119 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/27/iOS/2017/Xcode-注释报警告处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/27/iOS/2017/Xcode-注释报警告处理/" itemprop="url">Xcode 注释报警告处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T15:17:51+08:00">
+                2017-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Xcode 有时候注释会报警告，尤其是你写一些 @protocol @xxx 等东西的时候，看着牙根都痒痒，于是解决</p>
+<p>Project——&gt; Build Setting ——&gt; Apple LLVM x.x - Warnings - All languages ——&gt; Documentation Comments 设置为 NO 就好了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/27/iOS/2017/Xcode-warning-Handle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -454,7 +567,8 @@
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">void</span> testResponseSelector() &#123;</div><div class="line"></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"————————————————————testResponseSelector——————————————————————"</span>);</div><div class="line"></div><div class="line">    OneClass *oneObj = [OneClass new];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj method1]            %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(method1)]);         <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj protocolMethod]     %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(protocolMethod)]);  <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj categoryMethod]     %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(categoryMethod)]);  <span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj privateMethod]      %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(privateMethod)]);   <span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj classMethod]        %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);     <span class="comment">//0</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj classMethod]        %d"</span>,[OneClass respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);   <span class="comment">//1</span></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"***************************************************************"</span>);</div><div class="line">    </div><div class="line">    SubOneClass *subOneObj = [SubOneClass new];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj method1]          %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(method1)]);         <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj protocolMethod]   %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(protocolMethod)]);  <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj categoryMethod]   %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(categoryMethod)]);  <span class="comment">//1</span></div><div class="line">    </div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj privateMethod]    %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(privateMethod)]);  <span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj classMethod]      %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);    <span class="comment">//0</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass classMethod]    %d"</span>,[SubOneClass respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);  <span class="comment">//1</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="实例方法（对象方法）"><a href="#实例方法（对象方法）" class="headerlink" title="实例方法（对象方法）"></a>实例方法（对象方法）</h4><p><em>respondsToSelector</em> 可以判断类中的公共方法、私有方法、协议方法、类目方法有没有实现，如果只是声明了方法而没有实现，那么返回值也是FALSE。</p>
 <h4 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h4><p><em>respondsToSelector</em> 针对类方法，只能通过类来调用该方法才能正确判断类方法有没有实现。</p>
-<h3 id="instancesRespondToSelector"><a href="#instancesRespondToSelector" class="headerlink" title="instancesRespondToSelector"></a>instancesRespondToSelector</h3><p>方法声明<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">BOOL</span>)instancesRespondToSelector:(SEL)aSelector;</div></pre></td></tr></table></figure></p>
+<h3 id="instancesRespondToSelector"><a href="#instancesRespondToSelector" class="headerlink" title="instancesRespondToSelector"></a>instancesRespondToSelector</h3><p>方法声明</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">BOOL</span>)instancesRespondToSelector:(SEL)aSelector;</div></pre></td></tr></table></figure>
 <p>对于 <em>instancesRespondToSelector</em> ，首先只能通过类调用，因为他是一个类方法，而且该方法只能判断实例方法，对类方法是没有判别能力的。</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> testInstanceResponseSelector() &#123;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"————————————————————instancesRespondToSelector——————————————————————"</span>);</div><div class="line"></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass method1]        %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(method1)]);		<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass protocolMethod] %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(protocolMethod)]);	<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass categoryMethod] %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(categoryMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass privateMethod]  %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(privateMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass classMethod]    %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(classMethod)]);	<span class="comment">//0</span></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"***************************************************************"</span>);</div><div class="line"></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass method1]          %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(method1)]);		<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass protocolMethod]   %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(protocolMethod)]);	<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass categoryMethod]   %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(categoryMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass privateMethod]    %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(privateMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass classMethod]      %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(classMethod)]);	<span class="comment">//0</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
@@ -1323,117 +1437,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-五/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/13/Database System Concepts/Database-System-Concepts-五/" itemprop="url">Database System Concepts(五)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T08:42:20+08:00">
-                2017-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1483,7 +1486,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
