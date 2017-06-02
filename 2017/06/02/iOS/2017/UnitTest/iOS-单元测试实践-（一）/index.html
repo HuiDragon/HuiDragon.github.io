@@ -1,0 +1,704 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="通过苹果官方的demo入门实践。 简单介绍苹果官方的Unit test有三个：OCUnit、XCTest和UITest，还有一个自动集成测试工具Automation；OCUnit 已经被XCTest代替，而Automation也被UITest代替，目前使用的只剩下两个：  XCTest UITest，实际上UITest也是属于XCTest组成部分。  测试类属于 XCTest.framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 单元测试实践 （一）">
+<meta property="og:url" content="http://yoursite.com/2017/06/02/iOS/2017/UnitTest/iOS-单元测试实践-（一）/index.html">
+<meta property="og:site_name" content="枫叶 🍁 影">
+<meta property="og:description" content="通过苹果官方的demo入门实践。 简单介绍苹果官方的Unit test有三个：OCUnit、XCTest和UITest，还有一个自动集成测试工具Automation；OCUnit 已经被XCTest代替，而Automation也被UITest代替，目前使用的只剩下两个：  XCTest UITest，实际上UITest也是属于XCTest组成部分。  测试类属于 XCTest.framework">
+<meta property="og:updated_time" content="2017-06-02T03:52:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 单元测试实践 （一）">
+<meta name="twitter:description" content="通过苹果官方的demo入门实践。 简单介绍苹果官方的Unit test有三个：OCUnit、XCTest和UITest，还有一个自动集成测试工具Automation；OCUnit 已经被XCTest代替，而Automation也被UITest代替，目前使用的只剩下两个：  XCTest UITest，实际上UITest也是属于XCTest组成部分。  测试类属于 XCTest.framework">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/02/iOS/2017/UnitTest/iOS-单元测试实践-（一）/"/>
+
+
+
+
+
+  <title>iOS 单元测试实践 （一） | 枫叶 🍁 影</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">枫叶 🍁 影</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/iOS/2017/UnitTest/iOS-单元测试实践-（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS 单元测试实践 （一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T10:10:47+08:00">
+                2017-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>通过苹果官方的demo入门实践。</p>
+<h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><p>苹果官方的Unit test有三个：OCUnit、XCTest和UITest，还有一个自动集成测试工具Automation；<br>OCUnit 已经被XCTest代替，而Automation也被UITest代替，目前使用的只剩下两个：</p>
+<ol>
+<li>XCTest</li>
+<li>UITest，实际上UITest也是属于XCTest组成部分。</li>
+</ol>
+<p>测试类属于 <em>XCTest.framework</em> 框架</p>
+<h2 id="实例演示"><a href="#实例演示" class="headerlink" title="实例演示"></a>实例演示</h2><h3 id="计算器demo"><a href="#计算器demo" class="headerlink" title="计算器demo"></a>计算器demo</h3><p>计算器主要功能是实现 +、 -、 *、 / ，计算类的公开属性和方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Calculator</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) input:(<span class="built_in">NSString</span> *) character;</div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *) displayValue;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>计算器类的使用：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"Calculator.h"</span></span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) Calculator *calculator;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="keyword">self</span>.calculator = [[Calculator alloc] init];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">IBAction</span>)press:(<span class="keyword">id</span>)sender &#123;</div><div class="line"></div><div class="line">    [<span class="keyword">self</span>.calculator input:[sender titleForState:<span class="built_in">UIControlStateNormal</span>]];</div><div class="line">    [<span class="keyword">self</span>.displayField setText:[<span class="keyword">self</span>.calculator displayValue]];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>下面主要是针对计算器类进行单元测试</p>
+<h3 id="Create-Unit-Test-Target-amp-Class"><a href="#Create-Unit-Test-Target-amp-Class" class="headerlink" title="Create Unit Test Target &amp; Class"></a>Create Unit Test Target &amp; Class</h3><p>Target 在项目创建的时候如果勾选上Unit Test 那么就会自动生成一个测试target，如果没有勾选按照线面的方法再去创建一个就好了。</p>
+<p>打开Xcode，在导航栏上选中第五个按钮，点击左下角 + 按钮，如果已经存在 Unit Test Target，那么可以选择创建一个Unit Test Class，如果没有这个Target那么需要首先创建Target。这里创建一个Class，集成自 XCTestCase ，注意所有的测试类都统一继承自这个类。类名为 <em>CalculatorTests</em></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;XCTest/XCTest.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CalculatorTests</span> : <span class="title">XCTestCase</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CalculatorTests</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setUp &#123;</div><div class="line">    [<span class="keyword">super</span> setUp];</div><div class="line">    <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)tearDown &#123;</div><div class="line">    <span class="comment">// Put teardown code here. This method is called after the invocation of each test method in the class.</span></div><div class="line">    [<span class="keyword">super</span> tearDown];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testExample &#123;</div><div class="line">    <span class="comment">// This is an example of a functional test case.</span></div><div class="line">    <span class="comment">// Use XCTAssert and related functions to verify your tests produce the correct results.</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testPerformanceExample &#123;</div><div class="line">    <span class="comment">// This is an example of a performance test case.</span></div><div class="line">    [<span class="keyword">self</span> measureBlock:^&#123;</div><div class="line">        <span class="comment">// Put the code you want to measure the time of here.</span></div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><em>- setUp</em> 测试代码执行之前都会执行的一个方法，可以在里面做一些初始化工作，相当于开发类的 init 方法；<br><em>- tearDown</em> 测试代码执行结束之后都会执行的一个方法，可以在里面做一些销毁工作，相当于开放类的的案例dealloc方法<br><em>- testExample</em> 顾名思义，一个示例方法，你写的测试方法要和它的格式一致及<em>-testxxx</em><br><em>- testPerformanceExample</em> 这个是性能测试方法；<br><em>CalculatorTests : XCTestCase</em> 自定义的测试类继承自 <em>XCTestCase</em></p>
+<h3 id="测试-Calculator-类对象是否存在"><a href="#测试-Calculator-类对象是否存在" class="headerlink" title="测试 Calculator 类对象是否存在"></a>测试 Calculator 类对象是否存在</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;XCTest/XCTest.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"Calculator.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CalculatorTests</span> : <span class="title">XCTestCase</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) Calculator *calculator;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CalculatorTests</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setUp &#123;</div><div class="line">    [<span class="keyword">super</span> setUp];</div><div class="line">    <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span></div><div class="line">    <span class="keyword">self</span>.calculator = [[Calculator alloc] init];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)tearDown &#123;</div><div class="line">    <span class="comment">// Put teardown code here. This method is called after the invocation of each test method in the class.</span></div><div class="line">    [<span class="keyword">super</span> tearDown];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testCaculatorNotNil &#123;</div><div class="line"></div><div class="line">    <span class="built_in">XCTAssertNotNil</span>(<span class="keyword">self</span>.calculator, <span class="string">"calculator 对象为空"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testExample &#123;</div><div class="line">    <span class="comment">// This is an example of a functional test case.</span></div><div class="line">    <span class="comment">// Use XCTAssert and related functions to verify your tests produce the correct results.</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testPerformanceExample &#123;</div><div class="line">    <span class="comment">// This is an example of a performance test case.</span></div><div class="line">    [<span class="keyword">self</span> measureBlock:^&#123;</div><div class="line">        <span class="comment">// Put the code you want to measure the time of here.</span></div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>测试 <em>Calculator</em> </p>
+<ol>
+<li>引入 <em>Calculator</em> 头文件；</li>
+<li>声明<em>Calculator</em>属性；</li>
+<li>在<em>-setup</em>方法中创建这个对象；</li>
+<li>添加<em>-testCaculatorNotNil</em>方法，注意方法必须是testXXXX类型，这是规定；</li>
+<li>通过 XCAssertNotNil()断言判断 self.calculator 是否为 nil；</li>
+<li>执行测试，在方法的前面有一个小的菱形，点击就可以执行测试了，如果没有请按 <em>command + s</em>保存一下；</li>
+<li>可以将<em>self.calculator = [[Calculator alloc] init];</em>注释掉在执行测试看看结果。</li>
+</ol>
+<h3 id="测试加法、减法、乘法和除法操作"><a href="#测试加法、减法、乘法和除法操作" class="headerlink" title="测试加法、减法、乘法和除法操作"></a>测试加法、减法、乘法和除法操作</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;XCTest/XCTest.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"Calculator.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CalculatorTests</span> : <span class="title">XCTestCase</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) Calculator *calculator;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CalculatorTests</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setUp &#123;</div><div class="line">    [<span class="keyword">super</span> setUp];</div><div class="line">    <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span></div><div class="line">    <span class="keyword">self</span>.calculator = [[Calculator alloc] init];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)tearDown &#123;</div><div class="line">    <span class="comment">// Put teardown code here. This method is called after the invocation of each test method in the class.</span></div><div class="line">    [<span class="keyword">super</span> tearDown];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testCaculatorNotNil &#123;</div><div class="line"></div><div class="line">    <span class="built_in">XCTAssertNotNil</span>(<span class="keyword">self</span>.calculator, <span class="string">"calculator 对象为空"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testInputAdd &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"+"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"3"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">7</span>,<span class="string">@"step1：1 + 3 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line"></div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"+"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"3"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">10</span>,<span class="string">@"step2：1 + 3 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testInputSub &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"-"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"3"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">1</span>,<span class="string">@"4 - 3 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)testInputMul &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"*"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"2"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">8</span>,<span class="string">@"4 * 2 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testInputDiv &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"/"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"2"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">2</span>,<span class="string">@"4 / 2 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testPerformanceExample &#123;</div><div class="line">    <span class="comment">// This is an example of a performance test case.</span></div><div class="line">    [<span class="keyword">self</span> measureBlock:^&#123;</div><div class="line">        <span class="comment">// Put the code you want to measure the time of here.</span></div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><h3 id="修改："><a href="#修改：" class="headerlink" title="修改："></a>修改：</h3><p>所有的内容都是根据苹果官方文档写成的，苹果示例demo是测试的按钮的点击（不是UI测试），通过button的tag取到按钮，然后调用点击方法实现的测试，这里我觉得直接测试计算类更好一些，所以做了些修改。</p>
+<h3 id="对单元测试认知"><a href="#对单元测试认知" class="headerlink" title="对单元测试认知"></a>对单元测试认知</h3><p>单元测试是TDD的一部分，对开发人员的编程能力要求也比较高，你不仅仅需要会编程更需要知道你为什么这么写，这么写到底有哪些逻辑要考虑。对于刚开始写单元测试的人来说，我觉得就是一个字“写”，写的多了慢慢的自然就会理解里面的东西了。首先，需要理解苹果给的测试的API，这是Unit Test的工具类。其次，需要练习使用这些API，写一写简单的测试类和方法。最后，需要通过测试的结果去优化我们写得代码。当然，最后要去维护我们的测试代码的，这是必需的，否则你的测试可能进行不下去。</p>
+<p>最后demo地址：<a href="https://github.com/HuiDragon/XCTest" target="_blank" rel="external">代码地址</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/28/Python/2017/Python-Requests-库/" rel="next" title="Python - Requests 库">
+                <i class="fa fa-chevron-left"></i> Python - Requests 库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘桂良" />
+          <p class="site-author-name" itemprop="name">刘桂良</p>
+           
+              <p class="site-description motion-element" itemprop="description">不变应万变，世界瞬息万变</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例演示"><span class="nav-number">2.</span> <span class="nav-text">实例演示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算器demo"><span class="nav-number">2.1.</span> <span class="nav-text">计算器demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-Unit-Test-Target-amp-Class"><span class="nav-number">2.2.</span> <span class="nav-text">Create Unit Test Target & Class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试-Calculator-类对象是否存在"><span class="nav-number">2.3.</span> <span class="nav-text">测试 Calculator 类对象是否存在</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试加法、减法、乘法和除法操作"><span class="nav-number">2.4.</span> <span class="nav-text">测试加法、减法、乘法和除法操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结："><span class="nav-number">3.</span> <span class="nav-text">总结：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改："><span class="nav-number">3.1.</span> <span class="nav-text">修改：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对单元测试认知"><span class="nav-number">3.2.</span> <span class="nav-text">对单元测试认知</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘桂良</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

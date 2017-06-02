@@ -253,6 +253,401 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/iOS/2017/UnitTest/iOS-单元测试实践-（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/02/iOS/2017/UnitTest/iOS-单元测试实践-（一）/" itemprop="url">iOS 单元测试实践 （一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T10:10:47+08:00">
+                2017-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>通过苹果官方的demo入门实践。</p>
+<h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><p>苹果官方的Unit test有三个：OCUnit、XCTest和UITest，还有一个自动集成测试工具Automation；<br>OCUnit 已经被XCTest代替，而Automation也被UITest代替，目前使用的只剩下两个：</p>
+<ol>
+<li>XCTest</li>
+<li>UITest，实际上UITest也是属于XCTest组成部分。</li>
+</ol>
+<p>测试类属于 <em>XCTest.framework</em> 框架</p>
+<h2 id="实例演示"><a href="#实例演示" class="headerlink" title="实例演示"></a>实例演示</h2><h3 id="计算器demo"><a href="#计算器demo" class="headerlink" title="计算器demo"></a>计算器demo</h3><p>计算器主要功能是实现 +、 -、 *、 / ，计算类的公开属性和方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Calculator</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) input:(<span class="built_in">NSString</span> *) character;</div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *) displayValue;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>计算器类的使用：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"Calculator.h"</span></span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) Calculator *calculator;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="keyword">self</span>.calculator = [[Calculator alloc] init];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">IBAction</span>)press:(<span class="keyword">id</span>)sender &#123;</div><div class="line"></div><div class="line">    [<span class="keyword">self</span>.calculator input:[sender titleForState:<span class="built_in">UIControlStateNormal</span>]];</div><div class="line">    [<span class="keyword">self</span>.displayField setText:[<span class="keyword">self</span>.calculator displayValue]];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>下面主要是针对计算器类进行单元测试</p>
+<h3 id="Create-Unit-Test-Target-amp-Class"><a href="#Create-Unit-Test-Target-amp-Class" class="headerlink" title="Create Unit Test Target &amp; Class"></a>Create Unit Test Target &amp; Class</h3><p>Target 在项目创建的时候如果勾选上Unit Test 那么就会自动生成一个测试target，如果没有勾选按照线面的方法再去创建一个就好了。</p>
+<p>打开Xcode，在导航栏上选中第五个按钮，点击左下角 + 按钮，如果已经存在 Unit Test Target，那么可以选择创建一个Unit Test Class，如果没有这个Target那么需要首先创建Target。这里创建一个Class，集成自 XCTestCase ，注意所有的测试类都统一继承自这个类。类名为 <em>CalculatorTests</em></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;XCTest/XCTest.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CalculatorTests</span> : <span class="title">XCTestCase</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CalculatorTests</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setUp &#123;</div><div class="line">    [<span class="keyword">super</span> setUp];</div><div class="line">    <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)tearDown &#123;</div><div class="line">    <span class="comment">// Put teardown code here. This method is called after the invocation of each test method in the class.</span></div><div class="line">    [<span class="keyword">super</span> tearDown];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testExample &#123;</div><div class="line">    <span class="comment">// This is an example of a functional test case.</span></div><div class="line">    <span class="comment">// Use XCTAssert and related functions to verify your tests produce the correct results.</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testPerformanceExample &#123;</div><div class="line">    <span class="comment">// This is an example of a performance test case.</span></div><div class="line">    [<span class="keyword">self</span> measureBlock:^&#123;</div><div class="line">        <span class="comment">// Put the code you want to measure the time of here.</span></div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><em>- setUp</em> 测试代码执行之前都会执行的一个方法，可以在里面做一些初始化工作，相当于开发类的 init 方法；<br><em>- tearDown</em> 测试代码执行结束之后都会执行的一个方法，可以在里面做一些销毁工作，相当于开放类的的案例dealloc方法<br><em>- testExample</em> 顾名思义，一个示例方法，你写的测试方法要和它的格式一致及<em>-testxxx</em><br><em>- testPerformanceExample</em> 这个是性能测试方法；<br><em>CalculatorTests : XCTestCase</em> 自定义的测试类继承自 <em>XCTestCase</em></p>
+<h3 id="测试-Calculator-类对象是否存在"><a href="#测试-Calculator-类对象是否存在" class="headerlink" title="测试 Calculator 类对象是否存在"></a>测试 Calculator 类对象是否存在</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;XCTest/XCTest.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"Calculator.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CalculatorTests</span> : <span class="title">XCTestCase</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) Calculator *calculator;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CalculatorTests</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setUp &#123;</div><div class="line">    [<span class="keyword">super</span> setUp];</div><div class="line">    <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span></div><div class="line">    <span class="keyword">self</span>.calculator = [[Calculator alloc] init];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)tearDown &#123;</div><div class="line">    <span class="comment">// Put teardown code here. This method is called after the invocation of each test method in the class.</span></div><div class="line">    [<span class="keyword">super</span> tearDown];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testCaculatorNotNil &#123;</div><div class="line"></div><div class="line">    <span class="built_in">XCTAssertNotNil</span>(<span class="keyword">self</span>.calculator, <span class="string">"calculator 对象为空"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testExample &#123;</div><div class="line">    <span class="comment">// This is an example of a functional test case.</span></div><div class="line">    <span class="comment">// Use XCTAssert and related functions to verify your tests produce the correct results.</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testPerformanceExample &#123;</div><div class="line">    <span class="comment">// This is an example of a performance test case.</span></div><div class="line">    [<span class="keyword">self</span> measureBlock:^&#123;</div><div class="line">        <span class="comment">// Put the code you want to measure the time of here.</span></div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>测试 <em>Calculator</em> </p>
+<ol>
+<li>引入 <em>Calculator</em> 头文件；</li>
+<li>声明<em>Calculator</em>属性；</li>
+<li>在<em>-setup</em>方法中创建这个对象；</li>
+<li>添加<em>-testCaculatorNotNil</em>方法，注意方法必须是testXXXX类型，这是规定；</li>
+<li>通过 XCAssertNotNil()断言判断 self.calculator 是否为 nil；</li>
+<li>执行测试，在方法的前面有一个小的菱形，点击就可以执行测试了，如果没有请按 <em>command + s</em>保存一下；</li>
+<li>可以将<em>self.calculator = [[Calculator alloc] init];</em>注释掉在执行测试看看结果。</li>
+</ol>
+<h3 id="测试加法、减法、乘法和除法操作"><a href="#测试加法、减法、乘法和除法操作" class="headerlink" title="测试加法、减法、乘法和除法操作"></a>测试加法、减法、乘法和除法操作</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;XCTest/XCTest.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"Calculator.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CalculatorTests</span> : <span class="title">XCTestCase</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) Calculator *calculator;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CalculatorTests</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setUp &#123;</div><div class="line">    [<span class="keyword">super</span> setUp];</div><div class="line">    <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span></div><div class="line">    <span class="keyword">self</span>.calculator = [[Calculator alloc] init];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)tearDown &#123;</div><div class="line">    <span class="comment">// Put teardown code here. This method is called after the invocation of each test method in the class.</span></div><div class="line">    [<span class="keyword">super</span> tearDown];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testCaculatorNotNil &#123;</div><div class="line"></div><div class="line">    <span class="built_in">XCTAssertNotNil</span>(<span class="keyword">self</span>.calculator, <span class="string">"calculator 对象为空"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testInputAdd &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"+"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"3"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">7</span>,<span class="string">@"step1：1 + 3 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line"></div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"+"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"3"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">10</span>,<span class="string">@"step2：1 + 3 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testInputSub &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"-"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"3"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">1</span>,<span class="string">@"4 - 3 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)testInputMul &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"*"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"2"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">8</span>,<span class="string">@"4 * 2 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testInputDiv &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"/"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"2"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">2</span>,<span class="string">@"4 / 2 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testPerformanceExample &#123;</div><div class="line">    <span class="comment">// This is an example of a performance test case.</span></div><div class="line">    [<span class="keyword">self</span> measureBlock:^&#123;</div><div class="line">        <span class="comment">// Put the code you want to measure the time of here.</span></div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><h3 id="修改："><a href="#修改：" class="headerlink" title="修改："></a>修改：</h3><p>所有的内容都是根据苹果官方文档写成的，苹果示例demo是测试的按钮的点击（不是UI测试），通过button的tag取到按钮，然后调用点击方法实现的测试，这里我觉得直接测试计算类更好一些，所以做了些修改。</p>
+<h3 id="对单元测试认知"><a href="#对单元测试认知" class="headerlink" title="对单元测试认知"></a>对单元测试认知</h3><p>单元测试是TDD的一部分，对开发人员的编程能力要求也比较高，你不仅仅需要会编程更需要知道你为什么这么写，这么写到底有哪些逻辑要考虑。对于刚开始写单元测试的人来说，我觉得就是一个字“写”，写的多了慢慢的自然就会理解里面的东西了。首先，需要理解苹果给的测试的API，这是Unit Test的工具类。其次，需要练习使用这些API，写一写简单的测试类和方法。最后，需要通过测试的结果去优化我们写得代码。当然，最后要去维护我们的测试代码的，这是必需的，否则你的测试可能进行不下去。</p>
+<p>最后demo地址：<a href="https://github.com/HuiDragon/XCTest" target="_blank" rel="external">代码地址</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/28/Python/2017/Python-Requests-库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/28/Python/2017/Python-Requests-库/" itemprop="url">Python - Requests 库</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-28T15:08:32+08:00">
+                2017-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Mac-OSX-安装-Requests-库"><a href="#Mac-OSX-安装-Requests-库" class="headerlink" title="Mac OSX 安装 Requests 库"></a>Mac OSX 安装 Requests 库</h2><h3 id="安装-pip"><a href="#安装-pip" class="headerlink" title="安装 pip"></a>安装 pip</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">curl https://bootstrap.pypa.io/ez_setup.py -o - | sudo python</div><div class="line">sudo chown -R <span class="variable">$USER</span> //Library/Python/2.7/site-packages/</div><div class="line">easy_install pip</div></pre></td></tr></table></figure>
+<h3 id="安装-requests-库"><a href="#安装-requests-库" class="headerlink" title="安装 requests 库"></a>安装 requests 库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">pip install requests</div></pre></td></tr></table></figure>
+<h3 id="下载-IDLE-编辑器"><a href="#下载-IDLE-编辑器" class="headerlink" title="下载 IDLE 编辑器"></a>下载 IDLE 编辑器</h3><pre><code>下载与mac上Python对应版本的IDLE的apk，点击一步一步安装。
+</code></pre><h3 id="在-IDLE-中验证-requests-库安装是否成功"><a href="#在-IDLE-中验证-requests-库安装是否成功" class="headerlink" title="在 IDLE 中验证 requests 库安装是否成功"></a>在 IDLE 中验证 requests 库安装是否成功</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> requests</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(<span class="string">"http://www.baidu.com"</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.status_code </div><div class="line"><span class="number">200</span></div></pre></td></tr></table></figure>
+<h3 id="显示百度首页内容"><a href="#显示百度首页内容" class="headerlink" title="显示百度首页内容"></a>显示百度首页内容</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; r.encoding = <span class="string">'utf-8'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.text</div><div class="line"> <span class="string">u'&lt;!DOCTYPE html&gt;\r\n&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet type=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;\u767e\u5ea6\u4e00\u4e0b\uff0c\u4f60\u5c31\u77e5\u9053&lt;/title&gt;&lt;/head&gt; &lt;body link=#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=\u767e\u5ea6\u4e00\u4e0b class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;\u65b0\u95fb&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;\u5730\u56fe&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;\u89c6\u9891&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;\u8d34\u5427&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;\u767b\u5f55&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write(\'&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u=\'+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ \'" name="tj_login" class="lb"&gt;\u767b\u5f55&lt;/a&gt;\');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;\u66f4\u591a\u4ea7\u54c1&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;\u5173\u4e8e\u767e\u5ea6&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2017&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;\u4f7f\u7528\u767e\u5ea6\u524d\u5fc5\u8bfb&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;\u610f\u89c1\u53cd\u9988&lt;/a&gt;&amp;nbsp;\u4eacICP\u8bc1030173\u53f7&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;\r\n'</span></div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+<h2 id="Requests-库详细介绍"><a href="#Requests-库详细介绍" class="headerlink" title="Requests 库详细介绍"></a>Requests 库详细介绍</h2><h3 id="七个主要方法"><a href="#七个主要方法" class="headerlink" title="七个主要方法"></a>七个主要方法</h3><p>requests.request(): 构造一个请求，支撑以下各个方法的基础方法；<br>requests.get(): 获取HTML网页的主要方法，对应于HTTP的GET方法；<br>requests.head():获取HTML网页头信息的方法，对应HTTP的HEAD<br>requests.post():向HTML网页提交POST请求的方法，对应HTTP的POST<br>requests.put():向HTTML网页提交PUT请求的方法，对应于HTTP的PUT<br>requests.patch(): 向HTML网页提交局部修改请求，对应于HTTP的PATCH<br>requests.delete(): 向HTML页面提交删除请求，对应于HTTP的DELETE</p>
+<h3 id="Requests-库的get-方法"><a href="#Requests-库的get-方法" class="headerlink" title="Requests 库的get()方法"></a>Requests 库的get()方法</h3><p>构造一个向服务器请求资源的Request对象，返回一个包含服务器资源的Response对象。 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response = requests.get(url)</div></pre></td></tr></table></figure>
+<p>get() 方法的完整格式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">requests.get(url, params = <span class="keyword">None</span>, **kwargs)</div></pre></td></tr></table></figure>
+<p>url: 获取页面的url链接；<br>params： url中的额外参数，字典或字节流格式，可选；<br>**kwargs：12个空值访问的参数。</p>
+<p>get 方法的定义：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(url, params=None, **kwargs)</span>:</span></div><div class="line">	“”“Sends a GET Request.</div></pre></td></tr></table></figure>
+<h3 id="Response-对象"><a href="#Response-对象" class="headerlink" title="Response 对象"></a>Response 对象</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; import requests</div><div class="line">&gt;&gt;&gt; r = requests.get("http://www.baidu.com")</div><div class="line">&gt;&gt;&gt; print(r.status_code)</div><div class="line">200</div><div class="line">&gt;&gt;&gt; type(r)</div><div class="line">&lt;class 'requests.models.Response'&gt;</div><div class="line">&gt;&gt;&gt; r.headers</div><div class="line">&#123;'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked', 'Set-Cookie': 'BDORZ=27315; max-age=86400; domain=.baidu.com; path=/', 'Server': 'bfe/1.0.8.18', 'Last-Modified': 'Mon, 23 Jan 2017 13:27:55 GMT', 'Connection': 'Keep-Alive', 'Pragma': 'no-cache', 'Cache-Control': 'private, no-cache, no-store, proxy-revalidate, no-transform', 'Date': 'Sun, 28 May 2017 14:33:26 GMT', 'Content-Type': 'text/html'&#125;</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+<p>r.status_code 为 200 表示请求成功<br>type(r),查看 r 的类型，为Response类<br>r.headers 查看头部信息</p>
+<h3 id="Response-对象的5个属性"><a href="#Response-对象的5个属性" class="headerlink" title="Response 对象的5个属性"></a>Response 对象的5个属性</h3><ol>
+<li>r.status_code: HTTP 请求返回的状态， 200 表示连接成功， 404 表示失败；</li>
+<li>r.text: HTTP响应内容的字符串形式，即 url对应的页面内容</li>
+<li>r.encoding 从HTTP header中猜测的响应内容编码方式</li>
+<li>r.apparent_encoding: 从内容中分析出的响应内容编码方式（备选编码方式）</li>
+<li>r.content: HTTP 响应内容的二进制形式</li>
+</ol>
+<h2 id="爬取网页的通用代码框架"><a href="#爬取网页的通用代码框架" class="headerlink" title="爬取网页的通用代码框架"></a>爬取网页的通用代码框架</h2><h3 id="Requests-库的异常"><a href="#Requests-库的异常" class="headerlink" title="Requests 库的异常"></a>Requests 库的异常</h3><ol>
+<li>requests.ConnectionError: 网络连接错误，如DNS查询失败、拒绝连接；</li>
+<li>requests.HTTPError： HTTP 错误异常，出现在HTTP协议称的错误；</li>
+<li>requests.URLRequired： URL  确实异常；</li>
+<li>requests.TooManyRedirects： 超过最单重定向次数，产生重定向异常；</li>
+<li>requests.ConnectTimeout：连接服务器超时异常；</li>
+<li>requests.Timeout: 请求URL超时，产生异常。</li>
+</ol>
+<p>如何获取 HTTP 异常类型<br>r.raise_for_status(): 如果请求code不是200，这个函数就会产生一个requests.HTTPError</p>
+<h2 id="HTTP协议及Requests-库方法"><a href="#HTTP协议及Requests-库方法" class="headerlink" title="HTTP协议及Requests 库方法"></a>HTTP协议及Requests 库方法</h2>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/27/iOS/2017/IB-DESIGNABLE-IBInspectable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/27/iOS/2017/IB-DESIGNABLE-IBInspectable/" itemprop="url">IB_DESIGNABLE&IBInspectable</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T18:17:30+08:00">
+                2017-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/27/iOS/2017/Xcode-注释报警告处理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -572,123 +967,6 @@
 <p>对于 <em>instancesRespondToSelector</em> ，首先只能通过类调用，因为他是一个类方法，而且该方法只能判断实例方法，对类方法是没有判别能力的。</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> testInstanceResponseSelector() &#123;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"————————————————————instancesRespondToSelector——————————————————————"</span>);</div><div class="line"></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass method1]        %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(method1)]);		<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass protocolMethod] %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(protocolMethod)]);	<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass categoryMethod] %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(categoryMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass privateMethod]  %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(privateMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass classMethod]    %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(classMethod)]);	<span class="comment">//0</span></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"***************************************************************"</span>);</div><div class="line"></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass method1]          %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(method1)]);		<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass protocolMethod]   %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(protocolMethod)]);	<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass categoryMethod]   %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(categoryMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass privateMethod]    %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(privateMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass classMethod]      %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(classMethod)]);	<span class="comment">//0</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/25/iOS/2017/UnitTest/XCTest-一-API认识/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/25/iOS/2017/UnitTest/XCTest-一-API认识/" itemprop="url">XCTest(一) API认识</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-25T16:49:59+08:00">
-                2017-05-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>最近要做一些重构的工作，为了让重构更加顺利，决定做一下 iOS 中的单元测试。</p>
-</blockquote>
-<h2 id="OCUnit-是什么？"><a href="#OCUnit-是什么？" class="headerlink" title="OCUnit 是什么？"></a>OCUnit 是什么？</h2><p>OCUnit 是 XCTest 的前身，现在已经不怎么使用了。</p>
-<h2 id="XCTest-介绍"><a href="#XCTest-介绍" class="headerlink" title="XCTest 介绍"></a>XCTest 介绍</h2><p>XCTest 是Xcode集成的测试框架，也就是 <em>XCTest.framework</em>，<img src="https://developer.apple.com/reference/xctest?language=objc#see-also" alt="官方文档">。通过 XCTest 我们可以在Xcode中创建、执行单元测试和UI测试。</p>
-<h2 id="XCTest-API"><a href="#XCTest-API" class="headerlink" title="XCTest API"></a>XCTest API</h2><p>XCTest 的主要类有两个，一个是 XCTestCase，另一个是XCTest。</p>
-<h3 id="XCTest-一个测试抽象基类"><a href="#XCTest-一个测试抽象基类" class="headerlink" title="XCTest 一个测试抽象基类"></a>XCTest 一个测试抽象基类</h3>
           
         
       
@@ -1215,228 +1493,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-七/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/13/Database System Concepts/Database-System-Concepts-七/" itemprop="url">Database System Concepts(七)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T08:42:33+08:00">
-                2017-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-六/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/13/Database System Concepts/Database-System-Concepts-六/" itemprop="url">Database System Concepts(六)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T08:42:26+08:00">
-                2017-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1486,7 +1542,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
