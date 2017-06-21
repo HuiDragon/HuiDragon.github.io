@@ -96,7 +96,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/09/Xcode 使用/Xcode-自定义模板/index.html">
 <meta property="og:site_name" content="枫叶 🍁 影">
 <meta property="og:description" content="为什么要自定义模板公司制定了代码规范之后，有些代码的格式是固定的，比如控制器中的代码格式： 123456789101112131415#pragma mark - Lifecycle- (void)viewDidLoad &amp;#123;	&amp;lt;#content#&amp;gt;&amp;#125;#pragma mark - Event#pragma mark - Public#pragma mark - Pri">
-<meta property="og:updated_time" content="2017-06-09T11:41:00.000Z">
+<meta property="og:updated_time" content="2017-06-10T11:44:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Xcode 自定义模板">
 <meta name="twitter:description" content="为什么要自定义模板公司制定了代码规范之后，有些代码的格式是固定的，比如控制器中的代码格式： 123456789101112131415#pragma mark - Lifecycle- (void)viewDidLoad &amp;#123;	&amp;lt;#content#&amp;gt;&amp;#125;#pragma mark - Event#pragma mark - Public#pragma mark - Pri">
@@ -321,6 +321,10 @@
 <p>每次在写的时候，都要去看一下这个格式，因为分的比较细不太容易记录，所以都有将代码规范打开对照一下，再者，这个代码规范自己也主推，所以不能作茧自缚，只有自建模板了，呵呵🙄。</p>
 <h2 id="Xcode-模板"><a href="#Xcode-模板" class="headerlink" title="Xcode 模板"></a>Xcode 模板</h2><p>Xcode 模板分为两种，一种是<em>系统默认模板</em>，另一种是<em>用户自定义模板</em>，模板存放的位置在</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">pwd</span></div><div class="line">/Applications/Xcode.app/Contents/Developer/Platforms</div><div class="line"></div><div class="line">$ ls</div><div class="line">AppleTVOS.platform        WatchOS.platform          iPhoneSimulator.platform</div><div class="line">AppleTVSimulator.platform WatchSimulator.platform</div><div class="line">MacOSX.platform           iPhoneOS.platform</div></pre></td></tr></table></figure>
+<h3 id="Xcode-系统模板位置"><a href="#Xcode-系统模板位置" class="headerlink" title="Xcode 系统模板位置"></a>Xcode 系统模板位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates</div></pre></td></tr></table></figure>
+<h3 id="用户自定义模板位置"><a href="#用户自定义模板位置" class="headerlink" title="用户自定义模板位置"></a>用户自定义模板位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd ~/Library/Developer/Xcode/Templates</div><div class="line">$ ls</div><div class="line">Project Templates</div></pre></td></tr></table></figure>
+<p>在 <strong>Templates</strong> 下有两个文件夹分别是</p>
+
       
     </div>
 
@@ -365,6 +369,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/10/吾日三省吾身（一）/" rel="prev" title="吾日三省吾身（一）">
+                吾日三省吾身（一） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -436,7 +444,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -493,7 +501,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要自定义模板"><span class="nav-number">1.</span> <span class="nav-text">为什么要自定义模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Xcode-模板"><span class="nav-number">2.</span> <span class="nav-text">Xcode 模板</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要自定义模板"><span class="nav-number">1.</span> <span class="nav-text">为什么要自定义模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Xcode-模板"><span class="nav-number">2.</span> <span class="nav-text">Xcode 模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-系统模板位置"><span class="nav-number">2.1.</span> <span class="nav-text">Xcode 系统模板位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户自定义模板位置"><span class="nav-number">2.2.</span> <span class="nav-text">用户自定义模板位置</span></a></li></ol></li></ol></div>
             
 
           </div>
