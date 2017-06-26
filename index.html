@@ -1141,6 +1141,15 @@
 <h2 id="构建-Pods-库"><a href="#构建-Pods-库" class="headerlink" title="构建 Pods 库"></a>构建 Pods 库</h2><p>构建Pods私有库 or 公有库，其实没有固定的步骤，只要做全就OK了。</p>
 <h2 id="通过脚本构建，非常方便"><a href="#通过脚本构建，非常方便" class="headerlink" title="通过脚本构建，非常方便"></a>通过脚本构建，非常方便</h2><h2 id="命令解析："><a href="#命令解析：" class="headerlink" title="命令解析："></a>命令解析：</h2><p> 将 podspec 文件推送到仓库，这里需要区分是推送到公共仓库还是私有仓库</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#私有仓库</div><div class="line">pod repo push [私有库名字]  xxxx.podspec --allow-warnings</div><div class="line"></div><div class="line"># 公有仓库</div><div class="line">pod trunk push xxxx.podspec</div></pre></td></tr></table></figure>
+<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>在执行单元测试的时候发现找不到对应的测试文件，导入了之后，提示 not find file xxx.h<br>两步解决：</p>
+<ol>
+<li>修改podfile 文件,测试的target一定要包含进来</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">target 'LYCache_Example' do</div><div class="line">  pod 'LYCache', :path =&gt; '../'</div><div class="line">  pod 'LYArchiver', '~&gt; 1.0.0'</div><div class="line">  </div><div class="line">  target 'LYCache_ExampleTests' do</div><div class="line">      inherit! :search_paths</div><div class="line">      </div><div class="line">      </div><div class="line">  end</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
+<ol>
+<li>测试的 Other Linker flag 和主工程一致</li>
+</ol>
+<p>目前来看，这两步设置了之后就可以愉快的测试了。</p>
 <h2 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h2><ol>
 <li><em><a href="https://juejin.im/entry/58df270f61ff4b006b1227c9" target="_blank" rel="external">https://juejin.im/entry/58df270f61ff4b006b1227c9</a></em></li>
 <li><em><a href="http://www.cnblogs.com/richard-youth/p/6272932.html" target="_blank" rel="external">http://www.cnblogs.com/richard-youth/p/6272932.html</a></em></li>
