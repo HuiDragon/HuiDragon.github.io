@@ -253,6 +253,887 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/01/读书/iOS-CORE-ANIMATION-ADVANCED-TECHNIQUES-阅读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/01/读书/iOS-CORE-ANIMATION-ADVANCED-TECHNIQUES-阅读/" itemprop="url">iOS CORE ANIMATION ADVANCED TECHNIQUES 阅读</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-01T10:32:57+08:00">
+                2017-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Part-I：-The-Layer-Beneath"><a href="#Part-I：-The-Layer-Beneath" class="headerlink" title="Part I： The Layer Beneath"></a>Part I： The Layer Beneath</h1><h2 id="The-Layer-Tree"><a href="#The-Layer-Tree" class="headerlink" title="The Layer Tree"></a>The Layer Tree</h2><p>这一章，主要讲解了图层的树状结构，以及为什么 iOS 中会有UIView和CALayer两个平行图层的存在（mac os 也会用到 CALayer）。后面代码展示了将CALayer添加到了UIView的layer层上。</p>
+<h2 id="The-Backing-Image"><a href="#The-Backing-Image" class="headerlink" title="The Backing Image"></a>The Backing Image</h2><p>这一章，主要讲了Layer和Image的关系。内容主要包括：</p>
+<ul>
+<li>如何在layer上显示出一张图片，这里需要layer的 <em>contents</em> 属性（id 类型），<br>  这个属性挺有意思，如果你将UIImage的值赋给它，只能得到一个空白的图层，因为只有 CGImage和NSImage的类型值对他起作用，<br>  而真正起作用的的值类型应该是，UIImage 有一个 CGImage 属性，返回的是 ，但是他又不是一个Cocoa对象，所以需要将其进行强制转换。</li>
+<li><p>CALyer 中与 UIView 的 contentMode 属性对应的属性叫做 contentsGravity,这是一个 NSString类型：</p>
+<ul>
+<li>kCAGravityCenter</li>
+<li>kCAGravityTop </li>
+<li>kCAGravityBottom </li>
+<li>kCAGravityLeft </li>
+<li>kCAGravityRight </li>
+<li>kCAGravityTopLeft</li>
+<li>kCAGravityTopRight </li>
+<li>kCAGravityBottomLeft </li>
+<li>kCAGravityBottomRight </li>
+<li>kCAGravityResize </li>
+<li>kCAGravityResizeAspect </li>
+<li>kCAGravityResizeAspectFill</li>
+</ul>
+</li>
+<li><p>contentsScale</p>
+</li>
+<li>maskToBounds</li>
+<li>contentsRect <a href="https://github.com/nicklockwood/LayerSprites" target="_blank" rel="external">LayerSprites</a></li>
+<li>contentsCenter</li>
+<li>Custom Drawing ,如果没有自定义绘制的任务就不要再UIView的子类中写一个空的 - drawRect: 方法</li>
+<li>CALayerDelegate</li>
+</ul>
+<h2 id="Layer-Geometry"><a href="#Layer-Geometry" class="headerlink" title="Layer Geometry"></a>Layer Geometry</h2><h3 id="frame"><a href="#frame" class="headerlink" title="frame"></a>frame</h3><p>代表了图层的外部坐标（也就是子视图在父视图层上占据的空间）,当对图层做变换的时候，比如旋转或者缩放， frame 实际上代表了覆盖在图层旋转之后的整个轴对其的矩形区域，也就是 frame 的宽高可能和 bounds 的宽高不在一致了。</p>
+<h3 id="bounds"><a href="#bounds" class="headerlink" title="bounds"></a>bounds</h3><p>内部坐标（{0，0}，通常是在图层的左上角）</p>
+<h3 id="center-amp-position"><a href="#center-amp-position" class="headerlink" title="center &amp; position"></a>center &amp; position</h3><p>代表了相对于父视图层 anchorpoint 所在的位置</p>
+<h3 id="archorpoint-通过时钟的例子来演示如何使用这个属性"><a href="#archorpoint-通过时钟的例子来演示如何使用这个属性" class="headerlink" title="archorpoint - 通过时钟的例子来演示如何使用这个属性"></a>archorpoint - 通过时钟的例子来演示如何使用这个属性</h3><p>取值 0 ~ 1，即将视图上的锚点放置到中心点上（center或者position）</p>
+<h3 id="坐标系"><a href="#坐标系" class="headerlink" title="坐标系"></a>坐标系</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">CGPoint</span>)convertPoint:(<span class="built_in">CGPoint</span>)point fromLayer:(<span class="built_in">CALayer</span> *)layer;</div><div class="line"></div><div class="line">- (<span class="built_in">CGPoint</span>)convertPoint:(<span class="built_in">CGPoint</span>)point toLayer:(<span class="built_in">CALayer</span> *)layer;</div><div class="line"></div><div class="line">- (<span class="built_in">CGRect</span>)convertRect:(<span class="built_in">CGRect</span>)rect fromLayer:(<span class="built_in">CALayer</span> *)layer;</div><div class="line"></div><div class="line">- (<span class="built_in">CGRect</span>)convertRect:(<span class="built_in">CGRect</span>)rect toLayer:(<span class="built_in">CALayer</span> *)layer;</div></pre></td></tr></table></figure>
+<h3 id="翻转的几何结构"><a href="#翻转的几何结构" class="headerlink" title="翻转的几何结构"></a>翻转的几何结构</h3><p>geometryFlipped</p>
+<h3 id="Z-坐标轴"><a href="#Z-坐标轴" class="headerlink" title="Z 坐标轴"></a>Z 坐标轴</h3><ol>
+<li>CATransform3D 变换；</li>
+<li>改变图层的显示顺序,可以不改变添加顺序而将后添加的视图藏在先添加的视图底下；</li>
+</ol>
+<h3 id="Hit-Testing"><a href="#Hit-Testing" class="headerlink" title="Hit Testing"></a>Hit Testing</h3><pre><code>当图层调用 -hitTest: 方法的时候，测算的顺序严格依赖于图层树当中的图层顺序。
+</code></pre><h3 id="自动布局"><a href="#自动布局" class="headerlink" title="自动布局"></a>自动布局</h3><p>CALayerDelegate 中的 - layoutSublayersOfLayer: 方法，当Layer的bounds发生改变，或者 - setNeedsLayout 方法被调用的时候，这个函数将会被执行。</p>
+<p>这里同样说明了 Core Animation 对自动调整和自动布局支持的缺乏。</p>
+<h2 id="Visual-Effects"><a href="#Visual-Effects" class="headerlink" title="Visual Effects"></a>Visual Effects</h2><h3 id="圆角-cornerRadius"><a href="#圆角-cornerRadius" class="headerlink" title="圆角 - cornerRadius"></a>圆角 - cornerRadius</h3><p>默认支队背景色起作用，但是如果设置了masksToBounds属性之后，对背景图片和子视图同样起租用</p>
+<h3 id="图层边框"><a href="#图层边框" class="headerlink" title="图层边框"></a>图层边框</h3><ul>
+<li>borderWidth</li>
+<li>borderColor</li>
+</ul>
+<h3 id="阴影"><a href="#阴影" class="headerlink" title="阴影"></a>阴影</h3><ul>
+<li>shadowOpacity 属性设置一个大于默认值(0)的值，阴影就可以显示在任意图层之下；（0.0不可见 1.0 完全不透明）。如果设置了 1.0 ，将会显示一个有轻微模糊的黑色阴影稍微在图层之上</li>
+<li>shadowColor 控制阴影颜色</li>
+<li>shadowOffset 控制阴影的方向和距离，是CGSize类型，宽度控制着阴影横向的唯一，高度控制着阴影纵向唯一，默认值是{0,-3},阴影相对于Y轴有3个点的向上位移。为什么向上呢？Mac OS 系统的坐标系和iOS的区别导致的</li>
+<li>shadowRadius 属性控制阴影模糊度。当值为0的时候，阴影和视图一样有一个非常确定的分界线。当值越来越大的时候，边界线看上去就越模糊和自然。苹果自家的应用设计更偏向于自然的阴影。</li>
+<li>阴影裁剪 如何处理圆角的阴影情况</li>
+<li>shadowPath属性 通过CGPath任意指定阴影形状，这里牵扯到了绘制圆形、方形或者其他形状的问题，可以用UIBezierPath，它是由UIKit提供的在CGPath基础上的OBjective-C保准类</li>
+</ul>
+<h3 id="图层蒙版-吊炸天的特性"><a href="#图层蒙版-吊炸天的特性" class="headerlink" title="图层蒙版 -吊炸天的特性"></a>图层蒙版 -吊炸天的特性</h3><p>mask 是CALayer一个属性，类型也是CALayer，它定义了父图层的部分可见区域。</p>
+<h3 id="拉伸过滤"><a href="#拉伸过滤" class="headerlink" title="拉伸过滤"></a>拉伸过滤</h3><p>当我们的视图显示一张图片的时候，都应该正确的显示这个图片（即：以正确的比例和正确的1：1像素显示在屏幕上）：</p>
+<ol>
+<li>能够显示最好的画质，像素既没有被压缩也没有被拉伸；</li>
+<li>能更好的使用内存，因为这就是所有你要存储的东西；</li>
+<li>最好的性能表现，CPU不需要为此额外的计算。</li>
+</ol>
+<h3 id="组透明-alpha-opctiy-shouldRasterize"><a href="#组透明-alpha-opctiy-shouldRasterize" class="headerlink" title="组透明 alpha opctiy shouldRasterize"></a>组透明 alpha opctiy shouldRasterize</h3><h2 id="5-Transform"><a href="#5-Transform" class="headerlink" title="5 Transform"></a>5 Transform</h2><p>2D 和 3D 的放射变换</p>
+<h2 id="6-Specialized-Layers"><a href="#6-Specialized-Layers" class="headerlink" title="6 Specialized Layers"></a>6 Specialized Layers</h2><h3 id="CAShapeLayer"><a href="#CAShapeLayer" class="headerlink" title="CAShapeLayer"></a>CAShapeLayer</h3><p>CAShapeLayer 优点：</p>
+<ul>
+<li><strong>渲染速度快</strong>， CAShapeLayer 使用了硬件加速，绘制同一图形比用Core Graphics 快很多。</li>
+<li><strong>高效使用内存</strong>，一个 CAShapeLayer 不需要像普通 CALayer 一样创建一个寄宿图形，所以无论有多大，都不会占用太多的内存。</li>
+<li>不会被图层边界剪裁掉。</li>
+<li>不会出现像素化。</li>
+</ul>
+<ol>
+<li>绘制火柴人</li>
+<li>设置圆角</li>
+</ol>
+<h3 id="CATextLayer"><a href="#CATextLayer" class="headerlink" title="CATextLayer"></a>CATextLayer</h3><p>它以图层的形式包含了UILabel几乎所有的绘制特性，并且额外提供了一些新的特性</p>
+<h3 id="富文本"><a href="#富文本" class="headerlink" title="富文本"></a>富文本</h3><p>通过 CATextLayer 实现了富文本展示内容</p>
+<h3 id="UILabel-替代品"><a href="#UILabel-替代品" class="headerlink" title="UILabel 替代品"></a>UILabel 替代品</h3><p>继承自 UILabel，然后重写 layerClass，通过 CATextLayer 绘制显示的内容</p>
+<h3 id="CATransormLayer"><a href="#CATransormLayer" class="headerlink" title="CATransormLayer"></a>CATransormLayer</h3><h3 id="CAGradientLayer"><a href="#CAGradientLayer" class="headerlink" title="CAGradientLayer"></a>CAGradientLayer</h3><p>用来生成两种或者更多颜色平滑渐变的。其真正的优势是使用了硬件加速。</p>
+<h3 id="CAReplicatorLayer"><a href="#CAReplicatorLayer" class="headerlink" title="CAReplicatorLayer"></a>CAReplicatorLayer</h3><p>目的是为了高效的生成许多相似的图层。</p>
+<h3 id="CAScrollLayer"><a href="#CAScrollLayer" class="headerlink" title="CAScrollLayer"></a>CAScrollLayer</h3><h3 id="CATiledLayer"><a href="#CATiledLayer" class="headerlink" title="CATiledLayer"></a>CATiledLayer</h3><p>为载入大图造成的性能问题提供了一个解决方法：将大图分解成小片然后将他们单独按需载入。</p>
+<h3 id="CAEmitterLayer"><a href="#CAEmitterLayer" class="headerlink" title="CAEmitterLayer"></a>CAEmitterLayer</h3><p>高性能的粒子引擎，被用来创建实时粒子动画：烟雾、火、雨滴等效果</p>
+<h3 id="CAEAGLLayer"><a href="#CAEAGLLayer" class="headerlink" title="CAEAGLLayer"></a>CAEAGLLayer</h3><p>显示任意的OPENGL图形</p>
+<h3 id="AVPlayerLayer"><a href="#AVPlayerLayer" class="headerlink" title="AVPlayerLayer"></a>AVPlayerLayer</h3><p>视频播放的图层</p>
+<h2 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h2><p>第一部分主要学习了图层，基本上与动画没有太多的关系。主要是图层数、图片、集合变换和纺射变换以及各种CALayer的子类。接下来的一部分主要针对动画了。</p>
+<h1 id="Part-II-Setting-Things-in-Motion"><a href="#Part-II-Setting-Things-in-Motion" class="headerlink" title="Part II: Setting Things in Motion"></a>Part II: Setting Things in Motion</h1>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/30/iOS/2010/Learn-Objective-C-Day-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/30/iOS/2010/Learn-Objective-C-Day-1/" itemprop="url">Learn Objective-C: Day 1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-30T20:00:35+08:00">
+                2017-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to my series on coming to grips with the awesome language that is Objective-C. Throughout this small series of articles, my aim is to take you from no prior experience with Objective-C to using it confidently in your own applications. This isnʼt a rush job - so donʼt expect to just skim through the basics and be away - weʼll be going through not just the bare essentials, but also the best practices you can apply to ensure your code is the best it can be. Letʼs jump straight in!</p>
+<p>## </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/Git-备忘录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/Git-备忘录/" itemprop="url">Git 备忘录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T21:44:58+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/iOS/2017/EasyJSWebView-基本使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/27/iOS/2017/EasyJSWebView-基本使用/" itemprop="url">EasyJSWebView 基本使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T18:47:16+08:00">
+                2017-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在 iOS app 开发过程中，使用了 UIWebView，那么不可避免的要使用 Javascript 与 Objective-C 进行交互。在 Objective-C 中想要执行 Javascript 代码，那么我们必须调用 <strong>-stringByEvaluatingJavaScriptFromString</strong> 这个方法，同时还需要实现 <strong>UIWebView</strong></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/iOS/2017/EasyJSWebView-实现学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/27/iOS/2017/EasyJSWebView-实现学习/" itemprop="url">EasyJSWebView 实现学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T15:10:05+08:00">
+                2017-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">EasyJSWebView</span> : <span class="title">UIWebView</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>EasyJSWebView 继承自 UIWebView，首先看一下起初始化方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">id</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame&#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">		[<span class="keyword">self</span> initEasyJS];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">id</span>)init&#123;</div><div class="line">	<span class="keyword">self</span> = [<span class="keyword">super</span> init];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">		[<span class="keyword">self</span> initEasyJS];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">id</span>)initWithCoder:(<span class="built_in">NSCoder</span> *)aDecoder&#123;</div><div class="line">	<span class="keyword">self</span> = [<span class="keyword">super</span> initWithCoder:aDecoder];</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">self</span>)&#123;</div><div class="line">		[<span class="keyword">self</span> initEasyJS];</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) initEasyJS&#123;</div><div class="line">	<span class="keyword">self</span>.proxyDelegate = [[EasyJSWebViewProxyDelegate alloc] init];</div><div class="line">	<span class="keyword">self</span>.delegate = <span class="keyword">self</span>.proxyDelegate;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) setDelegate:(<span class="keyword">id</span>&lt;<span class="built_in">UIWebViewDelegate</span>&gt;)delegate&#123;</div><div class="line">	<span class="keyword">if</span> (delegate != <span class="keyword">self</span>.proxyDelegate)&#123;</div><div class="line">		<span class="keyword">self</span>.proxyDelegate.realDelegate = delegate;</div><div class="line">	&#125;<span class="keyword">else</span>&#123;</div><div class="line">		[<span class="keyword">super</span> setDelegate:delegate];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，重写了三个初始化方法，统一调用了 <strong>initEasyJS</strong> 方法，在该方法中创建了 <strong>EasyJSWebViewProxyDelegate</strong> 这个对象，同时将webView的代理设置为该代理对象–proxyDelegate。<br>接下来，重写了webView代理的set方法，在set方法中处理了传进来的delegate对象，将其作为了EasyJSWebViewProxyDelegate 的realDelegate对象。<br>EasyJSWebView剩下的代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>) addJavascriptInterfaces:(<span class="built_in">NSObject</span>*) interface WithName:(<span class="built_in">NSString</span>*) name&#123;</div><div class="line">	[<span class="keyword">self</span>.proxyDelegate addJavascriptInterfaces:interface WithName:name];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) dealloc&#123;</div><div class="line">    <span class="keyword">self</span>.proxyDelegate = <span class="literal">nil</span>;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"----\n %s \n-----"</span>,__FUNCTION__);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过上面的代码块可以看到，确实没啥了。接下来看另个类 - EasyJSWebViewProxyDelegate。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">EasyJSWebViewProxyDelegate</span> : <span class="title">NSObject</span>&lt;<span class="title">UIWebViewDelegate</span>&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">retain</span>) <span class="built_in">NSMutableDictionary</span>* javascriptInterfaces;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">retain</span>) <span class="keyword">id</span>&lt;<span class="built_in">UIWebViewDelegate</span>&gt; realDelegate;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) addJavascriptInterfaces:(<span class="built_in">NSObject</span>*) interface WithName:(<span class="built_in">NSString</span>*) name;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>该类，继承自 NSObject ,同事实现了协议-UIWebViewDelegate，有一个真正的代理对象，realDelegate。还有一个和EasyJSWebView一样的方法。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/source/My-Bookself/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/27/source/My-Bookself/" itemprop="url">My Bookself</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T14:30:33+08:00">
+                2017-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>This page contains some personal book recommendations covering Cocoa and iOS Development.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/source/Tutorial-学习网站/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/27/source/Tutorial-学习网站/" itemprop="url">Tutorial-学习网站</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T14:30:15+08:00">
+                2017-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="No-1-Tutorials"><a href="#No-1-Tutorials" class="headerlink" title="No.1  Tutorials"></a>No.1  Tutorials</h2><p><a href="https://www.tutorialspoint.com/" target="_blank" rel="external">https://www.tutorialspoint.com/</a><br>入门级课程，如果想学习一些基础的东西可以过来看看。除此之外，还有一些文章和视频以及工具。</p>
+<h2 id="NO-2-Swift-实践"><a href="#NO-2-Swift-实践" class="headerlink" title="NO.2 Swift 实践"></a>NO.2 Swift 实践</h2><p>SRC: <a href="http://noeticforce.com/best-swift-tutorials-with-examples" target="_blank" rel="external">10+ Best Swift Tutorials with Examples for Apple Developers</a></p>
+<ol>
+<li><a href="https://www.bloc.io/swiftris-build-your-first-ios-game-with-swift" target="_blank" rel="external">俄罗斯方块</a></li>
+<li><a href="https://www.hackingwithswift.com/read/36/overview" target="_blank" rel="external">Crashy Plane</a></li>
+<li><a href="https://www.makeschool.com/tutorials/build-your-own-2048-with-spritebuilder-and-swift/set-up-spritebuilder" target="_blank" rel="external">2048</a></li>
+<li></li>
+</ol>
+<h2 id="NO-3-tutsplus"><a href="#NO-3-tutsplus" class="headerlink" title="NO.3  tutsplus"></a>NO.3  tutsplus</h2><p><a href="https://code.tutsplus.com/tutorials/" target="_blank" rel="external">envatotuts+</a>,里面有一系列的文章，URLSession Series 等。不仅仅是关于 iOS，其他it方面的也有</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/Python/基础/Linux-基本命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -593,854 +1474,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/15/脚本/21-天学习-Shell（第-1-天）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/15/脚本/21-天学习-Shell（第-1-天）/" itemprop="url">21 天学习 Shell（第 1 天）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-15T09:19:22+08:00">
-                2017-06-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Shell 脚本不仅可以执行单独的命令，shell还可以执行命令脚本，所以非常容易实现各种任务的自动化操作，如生成报表、发送电子邮件、进行系统维护等。</p>
-<h2 id="小试牛刀"><a href="#小试牛刀" class="headerlink" title="小试牛刀"></a>小试牛刀</h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/13/UISearchController-实现搜索功能/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/13/UISearchController-实现搜索功能/" itemprop="url">UISearchController 实现搜索功能</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-13T14:38:27+08:00">
-                2017-06-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>iOS  8 之后实现搜索功能可以通过系统的<em>UISearchController</em></p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NS_CLASS_AVAILABLE_IOS</span>(<span class="number">8</span>_0) <span class="class"><span class="keyword">@interface</span> <span class="title">UISearchController</span> : <span class="title">UIViewController</span> &lt;<span class="title">UIViewControllerTransitioningDelegate</span>, <span class="title">UIViewControllerAnimatedTransitioning</span>&gt;</span></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<h2 id="搜索框功能简介"><a href="#搜索框功能简介" class="headerlink" title="搜索框功能简介"></a>搜索框功能简介</h2><p>搜索框功能主要是在我们的控制器顶部增加一个搜索栏(search bar)，通过监听搜索栏中的内容展示搜索结果。具体流程如下：</p>
-<ol>
-<li>当焦点落到搜索框的时候，搜索控制器弹出；</li>
-<li>在焦点中输入文本，调用代理方法，搜索数据；</li>
-<li>重新刷新列表，根据搜索到的数据来刷新；</li>
-<li>通过系统缓存记录历史记录；</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/10/吾日三省吾身（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/10/吾日三省吾身（一）/" itemprop="url">吾日三省吾身（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-10T19:42:15+08:00">
-                2017-06-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/09/Xcode 使用/Xcode-自定义模板/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/09/Xcode 使用/Xcode-自定义模板/" itemprop="url">Xcode 自定义模板</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-09T19:24:46+08:00">
-                2017-06-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="为什么要自定义模板"><a href="#为什么要自定义模板" class="headerlink" title="为什么要自定义模板"></a>为什么要自定义模板</h2><p>公司制定了代码规范之后，有些代码的格式是固定的，比如控制器中的代码格式：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#pragma mark - Lifecycle</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">	&lt;<span class="meta">#content#&gt;</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - Event</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - Public</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - Private</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - <span class="meta-string">&lt;#content#&gt;</span>Delegate</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - Custom Accessors</span></div></pre></td></tr></table></figure>
-<p>每次在写的时候，都要去看一下这个格式，因为分的比较细不太容易记录，所以都有将代码规范打开对照一下，再者，这个代码规范自己也主推，所以不能作茧自缚，只有自建模板了，呵呵🙄。</p>
-<h2 id="Xcode-模板"><a href="#Xcode-模板" class="headerlink" title="Xcode 模板"></a>Xcode 模板</h2><p>Xcode 模板分为两种，一种是<em>系统默认模板</em>，另一种是<em>用户自定义模板</em>，模板存放的位置在</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">pwd</span></div><div class="line">/Applications/Xcode.app/Contents/Developer/Platforms</div><div class="line"></div><div class="line">$ ls</div><div class="line">AppleTVOS.platform        WatchOS.platform          iPhoneSimulator.platform</div><div class="line">AppleTVSimulator.platform WatchSimulator.platform</div><div class="line">MacOSX.platform           iPhoneOS.platform</div></pre></td></tr></table></figure>
-<h3 id="Xcode-系统模板位置"><a href="#Xcode-系统模板位置" class="headerlink" title="Xcode 系统模板位置"></a>Xcode 系统模板位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates</div></pre></td></tr></table></figure>
-<h3 id="用户自定义模板位置"><a href="#用户自定义模板位置" class="headerlink" title="用户自定义模板位置"></a>用户自定义模板位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd ~/Library/Developer/Xcode/Templates</div><div class="line">$ ls</div><div class="line">Project Templates</div></pre></td></tr></table></figure>
-<p>在 <strong>Templates</strong> 下有两个文件夹分别是</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/08/组件化/iOS-Pod-点点滴滴/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/08/组件化/iOS-Pod-点点滴滴/" itemprop="url">iOS Pod 点点滴滴</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-08T10:07:28+08:00">
-                2017-06-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里记录了在使用 Pods 库的时候遇到的各种问题：</p>
-<h2 id="搜索不到自己的私有库"><a href="#搜索不到自己的私有库" class="headerlink" title="搜索不到自己的私有库"></a>搜索不到自己的私有库</h2><p>执行下面这条命令之后，重新搜索</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm ~/Library/Caches/CocoaPods/search_index.json</div></pre></td></tr></table></figure>
-<h2 id="搜索到私有库，安装失败"><a href="#搜索到私有库，安装失败" class="headerlink" title="搜索到私有库，安装失败"></a>搜索到私有库，安装失败</h2><p>查看一下，在使用的 Podfile 文件中，有没有添加自己的私有库地址，需要加上的，否则安装不成功</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">platform :ios, &apos;8.0&apos;</div><div class="line"></div><div class="line">source &apos;http://192.168.10.224:3000/iOS/iOSPod.git&apos;</div><div class="line">use_frameworks!</div><div class="line"></div><div class="line">target &apos;HelloworldDemo&apos; do</div><div class="line">  pod &apos;LYArchiver&apos;</div><div class="line">end</div></pre></td></tr></table></figure>
-<p>就是这句 <em>source ‘<a href="http://192.168.10.224:3000/iOS/iOSPod.git" target="_blank" rel="external">http://192.168.10.224:3000/iOS/iOSPod.git</a>‘</em></p>
-<h2 id="构建-Pods-库"><a href="#构建-Pods-库" class="headerlink" title="构建 Pods 库"></a>构建 Pods 库</h2><p>构建Pods私有库 or 公有库，其实没有固定的步骤，只要做全就OK了。</p>
-<h2 id="通过脚本构建，非常方便"><a href="#通过脚本构建，非常方便" class="headerlink" title="通过脚本构建，非常方便"></a>通过脚本构建，非常方便</h2><h2 id="命令解析："><a href="#命令解析：" class="headerlink" title="命令解析："></a>命令解析：</h2><p> 将 podspec 文件推送到仓库，这里需要区分是推送到公共仓库还是私有仓库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#私有仓库</div><div class="line">pod repo push [私有库名字]  xxxx.podspec --allow-warnings</div><div class="line"></div><div class="line"># 公有仓库</div><div class="line">pod trunk push xxxx.podspec</div></pre></td></tr></table></figure>
-<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>在执行单元测试的时候发现找不到对应的测试文件，导入了之后，提示 not find file xxx.h<br>两步解决：</p>
-<ol>
-<li>修改podfile 文件,测试的target一定要包含进来</li>
-</ol>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">target 'LYCache_Example' do</div><div class="line">  pod 'LYCache', :path =&gt; '../'</div><div class="line">  pod 'LYArchiver', '~&gt; 1.0.0'</div><div class="line">  </div><div class="line">  target 'LYCache_ExampleTests' do</div><div class="line">      inherit! :search_paths</div><div class="line">      </div><div class="line">      </div><div class="line">  end</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
-<ol>
-<li>测试的 Other Linker flag 和主工程一致</li>
-</ol>
-<p>目前来看，这两步设置了之后就可以愉快的测试了。</p>
-<h2 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h2><ol>
-<li><em><a href="https://juejin.im/entry/58df270f61ff4b006b1227c9" target="_blank" rel="external">https://juejin.im/entry/58df270f61ff4b006b1227c9</a></em></li>
-<li><em><a href="http://www.cnblogs.com/richard-youth/p/6272932.html" target="_blank" rel="external">http://www.cnblogs.com/richard-youth/p/6272932.html</a></em></li>
-<li><em><a href="http://www.liuchungui.com/blog/2015/10/19/cocoapodschuang-jian-si-you-pods/" target="_blank" rel="external">http://www.liuchungui.com/blog/2015/10/19/cocoapodschuang-jian-si-you-pods/</a></em></li>
-<li><em><a href="https://segmentfault.com/a/1190000007947371" target="_blank" rel="external">https://segmentfault.com/a/1190000007947371</a></em></li>
-<li><em><a href="http://www.jianshu.com/p/001f5cf05b6d" target="_blank" rel="external">http://www.jianshu.com/p/001f5cf05b6d</a></em></li>
-<li><em><a href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/" target="_blank" rel="external">http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/</a></em></li>
-<li><em><a href="https://juejin.im/entry/5864fd801b69e6006cf76a64" target="_blank" rel="external">https://juejin.im/entry/5864fd801b69e6006cf76a64</a></em></li>
-<li><em><a href="http://ibloodline.com/articles/2016/09/23/my-pod.html" target="_blank" rel="external">http://ibloodline.com/articles/2016/09/23/my-pod.html</a></em></li>
-<li><em><a href="http://blog.csdn.net/chong_son/article/details/52262171" target="_blank" rel="external">http://blog.csdn.net/chong_son/article/details/52262171</a></em></li>
-<li><em>file:///Users/liuguiliang/Downloads/cocoaPod%20%E7%A7%81%E6%9C%89%E5%BA%93%E6%90%AD%E5%BB%BA.html</em></li>
-<li><em><a href="http://www.saitjr.com/ios/ios-trunk-cocoapods.html" target="_blank" rel="external">http://www.saitjr.com/ios/ios-trunk-cocoapods.html</a></em></li>
-<li><em><a href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/" target="_blank" rel="external">http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/</a></em></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/07/脚本/Shell-基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/07/脚本/Shell-基础/" itemprop="url">Shell 基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-07T23:15:42+08:00">
-                2017-06-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="序幕"><a href="#序幕" class="headerlink" title="序幕"></a>序幕</h2><h2 id="Shell-概述"><a href="#Shell-概述" class="headerlink" title="Shell 概述"></a>Shell 概述</h2><h2 id="脚本执行方式"><a href="#脚本执行方式" class="headerlink" title="脚本执行方式"></a>脚本执行方式</h2><h3 id="echo-输出命令"><a href="#echo-输出命令" class="headerlink" title="echo 输出命令"></a>echo 输出命令</h3><p>语法结构：</p>
-<p>echo [选项] [输出内容]<br>-e 添加一些控制参数</p>
-<h3 id="第一个脚本"><a href="#第一个脚本" class="headerlink" title="第一个脚本"></a>第一个脚本</h3><h4 id="脚本内容"><a href="#脚本内容" class="headerlink" title="脚本内容"></a>脚本内容</h4> <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">#!/bin/bash</span></div><div class="line"><span class="comment">#The first program</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"\e[1m;34m 天上掉下个林妹妹\e[0m"</span></div></pre></td></tr></table></figure>
-<h4 id="脚本执行"><a href="#脚本执行" class="headerlink" title="脚本执行"></a>脚本执行</h4><ol>
-<li>赋予执行权限，直接执行<ul>
-<li>chmod 755 xxx.sh</li>
-<li>./xxx.sh</li>
-</ul>
-</li>
-<li>通过 bash 调用执行脚本<br> bash xxx.sh</li>
-</ol>
-<h2 id="Bash-的基本功能"><a href="#Bash-的基本功能" class="headerlink" title="Bash 的基本功能"></a>Bash 的基本功能</h2><h3 id="命令别名和快捷键"><a href="#命令别名和快捷键" class="headerlink" title="命令别名和快捷键"></a>命令别名和快捷键</h3><p>别名：针对系统中的命令的缩写</p>
-<ul>
-<li>查看别名</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">liuguiliang@Liuguiliang# alias</div><div class="line">l=&apos;ls -lah&apos;</div><div class="line">la=&apos;ls -lAh&apos;</div><div class="line">ll=&apos;ls -lh&apos;</div><div class="line">ls=&apos;ls -G&apos;</div><div class="line">lsa=&apos;ls -lah&apos;</div><div class="line">md=&apos;mkdir -p&apos;</div><div class="line">please=sudo</div><div class="line">po=popd</div><div class="line">pu=pushd</div><div class="line">rd=rmdir</div><div class="line">rm=&apos;rm -i&apos;</div></pre></td></tr></table></figure>
-<h3 id="历史命令"><a href="#历史命令" class="headerlink" title="历史命令"></a>历史命令</h3><h3 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h3><h3 id="多命令顺序执行"><a href="#多命令顺序执行" class="headerlink" title="多命令顺序执行"></a>多命令顺序执行</h3><h3 id="Shell-中的特殊符号"><a href="#Shell-中的特殊符号" class="headerlink" title="Shell 中的特殊符号"></a>Shell 中的特殊符号</h3>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/05/我们该如何检测app性能/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/05/我们该如何检测app性能/" itemprop="url">我们该如何检测app性能</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-05T17:12:58+08:00">
-                2017-06-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1485,7 +1523,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1507,7 +1545,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

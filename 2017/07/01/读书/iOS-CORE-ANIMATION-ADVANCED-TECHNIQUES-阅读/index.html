@@ -1,0 +1,756 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Part I： The Layer BeneathThe Layer Tree这一章，主要讲解了图层的树状结构，以及为什么 iOS 中会有UIView和CALayer两个平行图层的存在（mac os 也会用到 CALayer）。后面代码展示了将CALayer添加到了UIView的layer层上。 The Backing Image这一章，主要讲了Layer和Image的关系。内容主要包括：  如何">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS CORE ANIMATION ADVANCED TECHNIQUES 阅读">
+<meta property="og:url" content="http://yoursite.com/2017/07/01/读书/iOS-CORE-ANIMATION-ADVANCED-TECHNIQUES-阅读/index.html">
+<meta property="og:site_name" content="枫叶 🍁 影">
+<meta property="og:description" content="Part I： The Layer BeneathThe Layer Tree这一章，主要讲解了图层的树状结构，以及为什么 iOS 中会有UIView和CALayer两个平行图层的存在（mac os 也会用到 CALayer）。后面代码展示了将CALayer添加到了UIView的layer层上。 The Backing Image这一章，主要讲了Layer和Image的关系。内容主要包括：  如何">
+<meta property="og:updated_time" content="2017-07-01T09:06:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS CORE ANIMATION ADVANCED TECHNIQUES 阅读">
+<meta name="twitter:description" content="Part I： The Layer BeneathThe Layer Tree这一章，主要讲解了图层的树状结构，以及为什么 iOS 中会有UIView和CALayer两个平行图层的存在（mac os 也会用到 CALayer）。后面代码展示了将CALayer添加到了UIView的layer层上。 The Backing Image这一章，主要讲了Layer和Image的关系。内容主要包括：  如何">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/01/读书/iOS-CORE-ANIMATION-ADVANCED-TECHNIQUES-阅读/"/>
+
+
+
+
+
+  <title>iOS CORE ANIMATION ADVANCED TECHNIQUES 阅读 | 枫叶 🍁 影</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">枫叶 🍁 影</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/01/读书/iOS-CORE-ANIMATION-ADVANCED-TECHNIQUES-阅读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS CORE ANIMATION ADVANCED TECHNIQUES 阅读</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-01T10:32:57+08:00">
+                2017-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Part-I：-The-Layer-Beneath"><a href="#Part-I：-The-Layer-Beneath" class="headerlink" title="Part I： The Layer Beneath"></a>Part I： The Layer Beneath</h1><h2 id="The-Layer-Tree"><a href="#The-Layer-Tree" class="headerlink" title="The Layer Tree"></a>The Layer Tree</h2><p>这一章，主要讲解了图层的树状结构，以及为什么 iOS 中会有UIView和CALayer两个平行图层的存在（mac os 也会用到 CALayer）。后面代码展示了将CALayer添加到了UIView的layer层上。</p>
+<h2 id="The-Backing-Image"><a href="#The-Backing-Image" class="headerlink" title="The Backing Image"></a>The Backing Image</h2><p>这一章，主要讲了Layer和Image的关系。内容主要包括：</p>
+<ul>
+<li>如何在layer上显示出一张图片，这里需要layer的 <em>contents</em> 属性（id 类型），<br>  这个属性挺有意思，如果你将UIImage的值赋给它，只能得到一个空白的图层，因为只有 CGImage和NSImage的类型值对他起作用，<br>  而真正起作用的的值类型应该是，UIImage 有一个 CGImage 属性，返回的是 ，但是他又不是一个Cocoa对象，所以需要将其进行强制转换。</li>
+<li><p>CALyer 中与 UIView 的 contentMode 属性对应的属性叫做 contentsGravity,这是一个 NSString类型：</p>
+<ul>
+<li>kCAGravityCenter</li>
+<li>kCAGravityTop </li>
+<li>kCAGravityBottom </li>
+<li>kCAGravityLeft </li>
+<li>kCAGravityRight </li>
+<li>kCAGravityTopLeft</li>
+<li>kCAGravityTopRight </li>
+<li>kCAGravityBottomLeft </li>
+<li>kCAGravityBottomRight </li>
+<li>kCAGravityResize </li>
+<li>kCAGravityResizeAspect </li>
+<li>kCAGravityResizeAspectFill</li>
+</ul>
+</li>
+<li><p>contentsScale</p>
+</li>
+<li>maskToBounds</li>
+<li>contentsRect <a href="https://github.com/nicklockwood/LayerSprites" target="_blank" rel="external">LayerSprites</a></li>
+<li>contentsCenter</li>
+<li>Custom Drawing ,如果没有自定义绘制的任务就不要再UIView的子类中写一个空的 - drawRect: 方法</li>
+<li>CALayerDelegate</li>
+</ul>
+<h2 id="Layer-Geometry"><a href="#Layer-Geometry" class="headerlink" title="Layer Geometry"></a>Layer Geometry</h2><h3 id="frame"><a href="#frame" class="headerlink" title="frame"></a>frame</h3><p>代表了图层的外部坐标（也就是子视图在父视图层上占据的空间）,当对图层做变换的时候，比如旋转或者缩放， frame 实际上代表了覆盖在图层旋转之后的整个轴对其的矩形区域，也就是 frame 的宽高可能和 bounds 的宽高不在一致了。</p>
+<h3 id="bounds"><a href="#bounds" class="headerlink" title="bounds"></a>bounds</h3><p>内部坐标（{0，0}，通常是在图层的左上角）</p>
+<h3 id="center-amp-position"><a href="#center-amp-position" class="headerlink" title="center &amp; position"></a>center &amp; position</h3><p>代表了相对于父视图层 anchorpoint 所在的位置</p>
+<h3 id="archorpoint-通过时钟的例子来演示如何使用这个属性"><a href="#archorpoint-通过时钟的例子来演示如何使用这个属性" class="headerlink" title="archorpoint - 通过时钟的例子来演示如何使用这个属性"></a>archorpoint - 通过时钟的例子来演示如何使用这个属性</h3><p>取值 0 ~ 1，即将视图上的锚点放置到中心点上（center或者position）</p>
+<h3 id="坐标系"><a href="#坐标系" class="headerlink" title="坐标系"></a>坐标系</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">CGPoint</span>)convertPoint:(<span class="built_in">CGPoint</span>)point fromLayer:(<span class="built_in">CALayer</span> *)layer;</div><div class="line"></div><div class="line">- (<span class="built_in">CGPoint</span>)convertPoint:(<span class="built_in">CGPoint</span>)point toLayer:(<span class="built_in">CALayer</span> *)layer;</div><div class="line"></div><div class="line">- (<span class="built_in">CGRect</span>)convertRect:(<span class="built_in">CGRect</span>)rect fromLayer:(<span class="built_in">CALayer</span> *)layer;</div><div class="line"></div><div class="line">- (<span class="built_in">CGRect</span>)convertRect:(<span class="built_in">CGRect</span>)rect toLayer:(<span class="built_in">CALayer</span> *)layer;</div></pre></td></tr></table></figure>
+<h3 id="翻转的几何结构"><a href="#翻转的几何结构" class="headerlink" title="翻转的几何结构"></a>翻转的几何结构</h3><p>geometryFlipped</p>
+<h3 id="Z-坐标轴"><a href="#Z-坐标轴" class="headerlink" title="Z 坐标轴"></a>Z 坐标轴</h3><ol>
+<li>CATransform3D 变换；</li>
+<li>改变图层的显示顺序,可以不改变添加顺序而将后添加的视图藏在先添加的视图底下；</li>
+</ol>
+<h3 id="Hit-Testing"><a href="#Hit-Testing" class="headerlink" title="Hit Testing"></a>Hit Testing</h3><pre><code>当图层调用 -hitTest: 方法的时候，测算的顺序严格依赖于图层树当中的图层顺序。
+</code></pre><h3 id="自动布局"><a href="#自动布局" class="headerlink" title="自动布局"></a>自动布局</h3><p>CALayerDelegate 中的 - layoutSublayersOfLayer: 方法，当Layer的bounds发生改变，或者 - setNeedsLayout 方法被调用的时候，这个函数将会被执行。</p>
+<p>这里同样说明了 Core Animation 对自动调整和自动布局支持的缺乏。</p>
+<h2 id="Visual-Effects"><a href="#Visual-Effects" class="headerlink" title="Visual Effects"></a>Visual Effects</h2><h3 id="圆角-cornerRadius"><a href="#圆角-cornerRadius" class="headerlink" title="圆角 - cornerRadius"></a>圆角 - cornerRadius</h3><p>默认支队背景色起作用，但是如果设置了masksToBounds属性之后，对背景图片和子视图同样起租用</p>
+<h3 id="图层边框"><a href="#图层边框" class="headerlink" title="图层边框"></a>图层边框</h3><ul>
+<li>borderWidth</li>
+<li>borderColor</li>
+</ul>
+<h3 id="阴影"><a href="#阴影" class="headerlink" title="阴影"></a>阴影</h3><ul>
+<li>shadowOpacity 属性设置一个大于默认值(0)的值，阴影就可以显示在任意图层之下；（0.0不可见 1.0 完全不透明）。如果设置了 1.0 ，将会显示一个有轻微模糊的黑色阴影稍微在图层之上</li>
+<li>shadowColor 控制阴影颜色</li>
+<li>shadowOffset 控制阴影的方向和距离，是CGSize类型，宽度控制着阴影横向的唯一，高度控制着阴影纵向唯一，默认值是{0,-3},阴影相对于Y轴有3个点的向上位移。为什么向上呢？Mac OS 系统的坐标系和iOS的区别导致的</li>
+<li>shadowRadius 属性控制阴影模糊度。当值为0的时候，阴影和视图一样有一个非常确定的分界线。当值越来越大的时候，边界线看上去就越模糊和自然。苹果自家的应用设计更偏向于自然的阴影。</li>
+<li>阴影裁剪 如何处理圆角的阴影情况</li>
+<li>shadowPath属性 通过CGPath任意指定阴影形状，这里牵扯到了绘制圆形、方形或者其他形状的问题，可以用UIBezierPath，它是由UIKit提供的在CGPath基础上的OBjective-C保准类</li>
+</ul>
+<h3 id="图层蒙版-吊炸天的特性"><a href="#图层蒙版-吊炸天的特性" class="headerlink" title="图层蒙版 -吊炸天的特性"></a>图层蒙版 -吊炸天的特性</h3><p>mask 是CALayer一个属性，类型也是CALayer，它定义了父图层的部分可见区域。</p>
+<h3 id="拉伸过滤"><a href="#拉伸过滤" class="headerlink" title="拉伸过滤"></a>拉伸过滤</h3><p>当我们的视图显示一张图片的时候，都应该正确的显示这个图片（即：以正确的比例和正确的1：1像素显示在屏幕上）：</p>
+<ol>
+<li>能够显示最好的画质，像素既没有被压缩也没有被拉伸；</li>
+<li>能更好的使用内存，因为这就是所有你要存储的东西；</li>
+<li>最好的性能表现，CPU不需要为此额外的计算。</li>
+</ol>
+<h3 id="组透明-alpha-opctiy-shouldRasterize"><a href="#组透明-alpha-opctiy-shouldRasterize" class="headerlink" title="组透明 alpha opctiy shouldRasterize"></a>组透明 alpha opctiy shouldRasterize</h3><h2 id="5-Transform"><a href="#5-Transform" class="headerlink" title="5 Transform"></a>5 Transform</h2><p>2D 和 3D 的放射变换</p>
+<h2 id="6-Specialized-Layers"><a href="#6-Specialized-Layers" class="headerlink" title="6 Specialized Layers"></a>6 Specialized Layers</h2><h3 id="CAShapeLayer"><a href="#CAShapeLayer" class="headerlink" title="CAShapeLayer"></a>CAShapeLayer</h3><p>CAShapeLayer 优点：</p>
+<ul>
+<li><strong>渲染速度快</strong>， CAShapeLayer 使用了硬件加速，绘制同一图形比用Core Graphics 快很多。</li>
+<li><strong>高效使用内存</strong>，一个 CAShapeLayer 不需要像普通 CALayer 一样创建一个寄宿图形，所以无论有多大，都不会占用太多的内存。</li>
+<li>不会被图层边界剪裁掉。</li>
+<li>不会出现像素化。</li>
+</ul>
+<ol>
+<li>绘制火柴人</li>
+<li>设置圆角</li>
+</ol>
+<h3 id="CATextLayer"><a href="#CATextLayer" class="headerlink" title="CATextLayer"></a>CATextLayer</h3><p>它以图层的形式包含了UILabel几乎所有的绘制特性，并且额外提供了一些新的特性</p>
+<h3 id="富文本"><a href="#富文本" class="headerlink" title="富文本"></a>富文本</h3><p>通过 CATextLayer 实现了富文本展示内容</p>
+<h3 id="UILabel-替代品"><a href="#UILabel-替代品" class="headerlink" title="UILabel 替代品"></a>UILabel 替代品</h3><p>继承自 UILabel，然后重写 layerClass，通过 CATextLayer 绘制显示的内容</p>
+<h3 id="CATransormLayer"><a href="#CATransormLayer" class="headerlink" title="CATransormLayer"></a>CATransormLayer</h3><h3 id="CAGradientLayer"><a href="#CAGradientLayer" class="headerlink" title="CAGradientLayer"></a>CAGradientLayer</h3><p>用来生成两种或者更多颜色平滑渐变的。其真正的优势是使用了硬件加速。</p>
+<h3 id="CAReplicatorLayer"><a href="#CAReplicatorLayer" class="headerlink" title="CAReplicatorLayer"></a>CAReplicatorLayer</h3><p>目的是为了高效的生成许多相似的图层。</p>
+<h3 id="CAScrollLayer"><a href="#CAScrollLayer" class="headerlink" title="CAScrollLayer"></a>CAScrollLayer</h3><h3 id="CATiledLayer"><a href="#CATiledLayer" class="headerlink" title="CATiledLayer"></a>CATiledLayer</h3><p>为载入大图造成的性能问题提供了一个解决方法：将大图分解成小片然后将他们单独按需载入。</p>
+<h3 id="CAEmitterLayer"><a href="#CAEmitterLayer" class="headerlink" title="CAEmitterLayer"></a>CAEmitterLayer</h3><p>高性能的粒子引擎，被用来创建实时粒子动画：烟雾、火、雨滴等效果</p>
+<h3 id="CAEAGLLayer"><a href="#CAEAGLLayer" class="headerlink" title="CAEAGLLayer"></a>CAEAGLLayer</h3><p>显示任意的OPENGL图形</p>
+<h3 id="AVPlayerLayer"><a href="#AVPlayerLayer" class="headerlink" title="AVPlayerLayer"></a>AVPlayerLayer</h3><p>视频播放的图层</p>
+<h2 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h2><p>第一部分主要学习了图层，基本上与动画没有太多的关系。主要是图层数、图片、集合变换和纺射变换以及各种CALayer的子类。接下来的一部分主要针对动画了。</p>
+<h1 id="Part-II-Setting-Things-in-Motion"><a href="#Part-II-Setting-Things-in-Motion" class="headerlink" title="Part II: Setting Things in Motion"></a>Part II: Setting Things in Motion</h1>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/30/iOS/2010/Learn-Objective-C-Day-1/" rel="next" title="Learn Objective-C: Day 1">
+                <i class="fa fa-chevron-left"></i> Learn Objective-C: Day 1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="刘桂良" />
+          <p class="site-author-name" itemprop="name">刘桂良</p>
+           
+              <p class="site-description motion-element" itemprop="description">不变应万变，世界瞬息万变</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Part-I：-The-Layer-Beneath"><span class="nav-number">1.</span> <span class="nav-text">Part I： The Layer Beneath</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Layer-Tree"><span class="nav-number">1.1.</span> <span class="nav-text">The Layer Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Backing-Image"><span class="nav-number">1.2.</span> <span class="nav-text">The Backing Image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-Geometry"><span class="nav-number">1.3.</span> <span class="nav-text">Layer Geometry</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#frame"><span class="nav-number">1.3.1.</span> <span class="nav-text">frame</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bounds"><span class="nav-number">1.3.2.</span> <span class="nav-text">bounds</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#center-amp-position"><span class="nav-number">1.3.3.</span> <span class="nav-text">center & position</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#archorpoint-通过时钟的例子来演示如何使用这个属性"><span class="nav-number">1.3.4.</span> <span class="nav-text">archorpoint - 通过时钟的例子来演示如何使用这个属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坐标系"><span class="nav-number">1.3.5.</span> <span class="nav-text">坐标系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#翻转的几何结构"><span class="nav-number">1.3.6.</span> <span class="nav-text">翻转的几何结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Z-坐标轴"><span class="nav-number">1.3.7.</span> <span class="nav-text">Z 坐标轴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hit-Testing"><span class="nav-number">1.3.8.</span> <span class="nav-text">Hit Testing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动布局"><span class="nav-number">1.3.9.</span> <span class="nav-text">自动布局</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Visual-Effects"><span class="nav-number">1.4.</span> <span class="nav-text">Visual Effects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#圆角-cornerRadius"><span class="nav-number">1.4.1.</span> <span class="nav-text">圆角 - cornerRadius</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图层边框"><span class="nav-number">1.4.2.</span> <span class="nav-text">图层边框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阴影"><span class="nav-number">1.4.3.</span> <span class="nav-text">阴影</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图层蒙版-吊炸天的特性"><span class="nav-number">1.4.4.</span> <span class="nav-text">图层蒙版 -吊炸天的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉伸过滤"><span class="nav-number">1.4.5.</span> <span class="nav-text">拉伸过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组透明-alpha-opctiy-shouldRasterize"><span class="nav-number">1.4.6.</span> <span class="nav-text">组透明 alpha opctiy shouldRasterize</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Transform"><span class="nav-number">1.5.</span> <span class="nav-text">5 Transform</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Specialized-Layers"><span class="nav-number">1.6.</span> <span class="nav-text">6 Specialized Layers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CAShapeLayer"><span class="nav-number">1.6.1.</span> <span class="nav-text">CAShapeLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CATextLayer"><span class="nav-number">1.6.2.</span> <span class="nav-text">CATextLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#富文本"><span class="nav-number">1.6.3.</span> <span class="nav-text">富文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UILabel-替代品"><span class="nav-number">1.6.4.</span> <span class="nav-text">UILabel 替代品</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CATransormLayer"><span class="nav-number">1.6.5.</span> <span class="nav-text">CATransormLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAGradientLayer"><span class="nav-number">1.6.6.</span> <span class="nav-text">CAGradientLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAReplicatorLayer"><span class="nav-number">1.6.7.</span> <span class="nav-text">CAReplicatorLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAScrollLayer"><span class="nav-number">1.6.8.</span> <span class="nav-text">CAScrollLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CATiledLayer"><span class="nav-number">1.6.9.</span> <span class="nav-text">CATiledLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAEmitterLayer"><span class="nav-number">1.6.10.</span> <span class="nav-text">CAEmitterLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAEAGLLayer"><span class="nav-number">1.6.11.</span> <span class="nav-text">CAEAGLLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVPlayerLayer"><span class="nav-number">1.6.12.</span> <span class="nav-text">AVPlayerLayer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结："><span class="nav-number">1.7.</span> <span class="nav-text">小结：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Part-II-Setting-Things-in-Motion"><span class="nav-number">2.</span> <span class="nav-text">Part II: Setting Things in Motion</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘桂良</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

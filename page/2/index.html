@@ -253,6 +253,859 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/15/脚本/21-天学习-Shell（第-1-天）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/15/脚本/21-天学习-Shell（第-1-天）/" itemprop="url">21 天学习 Shell（第 1 天）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-15T09:19:22+08:00">
+                2017-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Shell 脚本不仅可以执行单独的命令，shell还可以执行命令脚本，所以非常容易实现各种任务的自动化操作，如生成报表、发送电子邮件、进行系统维护等。</p>
+<h2 id="小试牛刀"><a href="#小试牛刀" class="headerlink" title="小试牛刀"></a>小试牛刀</h2>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/13/UISearchController-实现搜索功能/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/13/UISearchController-实现搜索功能/" itemprop="url">UISearchController 实现搜索功能</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-13T14:38:27+08:00">
+                2017-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>iOS  8 之后实现搜索功能可以通过系统的<em>UISearchController</em></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NS_CLASS_AVAILABLE_IOS</span>(<span class="number">8</span>_0) <span class="class"><span class="keyword">@interface</span> <span class="title">UISearchController</span> : <span class="title">UIViewController</span> &lt;<span class="title">UIViewControllerTransitioningDelegate</span>, <span class="title">UIViewControllerAnimatedTransitioning</span>&gt;</span></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h2 id="搜索框功能简介"><a href="#搜索框功能简介" class="headerlink" title="搜索框功能简介"></a>搜索框功能简介</h2><p>搜索框功能主要是在我们的控制器顶部增加一个搜索栏(search bar)，通过监听搜索栏中的内容展示搜索结果。具体流程如下：</p>
+<ol>
+<li>当焦点落到搜索框的时候，搜索控制器弹出；</li>
+<li>在焦点中输入文本，调用代理方法，搜索数据；</li>
+<li>重新刷新列表，根据搜索到的数据来刷新；</li>
+<li>通过系统缓存记录历史记录；</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/10/吾日三省吾身（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/10/吾日三省吾身（一）/" itemprop="url">吾日三省吾身（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-10T19:42:15+08:00">
+                2017-06-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/09/Xcode 使用/Xcode-自定义模板/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/09/Xcode 使用/Xcode-自定义模板/" itemprop="url">Xcode 自定义模板</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-09T19:24:46+08:00">
+                2017-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="为什么要自定义模板"><a href="#为什么要自定义模板" class="headerlink" title="为什么要自定义模板"></a>为什么要自定义模板</h2><p>公司制定了代码规范之后，有些代码的格式是固定的，比如控制器中的代码格式：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#pragma mark - Lifecycle</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">	&lt;<span class="meta">#content#&gt;</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - Event</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - Public</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - Private</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - <span class="meta-string">&lt;#content#&gt;</span>Delegate</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - Custom Accessors</span></div></pre></td></tr></table></figure>
+<p>每次在写的时候，都要去看一下这个格式，因为分的比较细不太容易记录，所以都有将代码规范打开对照一下，再者，这个代码规范自己也主推，所以不能作茧自缚，只有自建模板了，呵呵🙄。</p>
+<h2 id="Xcode-模板"><a href="#Xcode-模板" class="headerlink" title="Xcode 模板"></a>Xcode 模板</h2><p>Xcode 模板分为两种，一种是<em>系统默认模板</em>，另一种是<em>用户自定义模板</em>，模板存放的位置在</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">pwd</span></div><div class="line">/Applications/Xcode.app/Contents/Developer/Platforms</div><div class="line"></div><div class="line">$ ls</div><div class="line">AppleTVOS.platform        WatchOS.platform          iPhoneSimulator.platform</div><div class="line">AppleTVSimulator.platform WatchSimulator.platform</div><div class="line">MacOSX.platform           iPhoneOS.platform</div></pre></td></tr></table></figure>
+<h3 id="Xcode-系统模板位置"><a href="#Xcode-系统模板位置" class="headerlink" title="Xcode 系统模板位置"></a>Xcode 系统模板位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates</div></pre></td></tr></table></figure>
+<h3 id="用户自定义模板位置"><a href="#用户自定义模板位置" class="headerlink" title="用户自定义模板位置"></a>用户自定义模板位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd ~/Library/Developer/Xcode/Templates</div><div class="line">$ ls</div><div class="line">Project Templates</div></pre></td></tr></table></figure>
+<p>在 <strong>Templates</strong> 下有两个文件夹分别是</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/08/组件化/iOS-Pod-点点滴滴/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/08/组件化/iOS-Pod-点点滴滴/" itemprop="url">iOS Pod 点点滴滴</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-08T10:07:28+08:00">
+                2017-06-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这里记录了在使用 Pods 库的时候遇到的各种问题：</p>
+<h2 id="搜索不到自己的私有库"><a href="#搜索不到自己的私有库" class="headerlink" title="搜索不到自己的私有库"></a>搜索不到自己的私有库</h2><p>执行下面这条命令之后，重新搜索</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm ~/Library/Caches/CocoaPods/search_index.json</div></pre></td></tr></table></figure>
+<h2 id="搜索到私有库，安装失败"><a href="#搜索到私有库，安装失败" class="headerlink" title="搜索到私有库，安装失败"></a>搜索到私有库，安装失败</h2><p>查看一下，在使用的 Podfile 文件中，有没有添加自己的私有库地址，需要加上的，否则安装不成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">platform :ios, &apos;8.0&apos;</div><div class="line"></div><div class="line">source &apos;http://192.168.10.224:3000/iOS/iOSPod.git&apos;</div><div class="line">use_frameworks!</div><div class="line"></div><div class="line">target &apos;HelloworldDemo&apos; do</div><div class="line">  pod &apos;LYArchiver&apos;</div><div class="line">end</div></pre></td></tr></table></figure>
+<p>就是这句 <em>source ‘<a href="http://192.168.10.224:3000/iOS/iOSPod.git" target="_blank" rel="external">http://192.168.10.224:3000/iOS/iOSPod.git</a>‘</em></p>
+<h2 id="构建-Pods-库"><a href="#构建-Pods-库" class="headerlink" title="构建 Pods 库"></a>构建 Pods 库</h2><p>构建Pods私有库 or 公有库，其实没有固定的步骤，只要做全就OK了。</p>
+<h2 id="通过脚本构建，非常方便"><a href="#通过脚本构建，非常方便" class="headerlink" title="通过脚本构建，非常方便"></a>通过脚本构建，非常方便</h2><h2 id="命令解析："><a href="#命令解析：" class="headerlink" title="命令解析："></a>命令解析：</h2><p> 将 podspec 文件推送到仓库，这里需要区分是推送到公共仓库还是私有仓库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#私有仓库</div><div class="line">pod repo push [私有库名字]  xxxx.podspec --allow-warnings</div><div class="line"></div><div class="line"># 公有仓库</div><div class="line">pod trunk push xxxx.podspec</div></pre></td></tr></table></figure>
+<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>在执行单元测试的时候发现找不到对应的测试文件，导入了之后，提示 not find file xxx.h<br>两步解决：</p>
+<ul>
+<li>修改podfile 文件,测试的target一定要包含进来</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">target 'LYCache_Example' do</div><div class="line">  pod 'LYCache', :path =&gt; '../'</div><div class="line">  pod 'LYArchiver', '~&gt; 1.0.0'</div><div class="line">  </div><div class="line">  target 'LYCache_ExampleTests' do</div><div class="line">      inherit! :search_paths</div><div class="line">      </div><div class="line">      </div><div class="line">  end</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
+<ul>
+<li>测试的 Other Linker flag 和主工程一致</li>
+</ul>
+<p>目前来看，这两步设置了之后就可以愉快的测试了。</p>
+<h2 id="调试："><a href="#调试：" class="headerlink" title="调试："></a>调试：</h2><p>在提交私有pod库的时候，并不总是会成功，如果有警告我们可以忽略，但是一旦有error，就不能提交成功了</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">pod lib lint --verbose --allow-warnings  --sources=$publicSpecs,$privateSpecs</div></pre></td></tr></table></figure>
+<ol>
+<li><p>这里 <strong>–verbose</strong> 是指的查看错误详细信息，可以通过这里的错误信息找到问题所在<br><strong>–allow-warnings</strong> 是允许警告的存在，这里因为有些库的注释警告没办法避免了。</p>
+</li>
+<li><p>在库引入依赖库中的文件的时候，最好使用<xxxx xxxx.h="">这种方式，否则有些文件可能找不到</xxxx></p>
+</li>
+<li><p>在引入自己的私有库的时候最好加上最新的版本，有时候加载进来的不一定是最新的库，这个根据本地的索引表有可能不同。</p>
+</li>
+</ol>
+<h2 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h2><ol>
+<li><em><a href="https://juejin.im/entry/58df270f61ff4b006b1227c9" target="_blank" rel="external">https://juejin.im/entry/58df270f61ff4b006b1227c9</a></em></li>
+<li><em><a href="http://www.cnblogs.com/richard-youth/p/6272932.html" target="_blank" rel="external">http://www.cnblogs.com/richard-youth/p/6272932.html</a></em></li>
+<li><em><a href="http://www.liuchungui.com/blog/2015/10/19/cocoapodschuang-jian-si-you-pods/" target="_blank" rel="external">http://www.liuchungui.com/blog/2015/10/19/cocoapodschuang-jian-si-you-pods/</a></em></li>
+<li><em><a href="https://segmentfault.com/a/1190000007947371" target="_blank" rel="external">https://segmentfault.com/a/1190000007947371</a></em></li>
+<li><em><a href="http://www.jianshu.com/p/001f5cf05b6d" target="_blank" rel="external">http://www.jianshu.com/p/001f5cf05b6d</a></em></li>
+<li><em><a href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/" target="_blank" rel="external">http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/</a></em></li>
+<li><em><a href="https://juejin.im/entry/5864fd801b69e6006cf76a64" target="_blank" rel="external">https://juejin.im/entry/5864fd801b69e6006cf76a64</a></em></li>
+<li><em><a href="http://ibloodline.com/articles/2016/09/23/my-pod.html" target="_blank" rel="external">http://ibloodline.com/articles/2016/09/23/my-pod.html</a></em></li>
+<li><em><a href="http://blog.csdn.net/chong_son/article/details/52262171" target="_blank" rel="external">http://blog.csdn.net/chong_son/article/details/52262171</a></em></li>
+<li><em>file:///Users/liuguiliang/Downloads/cocoaPod%20%E7%A7%81%E6%9C%89%E5%BA%93%E6%90%AD%E5%BB%BA.html</em></li>
+<li><em><a href="http://www.saitjr.com/ios/ios-trunk-cocoapods.html" target="_blank" rel="external">http://www.saitjr.com/ios/ios-trunk-cocoapods.html</a></em></li>
+<li><em><a href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/" target="_blank" rel="external">http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/</a></em></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/07/脚本/Shell-基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/07/脚本/Shell-基础/" itemprop="url">Shell 基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-07T23:15:42+08:00">
+                2017-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="序幕"><a href="#序幕" class="headerlink" title="序幕"></a>序幕</h2><h2 id="Shell-概述"><a href="#Shell-概述" class="headerlink" title="Shell 概述"></a>Shell 概述</h2><h2 id="脚本执行方式"><a href="#脚本执行方式" class="headerlink" title="脚本执行方式"></a>脚本执行方式</h2><h3 id="echo-输出命令"><a href="#echo-输出命令" class="headerlink" title="echo 输出命令"></a>echo 输出命令</h3><p>语法结构：</p>
+<p>echo [选项] [输出内容]<br>-e 添加一些控制参数</p>
+<h3 id="第一个脚本"><a href="#第一个脚本" class="headerlink" title="第一个脚本"></a>第一个脚本</h3><h4 id="脚本内容"><a href="#脚本内容" class="headerlink" title="脚本内容"></a>脚本内容</h4> <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">#!/bin/bash</span></div><div class="line"><span class="comment">#The first program</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"\e[1m;34m 天上掉下个林妹妹\e[0m"</span></div></pre></td></tr></table></figure>
+<h4 id="脚本执行"><a href="#脚本执行" class="headerlink" title="脚本执行"></a>脚本执行</h4><ol>
+<li>赋予执行权限，直接执行<ul>
+<li>chmod 755 xxx.sh</li>
+<li>./xxx.sh</li>
+</ul>
+</li>
+<li>通过 bash 调用执行脚本<br> bash xxx.sh</li>
+</ol>
+<h2 id="Bash-的基本功能"><a href="#Bash-的基本功能" class="headerlink" title="Bash 的基本功能"></a>Bash 的基本功能</h2><h3 id="命令别名和快捷键"><a href="#命令别名和快捷键" class="headerlink" title="命令别名和快捷键"></a>命令别名和快捷键</h3><p>别名：针对系统中的命令的缩写</p>
+<ul>
+<li>查看别名</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">liuguiliang@Liuguiliang# alias</div><div class="line">l=&apos;ls -lah&apos;</div><div class="line">la=&apos;ls -lAh&apos;</div><div class="line">ll=&apos;ls -lh&apos;</div><div class="line">ls=&apos;ls -G&apos;</div><div class="line">lsa=&apos;ls -lah&apos;</div><div class="line">md=&apos;mkdir -p&apos;</div><div class="line">please=sudo</div><div class="line">po=popd</div><div class="line">pu=pushd</div><div class="line">rd=rmdir</div><div class="line">rm=&apos;rm -i&apos;</div></pre></td></tr></table></figure>
+<h3 id="历史命令"><a href="#历史命令" class="headerlink" title="历史命令"></a>历史命令</h3><h3 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h3><h3 id="多命令顺序执行"><a href="#多命令顺序执行" class="headerlink" title="多命令顺序执行"></a>多命令顺序执行</h3><h3 id="Shell-中的特殊符号"><a href="#Shell-中的特殊符号" class="headerlink" title="Shell 中的特殊符号"></a>Shell 中的特殊符号</h3>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/05/我们该如何检测app性能/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/05/我们该如何检测app性能/" itemprop="url">我们该如何检测app性能</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-05T17:12:58+08:00">
+                2017-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/组件化/组件化几种方式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -585,878 +1438,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/Swift/Raywenderlich/Swift Apprentice_v2.0/Swift-Apprentice-v2-0-Swift-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/02/Swift/Raywenderlich/Swift Apprentice_v2.0/Swift-Apprentice-v2-0-Swift-3/" itemprop="url">Swift Apprentice v2.0(Swift 3)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T11:56:01+08:00">
-                2017-06-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="How-a-computer-works"><a href="#How-a-computer-works" class="headerlink" title="How a computer works"></a>How a computer works</h2><h2 id="Playgrounds"><a href="#Playgrounds" class="headerlink" title="Playgrounds"></a>Playgrounds</h2><h2 id="key-points"><a href="#key-points" class="headerlink" title="key points"></a>key points</h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/iOS/2017/UnitTest/iOS-单元测试实践-（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/02/iOS/2017/UnitTest/iOS-单元测试实践-（一）/" itemprop="url">iOS 单元测试实践 （一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T10:10:47+08:00">
-                2017-06-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>通过苹果官方的demo入门实践。</p>
-<h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><p>苹果官方的Unit test有三个：OCUnit、XCTest和UITest，还有一个自动集成测试工具Automation；<br>OCUnit 已经被XCTest代替，而Automation也被UITest代替，目前使用的只剩下两个：</p>
-<ol>
-<li>XCTest</li>
-<li>UITest，实际上UITest也是属于XCTest组成部分。</li>
-</ol>
-<p>测试类属于 <em>XCTest.framework</em> 框架</p>
-<h2 id="实例演示"><a href="#实例演示" class="headerlink" title="实例演示"></a>实例演示</h2><h3 id="计算器demo"><a href="#计算器demo" class="headerlink" title="计算器demo"></a>计算器demo</h3><p>计算器主要功能是实现 +、 -、 *、 / ，计算类的公开属性和方法：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Calculator</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) input:(<span class="built_in">NSString</span> *) character;</div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *) displayValue;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>计算器类的使用：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"Calculator.h"</span></span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) Calculator *calculator;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="keyword">self</span>.calculator = [[Calculator alloc] init];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">IBAction</span>)press:(<span class="keyword">id</span>)sender &#123;</div><div class="line"></div><div class="line">    [<span class="keyword">self</span>.calculator input:[sender titleForState:<span class="built_in">UIControlStateNormal</span>]];</div><div class="line">    [<span class="keyword">self</span>.displayField setText:[<span class="keyword">self</span>.calculator displayValue]];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>下面主要是针对计算器类进行单元测试</p>
-<h3 id="Create-Unit-Test-Target-amp-Class"><a href="#Create-Unit-Test-Target-amp-Class" class="headerlink" title="Create Unit Test Target &amp; Class"></a>Create Unit Test Target &amp; Class</h3><p>Target 在项目创建的时候如果勾选上Unit Test 那么就会自动生成一个测试target，如果没有勾选按照线面的方法再去创建一个就好了。</p>
-<p>打开Xcode，在导航栏上选中第五个按钮，点击左下角 + 按钮，如果已经存在 Unit Test Target，那么可以选择创建一个Unit Test Class，如果没有这个Target那么需要首先创建Target。这里创建一个Class，集成自 XCTestCase ，注意所有的测试类都统一继承自这个类。类名为 <em>CalculatorTests</em></p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;XCTest/XCTest.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CalculatorTests</span> : <span class="title">XCTestCase</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CalculatorTests</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setUp &#123;</div><div class="line">    [<span class="keyword">super</span> setUp];</div><div class="line">    <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)tearDown &#123;</div><div class="line">    <span class="comment">// Put teardown code here. This method is called after the invocation of each test method in the class.</span></div><div class="line">    [<span class="keyword">super</span> tearDown];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testExample &#123;</div><div class="line">    <span class="comment">// This is an example of a functional test case.</span></div><div class="line">    <span class="comment">// Use XCTAssert and related functions to verify your tests produce the correct results.</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testPerformanceExample &#123;</div><div class="line">    <span class="comment">// This is an example of a performance test case.</span></div><div class="line">    [<span class="keyword">self</span> measureBlock:^&#123;</div><div class="line">        <span class="comment">// Put the code you want to measure the time of here.</span></div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p><em>- setUp</em> 测试代码执行之前都会执行的一个方法，可以在里面做一些初始化工作，相当于开发类的 init 方法；<br><em>- tearDown</em> 测试代码执行结束之后都会执行的一个方法，可以在里面做一些销毁工作，相当于开放类的的案例dealloc方法<br><em>- testExample</em> 顾名思义，一个示例方法，你写的测试方法要和它的格式一致及<em>-testxxx</em><br><em>- testPerformanceExample</em> 这个是性能测试方法；<br><em>CalculatorTests : XCTestCase</em> 自定义的测试类继承自 <em>XCTestCase</em></p>
-<h3 id="测试-Calculator-类对象是否存在"><a href="#测试-Calculator-类对象是否存在" class="headerlink" title="测试 Calculator 类对象是否存在"></a>测试 Calculator 类对象是否存在</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;XCTest/XCTest.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"Calculator.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CalculatorTests</span> : <span class="title">XCTestCase</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) Calculator *calculator;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CalculatorTests</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setUp &#123;</div><div class="line">    [<span class="keyword">super</span> setUp];</div><div class="line">    <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span></div><div class="line">    <span class="keyword">self</span>.calculator = [[Calculator alloc] init];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)tearDown &#123;</div><div class="line">    <span class="comment">// Put teardown code here. This method is called after the invocation of each test method in the class.</span></div><div class="line">    [<span class="keyword">super</span> tearDown];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testCaculatorNotNil &#123;</div><div class="line"></div><div class="line">    <span class="built_in">XCTAssertNotNil</span>(<span class="keyword">self</span>.calculator, <span class="string">"calculator 对象为空"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testExample &#123;</div><div class="line">    <span class="comment">// This is an example of a functional test case.</span></div><div class="line">    <span class="comment">// Use XCTAssert and related functions to verify your tests produce the correct results.</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testPerformanceExample &#123;</div><div class="line">    <span class="comment">// This is an example of a performance test case.</span></div><div class="line">    [<span class="keyword">self</span> measureBlock:^&#123;</div><div class="line">        <span class="comment">// Put the code you want to measure the time of here.</span></div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>测试 <em>Calculator</em> </p>
-<ol>
-<li>引入 <em>Calculator</em> 头文件；</li>
-<li>声明<em>Calculator</em>属性；</li>
-<li>在<em>-setup</em>方法中创建这个对象；</li>
-<li>添加<em>-testCaculatorNotNil</em>方法，注意方法必须是testXXXX类型，这是规定；</li>
-<li>通过 XCAssertNotNil()断言判断 self.calculator 是否为 nil；</li>
-<li>执行测试，在方法的前面有一个小的菱形，点击就可以执行测试了，如果没有请按 <em>command + s</em>保存一下；</li>
-<li>可以将<em>self.calculator = [[Calculator alloc] init];</em>注释掉在执行测试看看结果。</li>
-</ol>
-<h3 id="测试加法、减法、乘法和除法操作"><a href="#测试加法、减法、乘法和除法操作" class="headerlink" title="测试加法、减法、乘法和除法操作"></a>测试加法、减法、乘法和除法操作</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;XCTest/XCTest.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"Calculator.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CalculatorTests</span> : <span class="title">XCTestCase</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) Calculator *calculator;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CalculatorTests</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setUp &#123;</div><div class="line">    [<span class="keyword">super</span> setUp];</div><div class="line">    <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span></div><div class="line">    <span class="keyword">self</span>.calculator = [[Calculator alloc] init];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)tearDown &#123;</div><div class="line">    <span class="comment">// Put teardown code here. This method is called after the invocation of each test method in the class.</span></div><div class="line">    [<span class="keyword">super</span> tearDown];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testCaculatorNotNil &#123;</div><div class="line"></div><div class="line">    <span class="built_in">XCTAssertNotNil</span>(<span class="keyword">self</span>.calculator, <span class="string">"calculator 对象为空"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testInputAdd &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"+"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"3"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">7</span>,<span class="string">@"step1：1 + 3 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line"></div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"+"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"3"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">10</span>,<span class="string">@"step2：1 + 3 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testInputSub &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"-"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"3"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">1</span>,<span class="string">@"4 - 3 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)testInputMul &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"*"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"2"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">8</span>,<span class="string">@"4 * 2 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testInputDiv &#123;</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"4"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"/"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"2"</span>];</div><div class="line">    [<span class="keyword">self</span>.calculator input:<span class="string">@"="</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">XCTAssertTrue</span>([<span class="keyword">self</span>.calculator.displayValue integerValue] == <span class="number">2</span>,<span class="string">@"4 / 2 = %@ 不成立"</span>,<span class="keyword">self</span>.calculator.displayValue);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)testPerformanceExample &#123;</div><div class="line">    <span class="comment">// This is an example of a performance test case.</span></div><div class="line">    [<span class="keyword">self</span> measureBlock:^&#123;</div><div class="line">        <span class="comment">// Put the code you want to measure the time of here.</span></div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><h3 id="修改："><a href="#修改：" class="headerlink" title="修改："></a>修改：</h3><p>所有的内容都是根据苹果官方文档写成的，苹果示例demo是测试的按钮的点击（不是UI测试），通过button的tag取到按钮，然后调用点击方法实现的测试，这里我觉得直接测试计算类更好一些，所以做了些修改。</p>
-<h3 id="对单元测试认知"><a href="#对单元测试认知" class="headerlink" title="对单元测试认知"></a>对单元测试认知</h3><p>单元测试是TDD的一部分，对开发人员的编程能力要求也比较高，你不仅仅需要会编程更需要知道你为什么这么写，这么写到底有哪些逻辑要考虑。对于刚开始写单元测试的人来说，我觉得就是一个字“写”，写的多了慢慢的自然就会理解里面的东西了。首先，需要理解苹果给的测试的API，这是Unit Test的工具类。其次，需要练习使用这些API，写一写简单的测试类和方法。最后，需要通过测试的结果去优化我们写得代码。当然，最后要去维护我们的测试代码的，这是必需的，否则你的测试可能进行不下去。</p>
-<p>最后demo地址：<a href="https://github.com/HuiDragon/XCTest" target="_blank" rel="external">代码地址</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/28/Python/2017/Python-Requests-库/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/28/Python/2017/Python-Requests-库/" itemprop="url">Python - Requests 库</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-28T15:08:32+08:00">
-                2017-05-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Mac-OSX-安装-Requests-库"><a href="#Mac-OSX-安装-Requests-库" class="headerlink" title="Mac OSX 安装 Requests 库"></a>Mac OSX 安装 Requests 库</h2><h3 id="安装-pip"><a href="#安装-pip" class="headerlink" title="安装 pip"></a>安装 pip</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">curl https://bootstrap.pypa.io/ez_setup.py -o - | sudo python</div><div class="line">sudo chown -R <span class="variable">$USER</span> //Library/Python/2.7/site-packages/</div><div class="line">easy_install pip</div></pre></td></tr></table></figure>
-<h3 id="安装-requests-库"><a href="#安装-requests-库" class="headerlink" title="安装 requests 库"></a>安装 requests 库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">pip install requests</div></pre></td></tr></table></figure>
-<h3 id="下载-IDLE-编辑器"><a href="#下载-IDLE-编辑器" class="headerlink" title="下载 IDLE 编辑器"></a>下载 IDLE 编辑器</h3><pre><code>下载与mac上Python对应版本的IDLE的apk，点击一步一步安装。
-</code></pre><h3 id="在-IDLE-中验证-requests-库安装是否成功"><a href="#在-IDLE-中验证-requests-库安装是否成功" class="headerlink" title="在 IDLE 中验证 requests 库安装是否成功"></a>在 IDLE 中验证 requests 库安装是否成功</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> requests</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(<span class="string">"http://www.baidu.com"</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.status_code </div><div class="line"><span class="number">200</span></div></pre></td></tr></table></figure>
-<h3 id="显示百度首页内容"><a href="#显示百度首页内容" class="headerlink" title="显示百度首页内容"></a>显示百度首页内容</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; r.encoding = <span class="string">'utf-8'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.text</div><div class="line"> <span class="string">u'&lt;!DOCTYPE html&gt;\r\n&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet type=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;\u767e\u5ea6\u4e00\u4e0b\uff0c\u4f60\u5c31\u77e5\u9053&lt;/title&gt;&lt;/head&gt; &lt;body link=#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=\u767e\u5ea6\u4e00\u4e0b class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;\u65b0\u95fb&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;\u5730\u56fe&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;\u89c6\u9891&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;\u8d34\u5427&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;\u767b\u5f55&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write(\'&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u=\'+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ \'" name="tj_login" class="lb"&gt;\u767b\u5f55&lt;/a&gt;\');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;\u66f4\u591a\u4ea7\u54c1&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;\u5173\u4e8e\u767e\u5ea6&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2017&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;\u4f7f\u7528\u767e\u5ea6\u524d\u5fc5\u8bfb&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;\u610f\u89c1\u53cd\u9988&lt;/a&gt;&amp;nbsp;\u4eacICP\u8bc1030173\u53f7&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;\r\n'</span></div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
-<h2 id="Requests-库详细介绍"><a href="#Requests-库详细介绍" class="headerlink" title="Requests 库详细介绍"></a>Requests 库详细介绍</h2><h3 id="七个主要方法"><a href="#七个主要方法" class="headerlink" title="七个主要方法"></a>七个主要方法</h3><p>requests.request(): 构造一个请求，支撑以下各个方法的基础方法；<br>requests.get(): 获取HTML网页的主要方法，对应于HTTP的GET方法；<br>requests.head():获取HTML网页头信息的方法，对应HTTP的HEAD<br>requests.post():向HTML网页提交POST请求的方法，对应HTTP的POST<br>requests.put():向HTTML网页提交PUT请求的方法，对应于HTTP的PUT<br>requests.patch(): 向HTML网页提交局部修改请求，对应于HTTP的PATCH<br>requests.delete(): 向HTML页面提交删除请求，对应于HTTP的DELETE</p>
-<h3 id="Requests-库的get-方法"><a href="#Requests-库的get-方法" class="headerlink" title="Requests 库的get()方法"></a>Requests 库的get()方法</h3><p>构造一个向服务器请求资源的Request对象，返回一个包含服务器资源的Response对象。 </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response = requests.get(url)</div></pre></td></tr></table></figure>
-<p>get() 方法的完整格式：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">requests.get(url, params = <span class="keyword">None</span>, **kwargs)</div></pre></td></tr></table></figure>
-<p>url: 获取页面的url链接；<br>params： url中的额外参数，字典或字节流格式，可选；<br>**kwargs：12个空值访问的参数。</p>
-<p>get 方法的定义：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(url, params=None, **kwargs)</span>:</span></div><div class="line">	“”“Sends a GET Request.</div></pre></td></tr></table></figure>
-<h3 id="Response-对象"><a href="#Response-对象" class="headerlink" title="Response 对象"></a>Response 对象</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; import requests</div><div class="line">&gt;&gt;&gt; r = requests.get("http://www.baidu.com")</div><div class="line">&gt;&gt;&gt; print(r.status_code)</div><div class="line">200</div><div class="line">&gt;&gt;&gt; type(r)</div><div class="line">&lt;class 'requests.models.Response'&gt;</div><div class="line">&gt;&gt;&gt; r.headers</div><div class="line">&#123;'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked', 'Set-Cookie': 'BDORZ=27315; max-age=86400; domain=.baidu.com; path=/', 'Server': 'bfe/1.0.8.18', 'Last-Modified': 'Mon, 23 Jan 2017 13:27:55 GMT', 'Connection': 'Keep-Alive', 'Pragma': 'no-cache', 'Cache-Control': 'private, no-cache, no-store, proxy-revalidate, no-transform', 'Date': 'Sun, 28 May 2017 14:33:26 GMT', 'Content-Type': 'text/html'&#125;</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
-<p>r.status_code 为 200 表示请求成功<br>type(r),查看 r 的类型，为Response类<br>r.headers 查看头部信息</p>
-<h3 id="Response-对象的5个属性"><a href="#Response-对象的5个属性" class="headerlink" title="Response 对象的5个属性"></a>Response 对象的5个属性</h3><ol>
-<li>r.status_code: HTTP 请求返回的状态， 200 表示连接成功， 404 表示失败；</li>
-<li>r.text: HTTP响应内容的字符串形式，即 url对应的页面内容</li>
-<li>r.encoding 从HTTP header中猜测的响应内容编码方式</li>
-<li>r.apparent_encoding: 从内容中分析出的响应内容编码方式（备选编码方式）</li>
-<li>r.content: HTTP 响应内容的二进制形式</li>
-</ol>
-<h2 id="爬取网页的通用代码框架"><a href="#爬取网页的通用代码框架" class="headerlink" title="爬取网页的通用代码框架"></a>爬取网页的通用代码框架</h2><h3 id="Requests-库的异常"><a href="#Requests-库的异常" class="headerlink" title="Requests 库的异常"></a>Requests 库的异常</h3><ol>
-<li>requests.ConnectionError: 网络连接错误，如DNS查询失败、拒绝连接；</li>
-<li>requests.HTTPError： HTTP 错误异常，出现在HTTP协议称的错误；</li>
-<li>requests.URLRequired： URL  确实异常；</li>
-<li>requests.TooManyRedirects： 超过最单重定向次数，产生重定向异常；</li>
-<li>requests.ConnectTimeout：连接服务器超时异常；</li>
-<li>requests.Timeout: 请求URL超时，产生异常。</li>
-</ol>
-<p>如何获取 HTTP 异常类型<br>r.raise_for_status(): 如果请求code不是200，这个函数就会产生一个requests.HTTPError</p>
-<h2 id="HTTP协议及Requests-库方法"><a href="#HTTP协议及Requests-库方法" class="headerlink" title="HTTP协议及Requests 库方法"></a>HTTP协议及Requests 库方法</h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/27/iOS/2017/IB-DESIGNABLE-IBInspectable/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/27/iOS/2017/IB-DESIGNABLE-IBInspectable/" itemprop="url">IB_DESIGNABLE&IBInspectable</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T18:17:30+08:00">
-                2017-05-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/27/iOS/2017/Xcode-注释报警告处理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/27/iOS/2017/Xcode-注释报警告处理/" itemprop="url">Xcode 注释报警告处理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T15:17:51+08:00">
-                2017-05-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Xcode 有时候注释会报警告，尤其是你写一些 @protocol @xxx 等东西的时候，看着牙根都痒痒，于是解决</p>
-<p>Project——&gt; Build Setting ——&gt; Apple LLVM x.x - Warnings - All languages ——&gt; Documentation Comments 设置为 NO 就好了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/27/iOS/2017/Xcode-warning-Handle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/27/iOS/2017/Xcode-warning-Handle/" itemprop="url">Xcode warning Handle</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T13:54:11+08:00">
-                2017-05-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>近期，在写SDK的封装，有些地方的警告需要手动忽略，在这里记录一下。</p>
-</blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在开发的过程中 Xcode 会通过警告提醒开发者有些代码写的不合理或者有隐患，防止开发者出现bug，但是有些时候我们需要Xcode合理的提醒，这就需要一些特别的处理了。先通过一个例子看一下问题。</p>
-<h2 id="局部警告消除"><a href="#局部警告消除" class="headerlink" title="局部警告消除"></a>局部警告消除</h2><h3 id="例子（产生警告）"><a href="#例子（产生警告）" class="headerlink" title="例子（产生警告）"></a>例子（产生警告）</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// OneClass.h</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">OneClass</span> : <span class="title">NSObject</span>&lt;<span class="title">OneProtocol</span>&gt;</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)method1;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">//OneClass.m</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">OneClass</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)method1 &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"----"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)privateMethod&#123;&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">//main.m</span></div><div class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</div><div class="line"></div><div class="line">        OneClass *oneObj = [OneClass new];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(method1)]);        <span class="comment">//1</span></div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(privateMethod)]);   <span class="comment">//1</span></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在以上代码的第 26 行会产生一个警告 “Undeclared selector ‘privateMethod’ ”，这是因为在 OneClass 中有一个私有方法，编译器找不到这个方法，所以给出了警告。</p>
-<h3 id="消除警告"><a href="#消除警告" class="headerlink" title="消除警告"></a>消除警告</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// OneClass.h</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">OneClass</span> : <span class="title">NSObject</span>&lt;<span class="title">OneProtocol</span>&gt;</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)method1;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">//OneClass.m</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">OneClass</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)method1 &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"----"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)privateMethod&#123;&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">//main.m</span></div><div class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</div><div class="line"></div><div class="line">        OneClass *oneObj = [OneClass new];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(method1)]);        <span class="comment">//1</span></div><div class="line"></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(privateMethod)]);   <span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>只需要添加 27、28、30 三行代码警告就可以消除了。</p>
-<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">	<span class="comment">// ... 存在警告的代码</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div></pre></td></tr></table></figure>
-<p>这里有一个需要提醒的地方，”-Wundeclared-selector” 这个警告的参数是根据报警高的类型变化的，在编译的信息中可以找到：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/Users/xxxx/Developer/ResponseSelctor/ResponseSelctor/main.m:20:49: warning: undeclared selector 'privateMethod' [-Wundeclared-selector]</div><div class="line">        NSLog(@"%d",[oneObj respondsToSelector:@selector(privateMethod)]); //1</div></pre></td></tr></table></figure>
-<h2 id="开启警告"><a href="#开启警告" class="headerlink" title="开启警告"></a>开启警告</h2><h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#warning 嘎嘎嘎，这里给你一个警告，作为善意的提醒</span></div><div class="line">OneClass *oneObj = [OneClass new];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(method1)]);        <span class="comment">//1</span></div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%d"</span>,[oneObj</div></pre></td></tr></table></figure>
-<p>项目编译的时候，就会出现警告</p>
-<h3 id="格式-1"><a href="#格式-1" class="headerlink" title="格式"></a>格式</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#warning <span class="meta-string">"警告提示信息"</span></span></div></pre></td></tr></table></figure>
-<h2 id="全局关闭警告"><a href="#全局关闭警告" class="headerlink" title="全局关闭警告"></a>全局关闭警告</h2><p>这个我觉得在工程里很少使用，反正目前我是不去关闭的，所以就 bla bla ….</p>
-<h2 id="警告编译不通过"><a href="#警告编译不通过" class="headerlink" title="警告编译不通过"></a>警告编译不通过</h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/27/iOS/2017/respondsToSelector-and-instancesRespondToSelector/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/27/iOS/2017/respondsToSelector-and-instancesRespondToSelector/" itemprop="url">respondsToSelector and instancesRespondToSelector</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T12:19:21+08:00">
-                2017-05-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>最近在写代码的时候无意间写错了，将<em>respondsToSelector</em>写成了<em>instancesRespondToSelector</em>，结果…就没有了结果。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="respondsToSelector"><a href="#respondsToSelector" class="headerlink" title="respondsToSelector"></a>respondsToSelector</h3><p><em>respondsToSelector</em> 是协议 <nsobject> 中的一个@required的方法(第21行)</nsobject></p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">NSObject</span></span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isEqual:(<span class="keyword">id</span>)object;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSUInteger</span> hash;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) Class superclass;</div><div class="line">- (Class)<span class="keyword">class</span> OBJC_SWIFT_UNAVAILABLE(<span class="string">"use 'type(of: anObject)' instead"</span>);</div><div class="line">- (<span class="keyword">instancetype</span>)<span class="keyword">self</span>;</div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)performSelector:(SEL)aSelector;</div><div class="line">- (<span class="keyword">id</span>)performSelector:(SEL)aSelector withObject:(<span class="keyword">id</span>)object;</div><div class="line">- (<span class="keyword">id</span>)performSelector:(SEL)aSelector withObject:(<span class="keyword">id</span>)object1 withObject:(<span class="keyword">id</span>)object2;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isProxy;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isKindOfClass:(Class)aClass;</div><div class="line">- (<span class="built_in">BOOL</span>)isMemberOfClass:(Class)aClass;</div><div class="line">- (<span class="built_in">BOOL</span>)conformsToProtocol:(Protocol *)aProtocol;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)respondsToSelector:(SEL)aSelector;</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)<span class="keyword">retain</span> OBJC_ARC_UNAVAILABLE;</div><div class="line">- (<span class="keyword">oneway</span> <span class="keyword">void</span>)release OBJC_ARC_UNAVAILABLE;</div><div class="line">- (<span class="keyword">instancetype</span>)autorelease OBJC_ARC_UNAVAILABLE;</div><div class="line">- (<span class="built_in">NSUInteger</span>)retainCount OBJC_ARC_UNAVAILABLE;</div><div class="line"></div><div class="line">- (<span class="keyword">struct</span> _NSZone *)zone OBJC_ARC_UNAVAILABLE;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *description;</div><div class="line"><span class="keyword">@optional</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *debugDescription;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p><em>respondsToSelector</em> 返回一个Boolean值，表示调用该方法的对象是否实现了或者继承了 <em>aSelector</em> 这个方法。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">void</span> testResponseSelector() &#123;</div><div class="line"></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"————————————————————testResponseSelector——————————————————————"</span>);</div><div class="line"></div><div class="line">    OneClass *oneObj = [OneClass new];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj method1]            %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(method1)]);         <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj protocolMethod]     %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(protocolMethod)]);  <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj categoryMethod]     %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(categoryMethod)]);  <span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj privateMethod]      %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(privateMethod)]);   <span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj classMethod]        %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);     <span class="comment">//0</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj classMethod]        %d"</span>,[OneClass respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);   <span class="comment">//1</span></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"***************************************************************"</span>);</div><div class="line">    </div><div class="line">    SubOneClass *subOneObj = [SubOneClass new];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj method1]          %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(method1)]);         <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj protocolMethod]   %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(protocolMethod)]);  <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj categoryMethod]   %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(categoryMethod)]);  <span class="comment">//1</span></div><div class="line">    </div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj privateMethod]    %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(privateMethod)]);  <span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj classMethod]      %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);    <span class="comment">//0</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass classMethod]    %d"</span>,[SubOneClass respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);  <span class="comment">//1</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="实例方法（对象方法）"><a href="#实例方法（对象方法）" class="headerlink" title="实例方法（对象方法）"></a>实例方法（对象方法）</h4><p><em>respondsToSelector</em> 可以判断类中的公共方法、私有方法、协议方法、类目方法有没有实现，如果只是声明了方法而没有实现，那么返回值也是FALSE。</p>
-<h4 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h4><p><em>respondsToSelector</em> 针对类方法，只能通过类来调用该方法才能正确判断类方法有没有实现。</p>
-<h3 id="instancesRespondToSelector"><a href="#instancesRespondToSelector" class="headerlink" title="instancesRespondToSelector"></a>instancesRespondToSelector</h3><p>方法声明</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">BOOL</span>)instancesRespondToSelector:(SEL)aSelector;</div></pre></td></tr></table></figure>
-<p>对于 <em>instancesRespondToSelector</em> ，首先只能通过类调用，因为他是一个类方法，而且该方法只能判断实例方法，对类方法是没有判别能力的。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> testInstanceResponseSelector() &#123;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"————————————————————instancesRespondToSelector——————————————————————"</span>);</div><div class="line"></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass method1]        %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(method1)]);		<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass protocolMethod] %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(protocolMethod)]);	<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass categoryMethod] %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(categoryMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass privateMethod]  %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(privateMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass classMethod]    %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(classMethod)]);	<span class="comment">//0</span></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"***************************************************************"</span>);</div><div class="line"></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass method1]          %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(method1)]);		<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass protocolMethod]   %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(protocolMethod)]);	<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass categoryMethod]   %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(categoryMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass privateMethod]    %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(privateMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass classMethod]      %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(classMethod)]);	<span class="comment">//0</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1501,7 +1487,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1523,7 +1509,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
