@@ -253,6 +253,355 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/Python/基础/Linux-基本命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/20/Python/基础/Linux-基本命令/" itemprop="url">Linux 基本命令</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T22:32:47+08:00">
+                2017-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这里记录了日常中经常用到的 Linux 中 shell 命令，作为一个备忘录：</p>
+<h2 id="history"><a href="#history" class="headerlink" title="history"></a>history</h2><p>显示在终端上之前输入过得命令列表，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">history</span></div><div class="line">... ...</div><div class="line">8286  clear</div><div class="line"> 8287  ls</div><div class="line"> 8288  <span class="built_in">pwd</span></div><div class="line"> 8289  ls</div><div class="line"> 8290  clear</div><div class="line"> 8291  c</div><div class="line"> 8292  <span class="built_in">cd</span> ~</div><div class="line"> 8293  ls</div><div class="line"> 8294  clear</div><div class="line"> 8295  <span class="built_in">cd</span> blog</div><div class="line"> 8296  ls</div><div class="line"> 8297  hist</div><div class="line"> 8298  <span class="built_in">history</span></div><div class="line"> 8299  clear</div><div class="line"> 8300  hexo new <span class="string">"Linux 基本命令"</span></div><div class="line"> 8301  open .</div><div class="line"> 8302  ls</div><div class="line">$</div></pre></td></tr></table></figure>
+<p>可以通过上下键或者control+p(和向上箭头一样)、control+n(同向下箭头)找到之前输入过得命令，如果想要执行某一条可以通过 !123,执行第123条命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">8288  <span class="built_in">pwd</span></div><div class="line"> 8289  ls</div><div class="line"> 8290  clear</div><div class="line"> 8291  c</div><div class="line"> 8292  <span class="built_in">cd</span> ~</div><div class="line"> 8293  ls</div><div class="line"> 8294  clear</div><div class="line"> 8295  <span class="built_in">cd</span> blog</div><div class="line"> 8296  ls</div><div class="line"> 8297  hist</div><div class="line"> 8298  <span class="built_in">history</span></div><div class="line"> 8299  clear</div><div class="line"> 8300  hexo new <span class="string">"Linux 基本命令"</span></div><div class="line"> 8301  open .</div><div class="line"> 8302  ls</div><div class="line">$ !8290</div><div class="line">$ clear</div></pre></td></tr></table></figure>
+<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><h3 id=""><a href="#" class="headerlink" title="*"></a>*</h3><p>$ ls -l # 显示目录的文件列表<br>total 0<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:51 123.txt<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 124.txt<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 126<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 134<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 135<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 136<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 138<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 139</p>
+<p>$  ls -l 12<em> # 显示以 12开头的所有文件列表， </em> 表示多个任意字符<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:51 123.txt<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:54 123456<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 124.txt<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 126</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title="?"></a>?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ls <span class="_">-l</span> 12? <span class="comment"># 显示</span></div><div class="line">-rw-r--r--  1 liuguiliang  staff  0  6 20 22:52 126</div></pre></td></tr></table></figure>
+<p>###[]</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/Python/基础/操作系统发展史/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/19/Python/基础/操作系统发展史/" itemprop="url">操作系统发展史</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T22:47:29+08:00">
+                2017-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Unix</strong> : 一个老头为了玩游戏而写的，后来想让这个系统在多个设备上通用，又开发了 C 语言，然后重写了Unix系统；<br><strong>Mini-Unix</strong>： Unix的源码后来不再开源，一位大学教授写了一个类似于Unix的操作系统，起名字叫 Mini-Unix;<br><strong>Linux</strong> : Torvalds 利用 GNU 的 bash 当做开发环境， gcc 当做编译工具，编写了 Linux 内核 -v0.02;</p>
+<p>之后 Linux 又分为了 内核版本 和 发行版本，我们日常中用到的都是发行版本，比如Ubuntu、红帽、CentOs 等等。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/16/脚本/21-天学习-Shell（第-2-天）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/16/脚本/21-天学习-Shell（第-2-天）/" itemprop="url">21-天学习-Shell（第 2 天）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-16T13:39:12+08:00">
+                2017-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="命令之乐"><a href="#命令之乐" class="headerlink" title="命令之乐"></a>命令之乐</h2><h2 id="用-cat-进行拼接"><a href="#用-cat-进行拼接" class="headerlink" title="用 cat 进行拼接"></a>用 cat 进行拼接</h2><p>cat 命令通常用于读取、显示或者拼接文件内容，不过 cat 命令远不止如此。</p>
+<h3 id="实战演练-读取文件内容"><a href="#实战演练-读取文件内容" class="headerlink" title="实战演练-读取文件内容"></a>实战演练-读取文件内容</h3><p>cat 命令是一个平日里经常会使用到的简单命令。它本身表示concatenate(拼接)。<br>格式：$cat file1 file2 file3 …</p>
+<ul>
+<li>打印单个文件</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/15/脚本/21-天学习-Shell（第-1-天）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1097,347 +1446,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/组件化/组件化几种方式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/02/组件化/组件化几种方式/" itemprop="url">组件化几种方式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T15:41:40+08:00">
-                2017-06-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/iOS/2017/UnitTest/单元测试-资料收集/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/02/iOS/2017/UnitTest/单元测试-资料收集/" itemprop="url">单元测试--资料收集</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T14:54:11+08:00">
-                2017-06-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="objc-io-测试专题"><a href="#objc-io-测试专题" class="headerlink" title="objc.io 测试专题"></a><a href="https://objccn.io/issue-15-0/" target="_blank" rel="external">objc.io 测试专题</a></h2><h2 id="iOS-开发之单元测试"><a href="#iOS-开发之单元测试" class="headerlink" title="iOS 开发之单元测试"></a><a href="https://www.bbsmax.com/A/1O5El3GJ7a/" target="_blank" rel="external">iOS 开发之单元测试</a></h2><p>文章讲的使用的是OCUnit，目前已经使用XCTest，OCUnit已经被弃用。</p>
-<p>文章分为了5部分：<br>第一部分：单元测试概述<br>主要介绍了两部分内容，一是，单元测试的充要条件；二是，单元测试的好处；</p>
-<p>第二部分：iOS单元测试概述<br>主要介绍了你要写一个能测试的代码</p>
-<p>第三部分：单元测试实践<br>这部分是主要，要好好看一下</p>
-<p>第四部分：其他<br>流程、TDD和总结了。</p>
-<p>这篇文章，告诉了你Unit的一些实施方案，但是并没有实际的代码和执行，所以需要领悟。</p>
-<h2 id="iOS开发：XCTest单元测试（附上一个单例的测试代码）"><a href="#iOS开发：XCTest单元测试（附上一个单例的测试代码）" class="headerlink" title="iOS开发：XCTest单元测试（附上一个单例的测试代码）"></a><a href="https://www.bbsmax.com/A/rV57nGo9JP/" target="_blank" rel="external">iOS开发：XCTest单元测试（附上一个单例的测试代码）</a></h2><p>使用XCTest，有示例，有过程，作为入门不错的选择。</p>
-<h2 id="Xcode单元测试-XCTest"><a href="#Xcode单元测试-XCTest" class="headerlink" title="Xcode单元测试-XCTest"></a><a href="http://yulingtianxia.com/blog/2014/04/28/iosdan-yuan-ce-shi-xctest/" target="_blank" rel="external">Xcode单元测试-XCTest</a></h2><p>看XCTest创建过程以及断言的使用可以看这篇</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/Swift/Raywenderlich/Swift Apprentice_v2.0/Swift-Apprentice-v2-0-笔记-一/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/02/Swift/Raywenderlich/Swift Apprentice_v2.0/Swift-Apprentice-v2-0-笔记-一/" itemprop="url">Swift Apprentice v2.0 笔记(一) </a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T12:33:39+08:00">
-                2017-06-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1487,7 +1495,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

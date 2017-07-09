@@ -253,6 +253,395 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/09/Linux-命令之查看磁盘空间/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/09/Linux-命令之查看磁盘空间/" itemprop="url">Linux 命令之查看磁盘空间</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-09T09:49:02+08:00">
+                2017-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h2><ol>
+<li>查看磁盘分区大小，已用空间等信息：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df -h</div></pre></td></tr></table></figure>
+<ol>
+<li>查看<em>Developer</em>目录大小</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">du -sh Developer</div></pre></td></tr></table></figure>
+<ol>
+<li>查找所有目录大小</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">du -sh *</div></pre></td></tr></table></figure>
+<ol>
+<li>查看当前目录</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">du -sh</div></pre></td></tr></table></figure>
+<ol>
+<li>查看当前目录下子目录分别大小</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">du -h</div></pre></td></tr></table></figure>
+<h2 id="du用法："><a href="#du用法：" class="headerlink" title="du用法："></a>du用法：</h2><p>$du –help<br>用法：du [选项]… [文件]…<br>　或：du [选项]… –files0-from=F<br>计算每个文件的磁盘用量，目录则取总用量。</p>
+<p>长选项必须使用的参数对于短选项时也是必需使用的。<br>  -a, –all 输出所有文件的磁盘用量，不仅仅是目录<br>      –apparent-size 显示表面用量，而并非是磁盘用量；虽然表面用量通常会<br>小一些，但有时它会因为稀疏文件间的”洞”、内部碎<br>片、非直接引用的块等原因而变大。<br>  -B, –block-size=大小 使用指定字节数的块。例如-BM 以 1,048,576<br>字节为单位显示大小。参看SIZE 格式。  -b, –bytes 等于–apparent-size –block-size=1<br>  -c, –total 显示总计信息<br>  -D, –dereference-args 解除命令行中列出的符号连接<br>      –files0-from=F 计算文件F 中以NUL 结尾的文件名对应占用的磁盘空间<br>如果F 的值是”-“，则从标准输入读入文件名<br>  -H 等于–dereference-args (-D)<br>  -h, –human-readable 以可读性较好的方式显示尺寸(例如：1K 234M 2G)<br>      –si 类似-h，但在计算时使用1000 为基底而非1024<br>  -k 等于–block-size=1K<br>  -l, –count-links 如果是硬连接，就多次计算其尺寸<br>  -m 等于–block-size=1M<br>  -L, –dereference 找出任何符号链接指示的真正目的地<br>  -P, –no-dereference 不跟随任何符号链接(默认)<br>  -0, –null 将每个空行视作0 字节而非换行符<br>  -S, –separate-dirs 不包括子目录的占用量<br>  -s, –summarize 只分别计算命令列中每个参数所占的总用量<br>  -x, –one-file-system 跳过处于不同文件系统之上的目录<br>  -X, –exclude-from=文件 排除与指定文件中描述的模式相符的文件<br>      –exclude=PATTERN 排除与PATTERN 中描述的模式相符的文件<br>      –max-depth=N 显示目录总计(与–all 一起使用计算文件)<br>当N 为指定数值时计算深度为N；<br>–max-depth=0 等于–summarize<br>      –time 显示目录或该目录子目录下所有文件的最后修改时间<br>      –time=WORD 显示WORD 时间，而非修改时间：<br>atime，access，use，ctime 或status<br>      –time-style=样式 按照指定样式显示时间(样式解释规则同”date”命令)：<br>full-iso，long-iso，iso，+FORMAT<br>      –help 显示此帮助信息并退出<br>      –version 显示版本信息并退出</p>
+<p>所显示的数值是来自 –block-size、DU_BLOCK_SIZE、BLOCK_SIZE<br>及 BLOCKSIZE 环境变量中第一个可用的 SIZE 单位。<br>否则，默认单位是 1024 字节(或是 512，若设定 POSIXLY_CORRECT 的话)。</p>
+<p>SIZE 可以是一个可选的整数，后面跟着以下单位中的一个：<br>KB 1000，K 1024，MB 1000<em>1000，M 1024</em>1024，还有 G、T、P、E、Z、Y。</p>
+<h2 id="df用法："><a href="#df用法：" class="headerlink" title="df用法："></a>df用法：</h2><p>$df –help<br>用法：df [选项]… [文件]…<br>显示每个文件所在的文件系统的信息，默认是显示所有文件系统。</p>
+<p>长选项必须使用的参数对于短选项时也是必需使用的。<br>  -a, –all 包含虚拟文件系统<br>  -B, –block-size=大小 使用指定字节数的块。例如-BM 以 1,248,576<br>字节为单位显示大小。参看SIZE 格式。      –total 显示总计信息<br>  -h, –human-readable 以可读性较好的格式显示尺寸(例如：1K 234M 2G)<br>  -H, –si 计算时使用1000 为基底而非1024<br>  -i, –inodes 显示inode 信息而非块使用量<br>  -k 即–block-size=1K<br>  -l, –local 只显示本机的文件系统<br>      –no-sync 取得使用量数据前不进行同步动作(默认)<br>  -P, –portability 使用POSIX 兼容的输出格式<br>      –sync 取得使用量数据前先进行同步动作<br>  -t, –type=类型 只显示指定文件系统为指定类型的信息<br>  -T, –print-type 显示文件系统类型<br>  -x, –exclude-type=类型 只显示文件系统不是指定类型信息<br>  -v (忽略)<br>      –help 显示此帮助信息并退出<br>      –version 显示版本信息并退出</p>
+<p>所显示的数值是来自 –block-size、DF_BLOCK_SIZE、BLOCK_SIZE<br>及 BLOCKSIZE 环境变量中第一个可用的 SIZE 单位。<br>否则，默认单位是 1024 字节(或是 512，若设定 POSIXLY_CORRECT 的话)。</p>
+<p>SIZE 可以是一个可选的整数，后面跟着以下单位中的一个：<br>KB 1000，K 1024，MB 1000<em>1000，M 1024</em>1024，还有 G、T、P、E、Z、Y。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/08/sublime-编译系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/08/sublime-编译系统/" itemprop="url">sublime 编译系统 </a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-08T00:24:21+08:00">
+                2017-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在使用 sublime 编写一些程序的时候，需要编译运行看一下效果，这里记录着一些配置,配置好之后就可以愉快的使用sublime验证我们写的程序了：</p>
+<ol>
+<li>PHP</li>
+<li>Java</li>
+</ol>
+<h2 id="编译PHP"><a href="#编译PHP" class="headerlink" title="编译PHP"></a>编译PHP</h2><h3 id="第一步：新建编译系统-PHP-sublime-build（Tools-gt-Build-System-gt-New-Build-System）"><a href="#第一步：新建编译系统-PHP-sublime-build（Tools-gt-Build-System-gt-New-Build-System）" class="headerlink" title="第一步：新建编译系统 PHP.sublime-build（Tools -&gt; Build System -&gt; New Build System）"></a>第一步：新建编译系统 PHP.sublime-build（Tools -&gt; Build System -&gt; New Build System）</h3><h3 id="第二步：在-PHP-sublime-build-输入"><a href="#第二步：在-PHP-sublime-build-输入" class="headerlink" title="第二步：在 PHP.sublime-build 输入"></a>第二步：在 PHP.sublime-build 输入</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="string">"cmd"</span>:[<span class="string">"php"</span>, <span class="string">"<span class="variable">$file</span>"</span>],</div><div class="line">	<span class="string">"file_regex"</span>:<span class="string">"php$"</span>,</div><div class="line">	<span class="string">"selector"</span>:<span class="string">"source.php"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="第三步：-cmd-B-运行编译"><a href="#第三步：-cmd-B-运行编译" class="headerlink" title="第三步： cmd + B 运行编译"></a>第三步： cmd + B 运行编译</h3><h2 id="编译运行-JAVA"><a href="#编译运行-JAVA" class="headerlink" title="编译运行 JAVA"></a>编译运行 JAVA</h2><h3 id="第一步：新建编译系统-javaRun-sublime-build"><a href="#第一步：新建编译系统-javaRun-sublime-build" class="headerlink" title="第一步：新建编译系统 javaRun.sublime-build"></a>第一步：新建编译系统 javaRun.sublime-build</h3><h3 id="第二步：在-javaRun-sublime-build-输入"><a href="#第二步：在-javaRun-sublime-build-输入" class="headerlink" title="第二步：在 javaRun.sublime-build 输入"></a>第二步：在 javaRun.sublime-build 输入</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"shell_cmd"</span>: <span class="string">"javac -encoding utf-8 <span class="variable">$file_name</span> &amp;&amp; java <span class="variable">$file_base_name</span>"</span>,</div><div class="line">    <span class="string">"file_regex"</span>: <span class="string">"^ *\\[javac\\] (.+):([0-9]+):() (.*)$"</span>,</div><div class="line">    <span class="string">"selector"</span>: <span class="string">"source.java"</span>,    </div><div class="line">    <span class="string">"encoding"</span>: <span class="string">"utf-8"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="第三步：-cmd-B-运行编译-1"><a href="#第三步：-cmd-B-运行编译-1" class="headerlink" title="第三步： cmd + B 运行编译"></a>第三步： cmd + B 运行编译</h3>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/SQLite/sqlite-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/SQLite/sqlite-一/" itemprop="url">sqlite (一)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T12:32:01+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="SQLite-优势"><a href="#SQLite-优势" class="headerlink" title="SQLite 优势"></a>SQLite 优势</h2><ol>
+<li>轻量级、关系型和嵌入式；</li>
+<li>速度快、占用资源低和可移植性强</li>
+</ol>
+<p>iOS 内置了 sqlite，直接调用API就可以使用，它是植入我们进程空间的，不需要跨进程处理，提高了处理速度。</p>
+<h2 id="SQlite-支持的数据类型"><a href="#SQlite-支持的数据类型" class="headerlink" title="SQlite 支持的数据类型"></a>SQlite 支持的数据类型</h2><ul>
+<li>INTEGER，有符号整型；</li>
+<li>REAL， 浮点型；</li>
+<li>TEXT，字符串类型，采用 UTF-8 UTF-16 编码</li>
+<li>BLOB， 大二进制对象类型，能够存放任何二进制数据</li>
+<li>VARCHAR CHAR CLOB 转成为TEXT类型</li>
+<li>FLOAT DOUBLE 转换成 REAL 类型</li>
+<li>NUMERIC 转换成为 INTEGER 或者 REAL 类型</li>
+</ul>
+<h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3><ol>
+<li>SQLite 不支持布尔类型数据，使用证书 0 或者 1 代替；</li>
+<li>没有日期和时间类型数据，存储在TEXT、REAL类型中；</li>
+</ol>
+<h2 id="SQLite-基础"><a href="#SQLite-基础" class="headerlink" title="SQLite 基础"></a>SQLite 基础</h2><h3 id="SQLite-语句"><a href="#SQLite-语句" class="headerlink" title="SQLite 语句"></a>SQLite 语句</h3><ol>
+<li>创建数据表<br>指令：create table tableName(字段1, 字段2, …);<br>示例：create table USER(uid,name);</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/01/读书/iOS-CORE-ANIMATION-ADVANCED-TECHNIQUES-阅读/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1125,355 +1514,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/Python/基础/Linux-基本命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/20/Python/基础/Linux-基本命令/" itemprop="url">Linux 基本命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T22:32:47+08:00">
-                2017-06-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里记录了日常中经常用到的 Linux 中 shell 命令，作为一个备忘录：</p>
-<h2 id="history"><a href="#history" class="headerlink" title="history"></a>history</h2><p>显示在终端上之前输入过得命令列表，如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">history</span></div><div class="line">... ...</div><div class="line">8286  clear</div><div class="line"> 8287  ls</div><div class="line"> 8288  <span class="built_in">pwd</span></div><div class="line"> 8289  ls</div><div class="line"> 8290  clear</div><div class="line"> 8291  c</div><div class="line"> 8292  <span class="built_in">cd</span> ~</div><div class="line"> 8293  ls</div><div class="line"> 8294  clear</div><div class="line"> 8295  <span class="built_in">cd</span> blog</div><div class="line"> 8296  ls</div><div class="line"> 8297  hist</div><div class="line"> 8298  <span class="built_in">history</span></div><div class="line"> 8299  clear</div><div class="line"> 8300  hexo new <span class="string">"Linux 基本命令"</span></div><div class="line"> 8301  open .</div><div class="line"> 8302  ls</div><div class="line">$</div></pre></td></tr></table></figure>
-<p>可以通过上下键或者control+p(和向上箭头一样)、control+n(同向下箭头)找到之前输入过得命令，如果想要执行某一条可以通过 !123,执行第123条命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">8288  <span class="built_in">pwd</span></div><div class="line"> 8289  ls</div><div class="line"> 8290  clear</div><div class="line"> 8291  c</div><div class="line"> 8292  <span class="built_in">cd</span> ~</div><div class="line"> 8293  ls</div><div class="line"> 8294  clear</div><div class="line"> 8295  <span class="built_in">cd</span> blog</div><div class="line"> 8296  ls</div><div class="line"> 8297  hist</div><div class="line"> 8298  <span class="built_in">history</span></div><div class="line"> 8299  clear</div><div class="line"> 8300  hexo new <span class="string">"Linux 基本命令"</span></div><div class="line"> 8301  open .</div><div class="line"> 8302  ls</div><div class="line">$ !8290</div><div class="line">$ clear</div></pre></td></tr></table></figure>
-<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><h3 id=""><a href="#" class="headerlink" title="*"></a>*</h3><p>$ ls -l # 显示目录的文件列表<br>total 0<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:51 123.txt<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 124.txt<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 126<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 134<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 135<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 136<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 138<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 139</p>
-<p>$  ls -l 12<em> # 显示以 12开头的所有文件列表， </em> 表示多个任意字符<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:51 123.txt<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:54 123456<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 124.txt<br>-rw-r–r–  1 liuguiliang  staff  0  6 20 22:52 126</p>
-<h3 id="-1"><a href="#-1" class="headerlink" title="?"></a>?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ls <span class="_">-l</span> 12? <span class="comment"># 显示</span></div><div class="line">-rw-r--r--  1 liuguiliang  staff  0  6 20 22:52 126</div></pre></td></tr></table></figure>
-<p>###[]</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/Python/基础/操作系统发展史/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/19/Python/基础/操作系统发展史/" itemprop="url">操作系统发展史</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T22:47:29+08:00">
-                2017-06-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>Unix</strong> : 一个老头为了玩游戏而写的，后来想让这个系统在多个设备上通用，又开发了 C 语言，然后重写了Unix系统；<br><strong>Mini-Unix</strong>： Unix的源码后来不再开源，一位大学教授写了一个类似于Unix的操作系统，起名字叫 Mini-Unix;<br><strong>Linux</strong> : Torvalds 利用 GNU 的 bash 当做开发环境， gcc 当做编译工具，编写了 Linux 内核 -v0.02;</p>
-<p>之后 Linux 又分为了 内核版本 和 发行版本，我们日常中用到的都是发行版本，比如Ubuntu、红帽、CentOs 等等。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/16/脚本/21-天学习-Shell（第-2-天）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/16/脚本/21-天学习-Shell（第-2-天）/" itemprop="url">21-天学习-Shell（第 2 天）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-16T13:39:12+08:00">
-                2017-06-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="命令之乐"><a href="#命令之乐" class="headerlink" title="命令之乐"></a>命令之乐</h2><h2 id="用-cat-进行拼接"><a href="#用-cat-进行拼接" class="headerlink" title="用 cat 进行拼接"></a>用 cat 进行拼接</h2><p>cat 命令通常用于读取、显示或者拼接文件内容，不过 cat 命令远不止如此。</p>
-<h3 id="实战演练-读取文件内容"><a href="#实战演练-读取文件内容" class="headerlink" title="实战演练-读取文件内容"></a>实战演练-读取文件内容</h3><p>cat 命令是一个平日里经常会使用到的简单命令。它本身表示concatenate(拼接)。<br>格式：$cat file1 file2 file3 …</p>
-<ul>
-<li>打印单个文件</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1523,7 +1563,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

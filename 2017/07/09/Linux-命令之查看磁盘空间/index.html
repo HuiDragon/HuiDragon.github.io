@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="DB," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -90,17 +90,16 @@
 
 
 
-<meta name="description" content="SQL 语言介绍：SQL，全称数据化结构查询语言，常见的SQL语句类型分为：数据定义语言（DDL）、事务处理语言（TPL）、数据控制语言（DCL）和数据操作语言（DML）。对于开发而言，着重使用的是DML，DML语言包含了Select、Insert、Update和Delete等操作。正确使用SQL语句，有利于：增加数据库处理效率，减少应用相应的时间；减少数据库服务的负载，增加服务器的稳定性；减少服">
-<meta name="keywords" content="DB">
+<meta name="description" content="常用指令 查看磁盘分区大小，已用空间等信息：  1df -h  查看Developer目录大小  1du -sh Developer  查找所有目录大小  1du -sh *  查看当前目录  1du -sh  查看当前目录下子目录分别大小  1du -h du用法：$du –help用法：du [选项]… [文件]…　或：du [选项]… –files0-from=F计算每个文件的磁盘用量，目录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL 开发技巧（一）">
-<meta property="og:url" content="http://yoursite.com/2017/05/08/MySQL/MySQL-开发技巧（一）/index.html">
+<meta property="og:title" content="Linux 命令之查看磁盘空间">
+<meta property="og:url" content="http://yoursite.com/2017/07/09/Linux-命令之查看磁盘空间/index.html">
 <meta property="og:site_name" content="枫叶 🍁 影">
-<meta property="og:description" content="SQL 语言介绍：SQL，全称数据化结构查询语言，常见的SQL语句类型分为：数据定义语言（DDL）、事务处理语言（TPL）、数据控制语言（DCL）和数据操作语言（DML）。对于开发而言，着重使用的是DML，DML语言包含了Select、Insert、Update和Delete等操作。正确使用SQL语句，有利于：增加数据库处理效率，减少应用相应的时间；减少数据库服务的负载，增加服务器的稳定性；减少服">
-<meta property="og:updated_time" content="2017-05-08T15:36:46.000Z">
+<meta property="og:description" content="常用指令 查看磁盘分区大小，已用空间等信息：  1df -h  查看Developer目录大小  1du -sh Developer  查找所有目录大小  1du -sh *  查看当前目录  1du -sh  查看当前目录下子目录分别大小  1du -h du用法：$du –help用法：du [选项]… [文件]…　或：du [选项]… –files0-from=F计算每个文件的磁盘用量，目录">
+<meta property="og:updated_time" content="2017-07-09T01:56:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL 开发技巧（一）">
-<meta name="twitter:description" content="SQL 语言介绍：SQL，全称数据化结构查询语言，常见的SQL语句类型分为：数据定义语言（DDL）、事务处理语言（TPL）、数据控制语言（DCL）和数据操作语言（DML）。对于开发而言，着重使用的是DML，DML语言包含了Select、Insert、Update和Delete等操作。正确使用SQL语句，有利于：增加数据库处理效率，减少应用相应的时间；减少数据库服务的负载，增加服务器的稳定性；减少服">
+<meta name="twitter:title" content="Linux 命令之查看磁盘空间">
+<meta name="twitter:description" content="常用指令 查看磁盘分区大小，已用空间等信息：  1df -h  查看Developer目录大小  1du -sh Developer  查找所有目录大小  1du -sh *  查看当前目录  1du -sh  查看当前目录下子目录分别大小  1du -h du用法：$du –help用法：du [选项]… [文件]…　或：du [选项]… –files0-from=F计算每个文件的磁盘用量，目录">
 
 
 
@@ -128,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/08/MySQL/MySQL-开发技巧（一）/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/07/09/Linux-命令之查看磁盘空间/"/>
 
 
 
 
 
-  <title>MySQL 开发技巧（一） | 枫叶 🍁 影</title>
+  <title>Linux 命令之查看磁盘空间 | 枫叶 🍁 影</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +252,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/08/MySQL/MySQL-开发技巧（一）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/09/Linux-命令之查看磁盘空间/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘桂良">
@@ -270,7 +269,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MySQL 开发技巧（一）</h1>
+          <h1 class="post-title" itemprop="name headline">Linux 命令之查看磁盘空间</h1>
         
 
         <div class="post-meta">
@@ -282,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-08T20:15:10+08:00">
-                2017-05-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-09T09:49:02+08:00">
+                2017-07-09
               </time>
             
 
@@ -292,28 +291,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -339,9 +316,34 @@
       
 
       
-        <h2 id="SQL-语言介绍："><a href="#SQL-语言介绍：" class="headerlink" title="SQL 语言介绍："></a>SQL 语言介绍：</h2><p>SQL，全称数据化结构查询语言，常见的SQL语句类型分为：数据定义语言（DDL）、事务处理语言（TPL）、数据控制语言（DCL）和数据操作语言（DML）。对于开发而言，着重使用的是DML，DML语言包含了Select、Insert、Update和Delete等操作。正确使用SQL语句，有利于：增加数据库处理效率，减少应用相应的时间；减少数据库服务的负载，增加服务器的稳定性；减少服务器间通讯的网络流量。</p>
-<h2 id="Join从句"><a href="#Join从句" class="headerlink" title="Join从句"></a>Join从句</h2><p>Join分为四种类型：内连接、全外连接、左外连接、右外连接和交叉连接。</p>
-<h3 id="内连接（Inner-Join）"><a href="#内连接（Inner-Join）" class="headerlink" title="内连接（Inner Join）"></a>内连接（Inner Join）</h3><p>内连接基于连接为此将两张表（如A表和B表）的列组合在一起，产生新的结果表。</p>
+        <h2 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h2><ol>
+<li>查看磁盘分区大小，已用空间等信息：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df -h</div></pre></td></tr></table></figure>
+<ol>
+<li>查看<em>Developer</em>目录大小</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">du -sh Developer</div></pre></td></tr></table></figure>
+<ol>
+<li>查找所有目录大小</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">du -sh *</div></pre></td></tr></table></figure>
+<ol>
+<li>查看当前目录</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">du -sh</div></pre></td></tr></table></figure>
+<ol>
+<li>查看当前目录下子目录分别大小</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">du -h</div></pre></td></tr></table></figure>
+<h2 id="du用法："><a href="#du用法：" class="headerlink" title="du用法："></a>du用法：</h2><p>$du –help<br>用法：du [选项]… [文件]…<br>　或：du [选项]… –files0-from=F<br>计算每个文件的磁盘用量，目录则取总用量。</p>
+<p>长选项必须使用的参数对于短选项时也是必需使用的。<br>  -a, –all 输出所有文件的磁盘用量，不仅仅是目录<br>      –apparent-size 显示表面用量，而并非是磁盘用量；虽然表面用量通常会<br>小一些，但有时它会因为稀疏文件间的”洞”、内部碎<br>片、非直接引用的块等原因而变大。<br>  -B, –block-size=大小 使用指定字节数的块。例如-BM 以 1,048,576<br>字节为单位显示大小。参看SIZE 格式。  -b, –bytes 等于–apparent-size –block-size=1<br>  -c, –total 显示总计信息<br>  -D, –dereference-args 解除命令行中列出的符号连接<br>      –files0-from=F 计算文件F 中以NUL 结尾的文件名对应占用的磁盘空间<br>如果F 的值是”-“，则从标准输入读入文件名<br>  -H 等于–dereference-args (-D)<br>  -h, –human-readable 以可读性较好的方式显示尺寸(例如：1K 234M 2G)<br>      –si 类似-h，但在计算时使用1000 为基底而非1024<br>  -k 等于–block-size=1K<br>  -l, –count-links 如果是硬连接，就多次计算其尺寸<br>  -m 等于–block-size=1M<br>  -L, –dereference 找出任何符号链接指示的真正目的地<br>  -P, –no-dereference 不跟随任何符号链接(默认)<br>  -0, –null 将每个空行视作0 字节而非换行符<br>  -S, –separate-dirs 不包括子目录的占用量<br>  -s, –summarize 只分别计算命令列中每个参数所占的总用量<br>  -x, –one-file-system 跳过处于不同文件系统之上的目录<br>  -X, –exclude-from=文件 排除与指定文件中描述的模式相符的文件<br>      –exclude=PATTERN 排除与PATTERN 中描述的模式相符的文件<br>      –max-depth=N 显示目录总计(与–all 一起使用计算文件)<br>当N 为指定数值时计算深度为N；<br>–max-depth=0 等于–summarize<br>      –time 显示目录或该目录子目录下所有文件的最后修改时间<br>      –time=WORD 显示WORD 时间，而非修改时间：<br>atime，access，use，ctime 或status<br>      –time-style=样式 按照指定样式显示时间(样式解释规则同”date”命令)：<br>full-iso，long-iso，iso，+FORMAT<br>      –help 显示此帮助信息并退出<br>      –version 显示版本信息并退出</p>
+<p>所显示的数值是来自 –block-size、DU_BLOCK_SIZE、BLOCK_SIZE<br>及 BLOCKSIZE 环境变量中第一个可用的 SIZE 单位。<br>否则，默认单位是 1024 字节(或是 512，若设定 POSIXLY_CORRECT 的话)。</p>
+<p>SIZE 可以是一个可选的整数，后面跟着以下单位中的一个：<br>KB 1000，K 1024，MB 1000<em>1000，M 1024</em>1024，还有 G、T、P、E、Z、Y。</p>
+<h2 id="df用法："><a href="#df用法：" class="headerlink" title="df用法："></a>df用法：</h2><p>$df –help<br>用法：df [选项]… [文件]…<br>显示每个文件所在的文件系统的信息，默认是显示所有文件系统。</p>
+<p>长选项必须使用的参数对于短选项时也是必需使用的。<br>  -a, –all 包含虚拟文件系统<br>  -B, –block-size=大小 使用指定字节数的块。例如-BM 以 1,248,576<br>字节为单位显示大小。参看SIZE 格式。      –total 显示总计信息<br>  -h, –human-readable 以可读性较好的格式显示尺寸(例如：1K 234M 2G)<br>  -H, –si 计算时使用1000 为基底而非1024<br>  -i, –inodes 显示inode 信息而非块使用量<br>  -k 即–block-size=1K<br>  -l, –local 只显示本机的文件系统<br>      –no-sync 取得使用量数据前不进行同步动作(默认)<br>  -P, –portability 使用POSIX 兼容的输出格式<br>      –sync 取得使用量数据前先进行同步动作<br>  -t, –type=类型 只显示指定文件系统为指定类型的信息<br>  -T, –print-type 显示文件系统类型<br>  -x, –exclude-type=类型 只显示文件系统不是指定类型信息<br>  -v (忽略)<br>      –help 显示此帮助信息并退出<br>      –version 显示版本信息并退出</p>
+<p>所显示的数值是来自 –block-size、DF_BLOCK_SIZE、BLOCK_SIZE<br>及 BLOCKSIZE 环境变量中第一个可用的 SIZE 单位。<br>否则，默认单位是 1024 字节(或是 512，若设定 POSIXLY_CORRECT 的话)。</p>
+<p>SIZE 可以是一个可选的整数，后面跟着以下单位中的一个：<br>KB 1000，K 1024，MB 1000<em>1000，M 1024</em>1024，还有 G、T、P、E、Z、Y。</p>
 
       
     </div>
@@ -369,12 +371,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/DB/" rel="tag"># DB</a>
-          
-        </div>
-      
 
       
         
@@ -384,8 +380,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/08/iOS/FMDB/FMDB-四-到底是个什么鬼/" rel="next" title="FMDB(四),到底是个什么鬼?">
-                <i class="fa fa-chevron-left"></i> FMDB(四),到底是个什么鬼?
+              <a href="/2017/07/08/sublime-编译系统/" rel="next" title="sublime 编译系统 ">
+                <i class="fa fa-chevron-left"></i> sublime 编译系统 
               </a>
             
           </div>
@@ -393,10 +389,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/13/Database System Concepts/Database-System-Concepts-一/" rel="prev" title="Database System Concepts(一)">
-                Database System Concepts(一) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -525,7 +517,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL-语言介绍："><span class="nav-number">1.</span> <span class="nav-text">SQL 语言介绍：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Join从句"><span class="nav-number">2.</span> <span class="nav-text">Join从句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内连接（Inner-Join）"><span class="nav-number">2.1.</span> <span class="nav-text">内连接（Inner Join）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用指令"><span class="nav-number">1.</span> <span class="nav-text">常用指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#du用法："><span class="nav-number">2.</span> <span class="nav-text">du用法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#df用法："><span class="nav-number">3.</span> <span class="nav-text">df用法：</span></a></li></ol></div>
             
 
           </div>

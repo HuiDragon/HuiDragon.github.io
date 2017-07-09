@@ -253,6 +253,388 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/25/iOS/2017/Objective-C-宏-NONNULL-BEGIN-NONNULL-END/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/25/iOS/2017/Objective-C-宏-NONNULL-BEGIN-NONNULL-END/" itemprop="url">Objective-C 宏 NONNULL_BEGIN & NONNULL_END</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-25T13:24:11+08:00">
+                2017-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>这篇文章就是来解释这两个宏定义的作用的，目的就是可以更好的去阅读苹果的API，可以更好的去写代码，使用OC新的特性来优化开发。</p>
+</blockquote>
+<h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p>最近再看XCTest内容，看到XCAbstractTest.h这个文件的时候，发现在文件的中有这么一对宏定义</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></div></pre></td></tr></table></figure>
+<p>进入文件<em>NSObjCRuntime.h</em>这个文件查看两个宏的定义：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#define NS_ASSUME_NONNULL_BEGIN _Pragma(<span class="meta-string">"clang assume_nonnull begin"</span>)</span></div><div class="line"><span class="meta">#define NS_ASSUME_NONNULL_END   _Pragma(<span class="meta-string">"clang assume_nonnull end"</span>)</span></div></pre></td></tr></table></figure>
+<p>反正也看不出是个什么鬼。如果看过 Swift 中的 ？和 ！，应该对这个理解的清楚一些。</p>
+<h2 id="写一个Person类"><a href="#写一个Person类" class="headerlink" title="写一个Person类"></a>写一个Person类</h2><p>其实，之前我们在使用OC开发的时候，有些时候对于对象为空的避免并没有体现在编写代码的层面上，也就是在写一些代码的时候可能没有通过语法来标记这个对象是否可以为空，但是Swift中的语法却做到了这一点。OC也是一门仍然在完善的语言，Nullability就是他的这个性特性。</p>
+<p>比如我们创建一个Person类，属性有name,我们一般这样写：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> <span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="comment">//Person.h</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> *name;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">//Person.m</span></div><div class="line"><span class="meta">#import <span class="meta-string">"Person.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>使用的时候这样写：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Person *ap = [Person new];</div><div class="line">ap.name = <span class="string">@"Tom"</span>;</div><div class="line"></div><div class="line">Person *tp = [Person new];</div><div class="line">ap.name = <span class="literal">nil</span>;</div></pre></td></tr></table></figure>
+<h2 id="nullable-amp-nonnull"><a href="#nullable-amp-nonnull" class="headerlink" title="nullable &amp; nonnull"></a>nullable &amp; nonnull</h2><p>但是有些时候我们想让这个人对象的名字不能设置为nil，那么Person类就应该这样实现：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> <span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="comment">//Person.h</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>, <span class="keyword">nullable</span>)<span class="built_in">NSString</span> *name;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">//Person.m</span></div><div class="line"><span class="meta">#import <span class="meta-string">"Person.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>这样，如果在使用这个类的时候，为对象设置name为nil，编译器就会报警告，对于方法也是一样的：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- (<span class="keyword">void</span>)runWithDistance:(<span class="built_in">NSString</span> *_Nonnull)mile;<span class="comment">//mile不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)runWithTime:(<span class="keyword">nonnull</span> <span class="built_in">NSString</span> *)time;<span class="comment">// time 不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatWithFood:(<span class="built_in">NSString</span> * _Nullable)food;<span class="comment">//food可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatAtPlace:(<span class="keyword">nullable</span> <span class="built_in">NSString</span> *)place;<span class="comment">// place 可以为nil</span></div></pre></td></tr></table></figure>
+<p>注意：_Nonnull 和 nonnull  效果是一样的，只是形式不一样。</p>
+<p>nonul , _Nonnull 表示属性或者参数不可以为空；<br>nullable, _Nullable 表示属性或者参数可以为空</p>
+<p>我们根据上面的理解继续完善一下 Person 类：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>, <span class="keyword">nonnull</span>)<span class="built_in">NSString</span> *name;<span class="comment">// name 不可以为空</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> * _Nonnull mile;<span class="comment">// mile 不可以为空</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> * _Nullable food;<span class="comment">// food 可以为空</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>,<span class="keyword">nullable</span>) <span class="built_in">NSString</span> *time; <span class="comment">//time 可以为空</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)runWithDistance:(<span class="built_in">NSString</span> *_Nonnull)mile;<span class="comment">//mile不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)runWithTime:(<span class="keyword">nonnull</span> <span class="built_in">NSString</span> *)time;<span class="comment">// time 不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatWithFood:(<span class="built_in">NSString</span> * _Nullable)food;<span class="comment">//food可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatAtPlace:(<span class="keyword">nullable</span> <span class="built_in">NSString</span> *)place;<span class="comment">// place 可以为nil</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">//Person.m</span></div><div class="line"><span class="meta">#import <span class="meta-string">"Person.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h2 id="NS-ASSUME-NONNULL-BEGIN-amp-NS-ASSUME-NONNULL-END-怎么用"><a href="#NS-ASSUME-NONNULL-BEGIN-amp-NS-ASSUME-NONNULL-END-怎么用" class="headerlink" title="NS_ASSUME_NONNULL_BEGIN &amp; NS_ASSUME_NONNULL_END 怎么用"></a>NS_ASSUME_NONNULL_BEGIN &amp; NS_ASSUME_NONNULL_END 怎么用</h2><p>到这里就应该出现 <em>NS_ASSUME_NONNULL_BEGIN</em> 宏了，有没有发现上面的代码有些啰嗦，苹果为了让我们少些几个 nonnull，所以就定义了这个宏，我们用这个宏进行改写：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> *name;<span class="comment">// name 不可以为空</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> * mile;<span class="comment">// mile 不可以为空</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>)<span class="built_in">NSString</span> * _Nullable food;<span class="comment">// food 可以为空</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>,<span class="keyword">nullable</span>) <span class="built_in">NSString</span> *time; <span class="comment">//time 可以为空</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)runWithDistance:(<span class="built_in">NSString</span> *)mile;<span class="comment">//mile不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)runWithTime:(<span class="built_in">NSString</span> *)time;<span class="comment">// time 不可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatWithFood:(<span class="built_in">NSString</span> * _Nullable)food;<span class="comment">//food可以为nil</span></div><div class="line">- (<span class="keyword">void</span>)eatAtPlace:(<span class="keyword">nullable</span> <span class="built_in">NSString</span> *)place;<span class="comment">// place 可以为nil</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></div></pre></td></tr></table></figure>
+<p>下面和上面的效果是一样的，也就是说在NS_ASSUME_NONNULL_BEGIN、NS_ASSUME_NONNULL_END两个宏之间 nonnull 就没有必要写了，默认就是nonnull，如果不是nonnull那么就需要显示写成nullable的。</p>
+<p>好了，理解清楚了，如果不知道这么个东西，真的看起文档来比较麻烦。之前在看Swift的时候老是觉得OC为什么不能直接对空值进行检测呢？每次有些空值还要自己判断，现在好啦。</p>
+<p>OVER，记录完毕。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-零/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/13/Database System Concepts/Database-System-Concepts-零/" itemprop="url">Database System Concepts(零)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T13:02:43+08:00">
+                2017-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Database/" itemprop="url" rel="index">
+                    <span itemprop="name">Database</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p><strong>数据库管理系统（DataBase-Manager System， DBMS）</strong> 由一个相互关联的数据的集合和一组用以访问这些数据的程序组成。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-九/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/13/Database System Concepts/Database-System-Concepts-九/" itemprop="url">Database System Concepts(九)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T08:42:45+08:00">
+                2017-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-八/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1021,387 +1403,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-一/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/13/Database System Concepts/Database-System-Concepts-一/" itemprop="url">Database System Concepts(一)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T00:00:00+08:00">
-                2017-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Database/" itemprop="url" rel="index">
-                    <span itemprop="name">Database</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>第一部分： 关系数据库（2~6章），第二章介绍了数据的关系模型，包括几本概念，诸如关系数据库的结构、数据库模式、码、模式图、关系查询语言和关系操作等。</p>
-<h2 id="第-2-章-关系模型介绍"><a href="#第-2-章-关系模型介绍" class="headerlink" title="第 2 章 关系模型介绍"></a>第 2 章 关系模型介绍</h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/08/MySQL/MySQL-开发技巧（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/08/MySQL/MySQL-开发技巧（一）/" itemprop="url">MySQL 开发技巧（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-08T20:15:10+08:00">
-                2017-05-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="SQL-语言介绍："><a href="#SQL-语言介绍：" class="headerlink" title="SQL 语言介绍："></a>SQL 语言介绍：</h2><p>SQL，全称数据化结构查询语言，常见的SQL语句类型分为：数据定义语言（DDL）、事务处理语言（TPL）、数据控制语言（DCL）和数据操作语言（DML）。对于开发而言，着重使用的是DML，DML语言包含了Select、Insert、Update和Delete等操作。正确使用SQL语句，有利于：增加数据库处理效率，减少应用相应的时间；减少数据库服务的负载，增加服务器的稳定性；减少服务器间通讯的网络流量。</p>
-<h2 id="Join从句"><a href="#Join从句" class="headerlink" title="Join从句"></a>Join从句</h2><p>Join分为四种类型：内连接、全外连接、左外连接、右外连接和交叉连接。</p>
-<h3 id="内连接（Inner-Join）"><a href="#内连接（Inner-Join）" class="headerlink" title="内连接（Inner Join）"></a>内连接（Inner Join）</h3><p>内连接基于连接为此将两张表（如A表和B表）的列组合在一起，产生新的结果表。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/08/iOS/FMDB/FMDB-四-到底是个什么鬼/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/08/iOS/FMDB/FMDB-四-到底是个什么鬼/" itemprop="url">FMDB(四),到底是个什么鬼?</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-08T08:34:34+08:00">
-                2017-05-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1451,7 +1452,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
