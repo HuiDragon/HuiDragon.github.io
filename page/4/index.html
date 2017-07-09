@@ -205,6 +205,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -253,10 +273,132 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/27/iOS/2017/respondsToSelector-and-instancesRespondToSelector/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="iDou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/27/iOS/2017/respondsToSelector-and-instancesRespondToSelector/" itemprop="url">respondsToSelector and instancesRespondToSelector</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T12:19:21+08:00">
+                2017-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>最近在写代码的时候无意间写错了，将<em>respondsToSelector</em>写成了<em>instancesRespondToSelector</em>，结果…就没有了结果。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="respondsToSelector"><a href="#respondsToSelector" class="headerlink" title="respondsToSelector"></a>respondsToSelector</h3><p><em>respondsToSelector</em> 是协议 <nsobject> 中的一个@required的方法(第21行)</nsobject></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">NSObject</span></span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isEqual:(<span class="keyword">id</span>)object;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSUInteger</span> hash;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) Class superclass;</div><div class="line">- (Class)<span class="keyword">class</span> OBJC_SWIFT_UNAVAILABLE(<span class="string">"use 'type(of: anObject)' instead"</span>);</div><div class="line">- (<span class="keyword">instancetype</span>)<span class="keyword">self</span>;</div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)performSelector:(SEL)aSelector;</div><div class="line">- (<span class="keyword">id</span>)performSelector:(SEL)aSelector withObject:(<span class="keyword">id</span>)object;</div><div class="line">- (<span class="keyword">id</span>)performSelector:(SEL)aSelector withObject:(<span class="keyword">id</span>)object1 withObject:(<span class="keyword">id</span>)object2;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isProxy;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)isKindOfClass:(Class)aClass;</div><div class="line">- (<span class="built_in">BOOL</span>)isMemberOfClass:(Class)aClass;</div><div class="line">- (<span class="built_in">BOOL</span>)conformsToProtocol:(Protocol *)aProtocol;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)respondsToSelector:(SEL)aSelector;</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)<span class="keyword">retain</span> OBJC_ARC_UNAVAILABLE;</div><div class="line">- (<span class="keyword">oneway</span> <span class="keyword">void</span>)release OBJC_ARC_UNAVAILABLE;</div><div class="line">- (<span class="keyword">instancetype</span>)autorelease OBJC_ARC_UNAVAILABLE;</div><div class="line">- (<span class="built_in">NSUInteger</span>)retainCount OBJC_ARC_UNAVAILABLE;</div><div class="line"></div><div class="line">- (<span class="keyword">struct</span> _NSZone *)zone OBJC_ARC_UNAVAILABLE;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *description;</div><div class="line"><span class="keyword">@optional</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *debugDescription;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><em>respondsToSelector</em> 返回一个Boolean值，表示调用该方法的对象是否实现了或者继承了 <em>aSelector</em> 这个方法。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">void</span> testResponseSelector() &#123;</div><div class="line"></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"————————————————————testResponseSelector——————————————————————"</span>);</div><div class="line"></div><div class="line">    OneClass *oneObj = [OneClass new];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj method1]            %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(method1)]);         <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj protocolMethod]     %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(protocolMethod)]);  <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj categoryMethod]     %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(categoryMethod)]);  <span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj privateMethod]      %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(privateMethod)]);   <span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj classMethod]        %d"</span>,[oneObj respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);     <span class="comment">//0</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [oneObj classMethod]        %d"</span>,[OneClass respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);   <span class="comment">//1</span></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"***************************************************************"</span>);</div><div class="line">    </div><div class="line">    SubOneClass *subOneObj = [SubOneClass new];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj method1]          %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(method1)]);         <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj protocolMethod]   %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(protocolMethod)]);  <span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj categoryMethod]   %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(categoryMethod)]);  <span class="comment">//1</span></div><div class="line">    </div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj privateMethod]    %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(privateMethod)]);  <span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [subOneObj classMethod]      %d"</span>,[subOneObj respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);    <span class="comment">//0</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass classMethod]    %d"</span>,[SubOneClass respondsToSelector:<span class="keyword">@selector</span>(classMethod)]);  <span class="comment">//1</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="实例方法（对象方法）"><a href="#实例方法（对象方法）" class="headerlink" title="实例方法（对象方法）"></a>实例方法（对象方法）</h4><p><em>respondsToSelector</em> 可以判断类中的公共方法、私有方法、协议方法、类目方法有没有实现，如果只是声明了方法而没有实现，那么返回值也是FALSE。</p>
+<h4 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h4><p><em>respondsToSelector</em> 针对类方法，只能通过类来调用该方法才能正确判断类方法有没有实现。</p>
+<h3 id="instancesRespondToSelector"><a href="#instancesRespondToSelector" class="headerlink" title="instancesRespondToSelector"></a>instancesRespondToSelector</h3><p>方法声明</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">BOOL</span>)instancesRespondToSelector:(SEL)aSelector;</div></pre></td></tr></table></figure>
+<p>对于 <em>instancesRespondToSelector</em> ，首先只能通过类调用，因为他是一个类方法，而且该方法只能判断实例方法，对类方法是没有判别能力的。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> testInstanceResponseSelector() &#123;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"————————————————————instancesRespondToSelector——————————————————————"</span>);</div><div class="line"></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass method1]        %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(method1)]);		<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass protocolMethod] %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(protocolMethod)]);	<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass categoryMethod] %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(categoryMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass privateMethod]  %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(privateMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [OneClass classMethod]    %d"</span>,[OneClass instancesRespondToSelector:<span class="keyword">@selector</span>(classMethod)]);	<span class="comment">//0</span></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"***************************************************************"</span>);</div><div class="line"></div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass method1]          %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(method1)]);		<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass protocolMethod]   %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(protocolMethod)]);	<span class="comment">//1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass categoryMethod]   %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(categoryMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wundeclared-selector"</span></span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass privateMethod]    %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(privateMethod)]);	<span class="comment">//1</span></div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"    [SubOneClass classMethod]      %d"</span>,[SubOneClass instancesRespondToSelector:<span class="keyword">@selector</span>(classMethod)]);	<span class="comment">//0</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/25/iOS/2017/Objective-C-宏-NONNULL-BEGIN-NONNULL-END/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="name" content="iDou">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -393,7 +535,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-零/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="name" content="iDou">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -527,7 +669,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-九/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="name" content="iDou">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -638,7 +780,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-八/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="name" content="iDou">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -749,7 +891,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-七/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="name" content="iDou">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -860,7 +1002,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-六/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="name" content="iDou">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -971,7 +1113,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-五/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="name" content="iDou">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -1082,7 +1224,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-四/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="name" content="iDou">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -1193,7 +1335,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-三/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
+      <meta itemprop="name" content="iDou">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -1222,117 +1364,6 @@
                 <span class="post-meta-item-text">发表于</span>
               
               <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T08:41:47+08:00">
-                2017-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/Database System Concepts/Database-System-Concepts-二/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘桂良">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/13/Database System Concepts/Database-System-Concepts-二/" itemprop="url">Database System Concepts(二)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T08:41:42+08:00">
                 2017-05-13
               </time>
             
@@ -1441,8 +1472,8 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
-               alt="刘桂良" />
-          <p class="site-author-name" itemprop="name">刘桂良</p>
+               alt="iDou" />
+          <p class="site-author-name" itemprop="name">iDou</p>
            
               <p class="site-description motion-element" itemprop="description">不变应万变，世界瞬息万变</p>
           
@@ -1452,7 +1483,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1473,10 +1504,10 @@
             
             
             <div class="site-state-item site-state-tags">
-              
+              <a href="/tags/index.html">
                 <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
-              
+              </a>
             </div>
           
 
@@ -1520,7 +1551,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">刘桂良</span>
+  <span class="author" itemprop="copyrightHolder">iDou</span>
 </div>
 
 
