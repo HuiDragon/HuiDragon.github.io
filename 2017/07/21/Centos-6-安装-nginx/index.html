@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="CentOS," />
 
 
 
@@ -93,16 +93,17 @@
 
 
 
-<meta name="description" content="序幕Shell 概述脚本执行方式echo 输出命令语法结构： echo [选项] [输出内容]-e 添加一些控制参数 第一个脚本脚本内容 1234 #!/bin/bash#The first programecho -e &quot;\e[1m;34m 天上掉下个林妹妹\e[0m&quot; 脚本执行 赋予执行权限，直接执行 chmod 755 xxx.sh ./xxx.sh   通过 bash 调用执行脚本 bas">
+<meta name="description" content="下载nginx12wget http://nginx.org/download/nginx-1.11.6.tar.gz 解压 nginx 的 gz 包1tar -zxvf nginx-1.11.6.tar.gz 初始化配置12$ cd nginx-1.2.9 安装：PCRE:1yum -y install pcre-devel 安装 zlib1yum install -y zlib-devel 执">
+<meta name="keywords" content="CentOS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shell 基础">
-<meta property="og:url" content="https://huidragon.github.io/2017/06/07/脚本/Shell-基础/index.html">
+<meta property="og:title" content="Centos 6 安装 nginx">
+<meta property="og:url" content="https://huidragon.github.io/2017/07/21/Centos-6-安装-nginx/index.html">
 <meta property="og:site_name" content="枫叶 🍁 影">
-<meta property="og:description" content="序幕Shell 概述脚本执行方式echo 输出命令语法结构： echo [选项] [输出内容]-e 添加一些控制参数 第一个脚本脚本内容 1234 #!/bin/bash#The first programecho -e &quot;\e[1m;34m 天上掉下个林妹妹\e[0m&quot; 脚本执行 赋予执行权限，直接执行 chmod 755 xxx.sh ./xxx.sh   通过 bash 调用执行脚本 bas">
-<meta property="og:updated_time" content="2017-06-08T06:02:37.000Z">
+<meta property="og:description" content="下载nginx12wget http://nginx.org/download/nginx-1.11.6.tar.gz 解压 nginx 的 gz 包1tar -zxvf nginx-1.11.6.tar.gz 初始化配置12$ cd nginx-1.2.9 安装：PCRE:1yum -y install pcre-devel 安装 zlib1yum install -y zlib-devel 执">
+<meta property="og:updated_time" content="2017-07-21T13:36:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shell 基础">
-<meta name="twitter:description" content="序幕Shell 概述脚本执行方式echo 输出命令语法结构： echo [选项] [输出内容]-e 添加一些控制参数 第一个脚本脚本内容 1234 #!/bin/bash#The first programecho -e &quot;\e[1m;34m 天上掉下个林妹妹\e[0m&quot; 脚本执行 赋予执行权限，直接执行 chmod 755 xxx.sh ./xxx.sh   通过 bash 调用执行脚本 bas">
+<meta name="twitter:title" content="Centos 6 安装 nginx">
+<meta name="twitter:description" content="下载nginx12wget http://nginx.org/download/nginx-1.11.6.tar.gz 解压 nginx 的 gz 包1tar -zxvf nginx-1.11.6.tar.gz 初始化配置12$ cd nginx-1.2.9 安装：PCRE:1yum -y install pcre-devel 安装 zlib1yum install -y zlib-devel 执">
 
 
 
@@ -130,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="https://huidragon.github.io/2017/06/07/脚本/Shell-基础/"/>
+  <link rel="canonical" href="https://huidragon.github.io/2017/07/21/Centos-6-安装-nginx/"/>
 
 
 
 
 
-  <title>Shell 基础 | 枫叶 🍁 影</title>
+  <title>Centos 6 安装 nginx | 枫叶 🍁 影</title>
   
 
 
@@ -275,7 +276,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://huidragon.github.io/2017/06/07/脚本/Shell-基础/">
+    <link itemprop="mainEntityOfPage" href="https://huidragon.github.io/2017/07/21/Centos-6-安装-nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="iDou">
@@ -292,7 +293,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Shell 基础</h1>
+          <h1 class="post-title" itemprop="name headline">Centos 6 安装 nginx</h1>
         
 
         <div class="post-meta">
@@ -304,8 +305,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-07T23:15:42+08:00">
-                2017-06-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-21T18:23:01+08:00">
+                2017-07-21
               </time>
             
 
@@ -339,23 +340,16 @@
       
 
       
-        <h2 id="序幕"><a href="#序幕" class="headerlink" title="序幕"></a>序幕</h2><h2 id="Shell-概述"><a href="#Shell-概述" class="headerlink" title="Shell 概述"></a>Shell 概述</h2><h2 id="脚本执行方式"><a href="#脚本执行方式" class="headerlink" title="脚本执行方式"></a>脚本执行方式</h2><h3 id="echo-输出命令"><a href="#echo-输出命令" class="headerlink" title="echo 输出命令"></a>echo 输出命令</h3><p>语法结构：</p>
-<p>echo [选项] [输出内容]<br>-e 添加一些控制参数</p>
-<h3 id="第一个脚本"><a href="#第一个脚本" class="headerlink" title="第一个脚本"></a>第一个脚本</h3><h4 id="脚本内容"><a href="#脚本内容" class="headerlink" title="脚本内容"></a>脚本内容</h4> <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">#!/bin/bash</span></div><div class="line"><span class="comment">#The first program</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"\e[1m;34m 天上掉下个林妹妹\e[0m"</span></div></pre></td></tr></table></figure>
-<h4 id="脚本执行"><a href="#脚本执行" class="headerlink" title="脚本执行"></a>脚本执行</h4><ol>
-<li>赋予执行权限，直接执行<ul>
-<li>chmod 755 xxx.sh</li>
-<li>./xxx.sh</li>
-</ul>
-</li>
-<li>通过 bash 调用执行脚本<br> bash xxx.sh</li>
-</ol>
-<h2 id="Bash-的基本功能"><a href="#Bash-的基本功能" class="headerlink" title="Bash 的基本功能"></a>Bash 的基本功能</h2><h3 id="命令别名和快捷键"><a href="#命令别名和快捷键" class="headerlink" title="命令别名和快捷键"></a>命令别名和快捷键</h3><p>别名：针对系统中的命令的缩写</p>
-<ul>
-<li>查看别名</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">liuguiliang@Liuguiliang# alias</div><div class="line">l=&apos;ls -lah&apos;</div><div class="line">la=&apos;ls -lAh&apos;</div><div class="line">ll=&apos;ls -lh&apos;</div><div class="line">ls=&apos;ls -G&apos;</div><div class="line">lsa=&apos;ls -lah&apos;</div><div class="line">md=&apos;mkdir -p&apos;</div><div class="line">please=sudo</div><div class="line">po=popd</div><div class="line">pu=pushd</div><div class="line">rd=rmdir</div><div class="line">rm=&apos;rm -i&apos;</div></pre></td></tr></table></figure>
-<h3 id="历史命令"><a href="#历史命令" class="headerlink" title="历史命令"></a>历史命令</h3><h3 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h3><h3 id="多命令顺序执行"><a href="#多命令顺序执行" class="headerlink" title="多命令顺序执行"></a>多命令顺序执行</h3><h3 id="Shell-中的特殊符号"><a href="#Shell-中的特殊符号" class="headerlink" title="Shell 中的特殊符号"></a>Shell 中的特殊符号</h3>
+        <h2 id="下载nginx"><a href="#下载nginx" class="headerlink" title="下载nginx"></a>下载nginx</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">wget http://nginx.org/download/nginx-1.11.6.tar.gz</div></pre></td></tr></table></figure>
+<h2 id="解压-nginx-的-gz-包"><a href="#解压-nginx-的-gz-包" class="headerlink" title="解压 nginx 的 gz 包"></a>解压 nginx 的 gz 包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -zxvf nginx-1.11.6.tar.gz</div></pre></td></tr></table></figure>
+<h2 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ cd nginx-1.2.9</div></pre></td></tr></table></figure>
+<h3 id="安装：PCRE"><a href="#安装：PCRE" class="headerlink" title="安装：PCRE:"></a>安装：PCRE:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install pcre-devel</div></pre></td></tr></table></figure>
+<h3 id="安装-zlib"><a href="#安装-zlib" class="headerlink" title="安装 zlib"></a>安装 zlib</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install -y zlib-devel</div></pre></td></tr></table></figure>
+<h3 id="执行-configure-文件"><a href="#执行-configure-文件" class="headerlink" title="执行 configure 文件"></a>执行 configure 文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure</div></pre></td></tr></table></figure>
+<h3 id="运行编译"><a href="#运行编译" class="headerlink" title="运行编译"></a>运行编译</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make install</div></pre></td></tr></table></figure>
+<h2 id="启动-nginx"><a href="#启动-nginx" class="headerlink" title="启动 nginx"></a>启动 nginx</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin</div></pre></td></tr></table></figure>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">curl http://localhost</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -382,6 +376,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+        </div>
+      
 
       
       
@@ -391,8 +391,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/05/iOS/2017/我们该如何检测app性能/" rel="next" title="我们该如何检测app性能">
-                <i class="fa fa-chevron-left"></i> 我们该如何检测app性能
+              <a href="/2017/07/21/CentOS-6-安装-MYSQL/" rel="next" title="CentOS 6 安装 MYSQL">
+                <i class="fa fa-chevron-left"></i> CentOS 6 安装 MYSQL
               </a>
             
           </div>
@@ -400,10 +400,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/08/组件化/iOS-Pod-点点滴滴/" rel="prev" title="iOS Pod 点点滴滴">
-                iOS Pod 点点滴滴 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -532,7 +528,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#序幕"><span class="nav-number">1.</span> <span class="nav-text">序幕</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-概述"><span class="nav-number">2.</span> <span class="nav-text">Shell 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本执行方式"><span class="nav-number">3.</span> <span class="nav-text">脚本执行方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#echo-输出命令"><span class="nav-number">3.1.</span> <span class="nav-text">echo 输出命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一个脚本"><span class="nav-number">3.2.</span> <span class="nav-text">第一个脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本内容"><span class="nav-number">3.2.1.</span> <span class="nav-text">脚本内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本执行"><span class="nav-number">3.2.2.</span> <span class="nav-text">脚本执行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bash-的基本功能"><span class="nav-number">4.</span> <span class="nav-text">Bash 的基本功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#命令别名和快捷键"><span class="nav-number">4.1.</span> <span class="nav-text">命令别名和快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#历史命令"><span class="nav-number">4.2.</span> <span class="nav-text">历史命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出重定向"><span class="nav-number">4.3.</span> <span class="nav-text">输出重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多命令顺序执行"><span class="nav-number">4.4.</span> <span class="nav-text">多命令顺序执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shell-中的特殊符号"><span class="nav-number">4.5.</span> <span class="nav-text">Shell 中的特殊符号</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载nginx"><span class="nav-number">1.</span> <span class="nav-text">下载nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解压-nginx-的-gz-包"><span class="nav-number">2.</span> <span class="nav-text">解压 nginx 的 gz 包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化配置"><span class="nav-number">3.</span> <span class="nav-text">初始化配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装：PCRE"><span class="nav-number">3.1.</span> <span class="nav-text">安装：PCRE:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-zlib"><span class="nav-number">3.2.</span> <span class="nav-text">安装 zlib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行-configure-文件"><span class="nav-number">3.3.</span> <span class="nav-text">执行 configure 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行编译"><span class="nav-number">3.4.</span> <span class="nav-text">运行编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动-nginx"><span class="nav-number">4.</span> <span class="nav-text">启动 nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证"><span class="nav-number">5.</span> <span class="nav-text">验证</span></a></li></ol></div>
             
 
           </div>

@@ -276,6 +276,237 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://huidragon.github.io/2017/06/27/iOS/2017/EasyJSWebView-实现学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="iDou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/27/iOS/2017/EasyJSWebView-实现学习/" itemprop="url">EasyJSWebView 实现学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T15:10:05+08:00">
+                2017-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">EasyJSWebView</span> : <span class="title">UIWebView</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>EasyJSWebView 继承自 UIWebView，首先看一下起初始化方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">id</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame&#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">		[<span class="keyword">self</span> initEasyJS];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">id</span>)init&#123;</div><div class="line">	<span class="keyword">self</span> = [<span class="keyword">super</span> init];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">		[<span class="keyword">self</span> initEasyJS];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">id</span>)initWithCoder:(<span class="built_in">NSCoder</span> *)aDecoder&#123;</div><div class="line">	<span class="keyword">self</span> = [<span class="keyword">super</span> initWithCoder:aDecoder];</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">self</span>)&#123;</div><div class="line">		[<span class="keyword">self</span> initEasyJS];</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) initEasyJS&#123;</div><div class="line">	<span class="keyword">self</span>.proxyDelegate = [[EasyJSWebViewProxyDelegate alloc] init];</div><div class="line">	<span class="keyword">self</span>.delegate = <span class="keyword">self</span>.proxyDelegate;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) setDelegate:(<span class="keyword">id</span>&lt;<span class="built_in">UIWebViewDelegate</span>&gt;)delegate&#123;</div><div class="line">	<span class="keyword">if</span> (delegate != <span class="keyword">self</span>.proxyDelegate)&#123;</div><div class="line">		<span class="keyword">self</span>.proxyDelegate.realDelegate = delegate;</div><div class="line">	&#125;<span class="keyword">else</span>&#123;</div><div class="line">		[<span class="keyword">super</span> setDelegate:delegate];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，重写了三个初始化方法，统一调用了 <strong>initEasyJS</strong> 方法，在该方法中创建了 <strong>EasyJSWebViewProxyDelegate</strong> 这个对象，同时将webView的代理设置为该代理对象–proxyDelegate。<br>接下来，重写了webView代理的set方法，在set方法中处理了传进来的delegate对象，将其作为了EasyJSWebViewProxyDelegate 的realDelegate对象。<br>EasyJSWebView剩下的代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>) addJavascriptInterfaces:(<span class="built_in">NSObject</span>*) interface WithName:(<span class="built_in">NSString</span>*) name&#123;</div><div class="line">	[<span class="keyword">self</span>.proxyDelegate addJavascriptInterfaces:interface WithName:name];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) dealloc&#123;</div><div class="line">    <span class="keyword">self</span>.proxyDelegate = <span class="literal">nil</span>;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"----\n %s \n-----"</span>,__FUNCTION__);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过上面的代码块可以看到，确实没啥了。接下来看另个类 - EasyJSWebViewProxyDelegate。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">EasyJSWebViewProxyDelegate</span> : <span class="title">NSObject</span>&lt;<span class="title">UIWebViewDelegate</span>&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">retain</span>) <span class="built_in">NSMutableDictionary</span>* javascriptInterfaces;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">retain</span>) <span class="keyword">id</span>&lt;<span class="built_in">UIWebViewDelegate</span>&gt; realDelegate;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) addJavascriptInterfaces:(<span class="built_in">NSObject</span>*) interface WithName:(<span class="built_in">NSString</span>*) name;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>该类，继承自 NSObject ,同事实现了协议-UIWebViewDelegate，有一个真正的代理对象，realDelegate。还有一个和EasyJSWebView一样的方法。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://huidragon.github.io/2017/06/27/source/My-Bookself/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="iDou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶 🍁 影">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/27/source/My-Bookself/" itemprop="url">My Bookself</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T14:30:33+08:00">
+                2017-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>This page contains some personal book recommendations covering Cocoa and iOS Development.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://huidragon.github.io/2017/06/27/source/Tutorial-学习网站/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1198,286 +1429,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://huidragon.github.io/2017/06/08/组件化/iOS-Pod-点点滴滴/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="iDou">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/08/组件化/iOS-Pod-点点滴滴/" itemprop="url">iOS Pod 点点滴滴</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-08T10:07:28+08:00">
-                2017-06-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里记录了在使用 Pods 库的时候遇到的各种问题：</p>
-<h2 id="搜索不到自己的私有库"><a href="#搜索不到自己的私有库" class="headerlink" title="搜索不到自己的私有库"></a>搜索不到自己的私有库</h2><p>执行下面这条命令之后，重新搜索</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm ~/Library/Caches/CocoaPods/search_index.json</div></pre></td></tr></table></figure>
-<h2 id="搜索到私有库，安装失败"><a href="#搜索到私有库，安装失败" class="headerlink" title="搜索到私有库，安装失败"></a>搜索到私有库，安装失败</h2><p>查看一下，在使用的 Podfile 文件中，有没有添加自己的私有库地址，需要加上的，否则安装不成功</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">platform :ios, &apos;8.0&apos;</div><div class="line"></div><div class="line">source &apos;http://192.168.10.224:3000/iOS/iOSPod.git&apos;</div><div class="line">use_frameworks!</div><div class="line"></div><div class="line">target &apos;HelloworldDemo&apos; do</div><div class="line">  pod &apos;LYArchiver&apos;</div><div class="line">end</div></pre></td></tr></table></figure>
-<p>就是这句 <em>source ‘<a href="http://192.168.10.224:3000/iOS/iOSPod.git" target="_blank" rel="external">http://192.168.10.224:3000/iOS/iOSPod.git</a>‘</em></p>
-<h2 id="构建-Pods-库"><a href="#构建-Pods-库" class="headerlink" title="构建 Pods 库"></a>构建 Pods 库</h2><p>构建Pods私有库 or 公有库，其实没有固定的步骤，只要做全就OK了。</p>
-<h2 id="通过脚本构建，非常方便"><a href="#通过脚本构建，非常方便" class="headerlink" title="通过脚本构建，非常方便"></a>通过脚本构建，非常方便</h2><h2 id="命令解析："><a href="#命令解析：" class="headerlink" title="命令解析："></a>命令解析：</h2><p> 将 podspec 文件推送到仓库，这里需要区分是推送到公共仓库还是私有仓库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#私有仓库</div><div class="line">pod repo push [私有库名字]  xxxx.podspec --allow-warnings</div><div class="line"></div><div class="line"># 公有仓库</div><div class="line">pod trunk push xxxx.podspec</div></pre></td></tr></table></figure>
-<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>在执行单元测试的时候发现找不到对应的测试文件，导入了之后，提示 not find file xxx.h<br>两步解决：</p>
-<ul>
-<li>修改podfile 文件,测试的target一定要包含进来</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">target 'LYCache_Example' do</div><div class="line">  pod 'LYCache', :path =&gt; '../'</div><div class="line">  pod 'LYArchiver', '~&gt; 1.0.0'</div><div class="line">  </div><div class="line">  target 'LYCache_ExampleTests' do</div><div class="line">      inherit! :search_paths</div><div class="line">      </div><div class="line">      </div><div class="line">  end</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
-<ul>
-<li>测试的 Other Linker flag 和主工程一致</li>
-</ul>
-<p>目前来看，这两步设置了之后就可以愉快的测试了。</p>
-<h2 id="调试："><a href="#调试：" class="headerlink" title="调试："></a>调试：</h2><p>在提交私有pod库的时候，并不总是会成功，如果有警告我们可以忽略，但是一旦有error，就不能提交成功了</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">pod lib lint --verbose --allow-warnings  --sources=$publicSpecs,$privateSpecs</div></pre></td></tr></table></figure>
-<ol>
-<li><p>这里 <strong>–verbose</strong> 是指的查看错误详细信息，可以通过这里的错误信息找到问题所在<br><strong>–allow-warnings</strong> 是允许警告的存在，这里因为有些库的注释警告没办法避免了。</p>
-</li>
-<li><p>在库引入依赖库中的文件的时候，最好使用<xxxx xxxx.h="">这种方式，否则有些文件可能找不到</xxxx></p>
-</li>
-<li><p>在引入自己的私有库的时候最好加上最新的版本，有时候加载进来的不一定是最新的库，这个根据本地的索引表有可能不同。</p>
-</li>
-</ol>
-<h2 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h2><ol>
-<li><em><a href="https://juejin.im/entry/58df270f61ff4b006b1227c9" target="_blank" rel="external">https://juejin.im/entry/58df270f61ff4b006b1227c9</a></em></li>
-<li><em><a href="http://www.cnblogs.com/richard-youth/p/6272932.html" target="_blank" rel="external">http://www.cnblogs.com/richard-youth/p/6272932.html</a></em></li>
-<li><em><a href="http://www.liuchungui.com/blog/2015/10/19/cocoapodschuang-jian-si-you-pods/" target="_blank" rel="external">http://www.liuchungui.com/blog/2015/10/19/cocoapodschuang-jian-si-you-pods/</a></em></li>
-<li><em><a href="https://segmentfault.com/a/1190000007947371" target="_blank" rel="external">https://segmentfault.com/a/1190000007947371</a></em></li>
-<li><em><a href="http://www.jianshu.com/p/001f5cf05b6d" target="_blank" rel="external">http://www.jianshu.com/p/001f5cf05b6d</a></em></li>
-<li><em><a href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/" target="_blank" rel="external">http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/</a></em></li>
-<li><em><a href="https://juejin.im/entry/5864fd801b69e6006cf76a64" target="_blank" rel="external">https://juejin.im/entry/5864fd801b69e6006cf76a64</a></em></li>
-<li><em><a href="http://ibloodline.com/articles/2016/09/23/my-pod.html" target="_blank" rel="external">http://ibloodline.com/articles/2016/09/23/my-pod.html</a></em></li>
-<li><em><a href="http://blog.csdn.net/chong_son/article/details/52262171" target="_blank" rel="external">http://blog.csdn.net/chong_son/article/details/52262171</a></em></li>
-<li><em>file:///Users/liuguiliang/Downloads/cocoaPod%20%E7%A7%81%E6%9C%89%E5%BA%93%E6%90%AD%E5%BB%BA.html</em></li>
-<li><em><a href="http://www.saitjr.com/ios/ios-trunk-cocoapods.html" target="_blank" rel="external">http://www.saitjr.com/ios/ios-trunk-cocoapods.html</a></em></li>
-<li><em><a href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/" target="_blank" rel="external">http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/</a></em></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://huidragon.github.io/2017/06/07/脚本/Shell-基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="iDou">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶 🍁 影">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/07/脚本/Shell-基础/" itemprop="url">Shell 基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-07T23:15:42+08:00">
-                2017-06-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="序幕"><a href="#序幕" class="headerlink" title="序幕"></a>序幕</h2><h2 id="Shell-概述"><a href="#Shell-概述" class="headerlink" title="Shell 概述"></a>Shell 概述</h2><h2 id="脚本执行方式"><a href="#脚本执行方式" class="headerlink" title="脚本执行方式"></a>脚本执行方式</h2><h3 id="echo-输出命令"><a href="#echo-输出命令" class="headerlink" title="echo 输出命令"></a>echo 输出命令</h3><p>语法结构：</p>
-<p>echo [选项] [输出内容]<br>-e 添加一些控制参数</p>
-<h3 id="第一个脚本"><a href="#第一个脚本" class="headerlink" title="第一个脚本"></a>第一个脚本</h3><h4 id="脚本内容"><a href="#脚本内容" class="headerlink" title="脚本内容"></a>脚本内容</h4> <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">#!/bin/bash</span></div><div class="line"><span class="comment">#The first program</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"\e[1m;34m 天上掉下个林妹妹\e[0m"</span></div></pre></td></tr></table></figure>
-<h4 id="脚本执行"><a href="#脚本执行" class="headerlink" title="脚本执行"></a>脚本执行</h4><ol>
-<li>赋予执行权限，直接执行<ul>
-<li>chmod 755 xxx.sh</li>
-<li>./xxx.sh</li>
-</ul>
-</li>
-<li>通过 bash 调用执行脚本<br> bash xxx.sh</li>
-</ol>
-<h2 id="Bash-的基本功能"><a href="#Bash-的基本功能" class="headerlink" title="Bash 的基本功能"></a>Bash 的基本功能</h2><h3 id="命令别名和快捷键"><a href="#命令别名和快捷键" class="headerlink" title="命令别名和快捷键"></a>命令别名和快捷键</h3><p>别名：针对系统中的命令的缩写</p>
-<ul>
-<li>查看别名</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">liuguiliang@Liuguiliang# alias</div><div class="line">l=&apos;ls -lah&apos;</div><div class="line">la=&apos;ls -lAh&apos;</div><div class="line">ll=&apos;ls -lh&apos;</div><div class="line">ls=&apos;ls -G&apos;</div><div class="line">lsa=&apos;ls -lah&apos;</div><div class="line">md=&apos;mkdir -p&apos;</div><div class="line">please=sudo</div><div class="line">po=popd</div><div class="line">pu=pushd</div><div class="line">rd=rmdir</div><div class="line">rm=&apos;rm -i&apos;</div></pre></td></tr></table></figure>
-<h3 id="历史命令"><a href="#历史命令" class="headerlink" title="历史命令"></a>历史命令</h3><h3 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h3><h3 id="多命令顺序执行"><a href="#多命令顺序执行" class="headerlink" title="多命令顺序执行"></a>多命令顺序执行</h3><h3 id="Shell-中的特殊符号"><a href="#Shell-中的特殊符号" class="headerlink" title="Shell 中的特殊符号"></a>Shell 中的特殊符号</h3>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1527,7 +1478,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">59</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1549,7 +1500,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
